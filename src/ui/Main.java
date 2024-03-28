@@ -20,6 +20,8 @@ public class Main {
         int opcion = 0;
         FileManager utilidadesFile = new FileManager();
         Experimento experimento = new Experimento();
+        System.out.println(experimento.toString());
+
 
         //FileManager utilidadesFile = new FileManager();
         while (opcion != 9) {

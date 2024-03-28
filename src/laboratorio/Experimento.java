@@ -5,6 +5,7 @@ import medio.Comida;
 import java.io.Serializable;
 import java.text.ParseException;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
@@ -20,7 +21,7 @@ public class Experimento {
     protected Comida dosisComida;
     private final int dias = 30; // duración del experimento
     protected int numPoblaciones;
-    private List<Poblacion> poblacionesList; //Uso una list, pq igual de repente le sumo poblaciones al experimento y no cabrían en un array
+    private ArrayList<Poblacion> poblacionesList; //Uso una list, pq igual de repente le sumo poblaciones al experimento y no cabrían en un array
 
 
     //constructor
@@ -43,7 +44,7 @@ public class Experimento {
         this.luminosidad = luminosidad;
         this.dosisComida = dosisComida;
         this.numPoblaciones = numPoblaciones;
-        this.poblacionesList = new LinkedList<Poblacion>();
+        this.poblacionesList = new ArrayList<Poblacion>();
     }
 
 
@@ -116,25 +117,25 @@ public class Experimento {
         this.numPoblaciones = numPoblaciones;
     }
 
-    public List<Poblacion> getPoblacionesList() {
+    public ArrayList<Poblacion> getPoblacionesList() {
         return this.poblacionesList;
     }
-    public void setPoblacionesList(List<Poblacion> lista){
+    public void setPoblacionesList(ArrayList<Poblacion> lista){
         this.poblacionesList=lista;
     }
 
     // Métodos para que al meter esta clase en un System.out.println() salga
     // algo legible
-    @Override //Este nos enseña TODA la info del experimento
+   @Override //Este nos enseña TODA la info del experimento
     public String toString() {
         String stringToRepresentInfoPoblacionesExperimento = "Nombre Experimento: " + this.nombreExperimento
-                + "\nNumero de días: " + dias
+                + "\nNumero de días: " + this.dias
                 + "\n\nInformación de las poblaciones:\n";
-        Iterator<Poblacion> iterador = poblacionesList.iterator();
-        int i=0;
-        while (iterador.hasNext()) {
-            stringToRepresentInfoPoblacionesExperimento += "\nPOBLACIÓN " + (i + 1) + ": " + iterador.next().toString();
-            i++;
+        if(poblacionesList!=null) {
+            for (int i = 0; i < poblacionesList.size(); i++) {
+                stringToRepresentInfoPoblacionesExperimento += "\nPOBLACIÓN " + (i + 1) + ": " + poblacionesList.get(i).toString();
+                i++;
+            }
         }
         return stringToRepresentInfoPoblacionesExperimento;
     }
@@ -143,10 +144,8 @@ public class Experimento {
     public String toStringNombres() {
         String stringToRepresentNombrePoblacionesExperimento = "Nombre Experimento: " + this.nombreExperimento
                 + "\nNombre de poblaciones:\n";
-        Iterator<Poblacion> iterador = poblacionesList.iterator();
-        int i=0;
-        while (iterador.hasNext()) {
-            stringToRepresentNombrePoblacionesExperimento += "Nombre de la poblacion " + (i + 1) + ": " + iterador.next().getNombrePoblacion();
+        for (int i=0; i<poblacionesList.size();i++) {
+            stringToRepresentNombrePoblacionesExperimento += "Nombre de la poblacion " + (i + 1) + ": " + poblacionesList.get(i).getNombrePoblacion();
             i++;
         }
         return stringToRepresentNombrePoblacionesExperimento;

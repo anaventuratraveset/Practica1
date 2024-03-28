@@ -5,6 +5,7 @@ import medio.*;
 
 import java.text.ParseException;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
@@ -122,7 +123,7 @@ public class GestionLab {
     //ELIMINAR población
     public static void deletePoblacion(String nombrePoblacion, Experimento e) {
         Iterator<Poblacion> iterador = e.getPoblacionesList().iterator();
-        List<Poblacion> copiaPoblacionesList=null;
+        ArrayList<Poblacion> copiaPoblacionesList=null;
         int indice = 0;
 
         while (iterador.hasNext()) {
