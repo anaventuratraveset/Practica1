@@ -1,7 +1,6 @@
 package dataio;
-import Medio.Luminosidad;
+import medio.Luminosidad;
 
-import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
@@ -113,6 +112,7 @@ public class UserInput {
 
         do{
             try{
+                System.out.println("Introducir las fechas en este formato: yyyy.MM.dd");
                 Scanner sc = new Scanner(System.in);
                 SimpleDateFormat formato = new SimpleDateFormat("yyyy.MM.dd");
                 fecha = formato.parse(sc.nextLine());

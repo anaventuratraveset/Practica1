@@ -1,8 +1,15 @@
 package dataio;
 //Importo todo aqui, pq es dónde estoy creando los experimentos
-import Laboratorio.Experimento;
+import laboratorio.Experimento;
+import laboratorio.Poblacion;
+import medio.Comida;
+import medio.Luminosidad;
+
 import java.io.*;
+import java.time.LocalDate;
 import java.util.*;
+
+import static gestionLab.GestionLab.addPoblacion;
 
 
 // Crear archivo en el que meto experimento
@@ -13,93 +20,72 @@ import java.util.*;
 public class FileManager {
 
     // su constructor, para poder usarlo en el main y crear y tal archivos
-    public FileManager(){
+    public FileManager() {
 
     }
 
+
     // ABRIR archivo, que es para leerlo
-    public Experimento abrirArchivoYCrearExperimento(String nombreExperimento) { //es correcto
-        File miArchivo = new File(nombreExperimento+".txt"); // Especifico el nombre del archivo,
-        // lo cual no es una ruta absoluta, sino una ruta de acceso relativa
-        // en realidad el nombreArchivo tendría este path: "C:\\Users\\AnaVentura\\nombreExperimento.txt"
-        // debería poner en lo de new File, el path o lo otro?
-        Experimento experimento=new Experimento();
-        // Para fñujo de salida (escribir)
-        FileOutputStream fileOutputStream=null;
-        ObjectOutputStream objectOutputStream=null;
+    public Experimento abrirArchivo(String nombreExperimento) throws Exception, FileNotFoundException { //es correcto
+        File file;
+        Experimento experimento = null;
+
         // Para flujo de entrada (leer)
         FileInputStream fileInputStream = null;
         ObjectInputStream objectInputStream = null;
         try {
-            //primero veo si el archivo ya existe y sino, lo creo antes de leerlo
-            if (miArchivo.createNewFile()) {
-                System.out.println("Archivo creado: " + miArchivo.getName()); //eso o el nombre del Experimento en cuestión
-                //Escribimos dentro de éste, para crearle un experimento
-                fileOutputStream= new FileOutputStream(miArchivo);
-                objectOutputStream=new ObjectOutputStream(fileOutputStream);
-                objectOutputStream.writeObject(experimento); //flujo de SALIDA = ESCRIBIR
-            } else {
-                System.out.println("El archivo ya existe.");
-                return experimento;
-            }
+            file = new File("C:\\Users\\Ana Ventura-Traveset\\Desktop\\JAVA\\Java 2023-24\\Practica1\\src\\Laboratorio\\Experimento.java\\" + nombreExperimento + ".txt"); // Especifico el nombre del archivo,
+            // lo cual no es una ruta absoluta, sino una ruta de acceso relativa
+            // en realidad el nombreArchivo tendría este path: "C:\\Users\\AnaVentura\\nombreExperimento.txt"
+            // debería poner en lo de new File, el path o lo otro?
+            // Se podría primero verificar si existe el fichero, pero no voy a hacerlo asi
 
-            //Una vez he visto que existe o lo he creado => lo leo
-            fileInputStream = new FileInputStream(miArchivo);
+            // lo leo
+            fileInputStream = new FileInputStream(file);
             objectInputStream = new ObjectInputStream(fileInputStream);
-            System.out.println(objectInputStream.readObject());
-
+            while (objectInputStream.readObject() != null) { //mientras haya experimentos, adelante
+                System.out.println(objectInputStream.readObject());
+            }
         } catch (IOException ioe) {
             System.out.println("ERROR");
             ioe.printStackTrace();
         } catch (Exception e) { //esto es para el objectInputStream
             System.out.println("Se ha producido un error antes de terminar las escrituras");
-                    e.printStackTrace();
-        } finally { //IMPORTANTE cerrar el flujo de datos al acabar!!
-            if (fileOutputStream != null) {
-                try {
-                    fileOutputStream.close();
-                } catch (IOException ex) {
-                    ex.printStackTrace();
-                }
-            }
-            if (objectOutputStream != null) {
-                try {
-                    objectOutputStream.close();
-                } catch (IOException ex) {
-                    ex.printStackTrace();
-                }
+            e.printStackTrace();
         }
+        return experimento;
     }
 
-    // ESCRIBIR en un archivo (meterle experimento)
-    public void escribirEnArchivo(String nombreExperimento){
+
+    // GUARDAR/GUARDAR COMO archivo
+    // en este caso voy a usar el mismo método para guardar y guardar como
+    // simplemente en el segundo caso, se le pasará el String de como se quiera guardar
+    public boolean guardarArchivo(String nombreExperimento, Experimento experimento) {
+        File file = new File("C:\\Users\\Ana Ventura-Traveset\\Desktop\\Java 2021-22\\JavaPractica2022\\" + nombreExperimento + ".txt");
+        PrintWriter printWriter = null;
         try {
-            FileWriter myWriter = new FileWriter(nombreExperimento+".txt");
-            myWriter.write("AQUI LE TENGO QUE METER TODA LA CHICHA DEL EXPERIMENTO");
-            myWriter.close(); //importante cerrar el flujo de datos de entrada
-            System.out.println("Se ha escrito correctament en el archivo "+nombreExperimento+".");
+            printWriter = new PrintWriter(file);
+            String experimentoInfoFile = experimento.getNombreExperimento() + ';' + experimento.getDias() + ';' + experimento.getNumPoblaciones();
+            printWriter.println(experimentoInfoFile);//escribe en el fichero
+            String infoPoblacionesFile = "";
+            for (int i = 0; i < experimento.getPoblacionesList().size(); i++) {
+                infoPoblacionesFile += experimento.getPoblacionesList().get(i).toString();
+                printWriter.println(infoPoblacionesFile); //lo escribimos en el fichero
+            }
+            printWriter.close();
+            return true;
         } catch (IOException e) {
-            System.out.println("ERROR.");
-        }
-    }
+            e.printStackTrace();
+            return false;
+        } finally {
+            if (printWriter != null) {
+                printWriter.close();
 
-    // LEER archivo (que entiendo que es lo mismo que abrirlo
-    public void leerArchivo(String nombreExperimento){
-        try {
-            File miArchivo = new File(nombreExperimento+".txt");
-            Scanner myReader = new Scanner(miArchivo);
-            while (myReader.hasNextLine()) {
-                String data = myReader.nextLine();
-                System.out.println(data);
             }
-            myReader.close();
-        } catch (FileNotFoundException e) {
-            System.out.println("ERROR.");
         }
-    }
-
-   // GUARDAR archivo
-    public void guardarArchivo(String nombreExperimento){
 
     }
+
+
+
 }

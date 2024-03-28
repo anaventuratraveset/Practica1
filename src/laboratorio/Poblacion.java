@@ -1,11 +1,11 @@
-package Laboratorio;
-import Medio.Comida;
-import Medio.Luminosidad;
+package laboratorio;
+import medio.Comida;
+import medio.Luminosidad;
 import java.time.LocalDate;
 
 public class Poblacion {
 
-    protected String nombre;
+    protected String nombrePoblacion;
     protected int numInicialBacterias;
     protected float temperatura;
     protected LocalDate fechaInicio, fechaFin;
@@ -21,9 +21,9 @@ public class Poblacion {
 
     }
 
-    public Poblacion(String nombre, int numInicialBacterias, float temperatura, LocalDate fechaInicio,
-                     LocalDate fechaFin, Luminosidad.luminosidad luminosidad, int dosisComida) {
-        this.nombre = nombre;
+    public Poblacion(String nombrePoblacion, int numInicialBacterias, float temperatura, LocalDate fechaInicio,
+                     LocalDate fechaFin, Luminosidad.luminosidad luminosidad) {
+        this.nombrePoblacion = nombrePoblacion;
         this.numInicialBacterias = numInicialBacterias;
         this.temperatura = temperatura;
         this.fechaInicio = fechaInicio;
@@ -32,12 +32,12 @@ public class Poblacion {
     }
 
     //Getters y setters
-    public String getNombre() {
-        return nombre;
+    public String getNombrePoblacion() {
+        return nombrePoblacion;
     }
 
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
+    public void setNombrePoblacion(String nombrePoblacion) {
+        this.nombrePoblacion = nombrePoblacion;
     }
 
     public int getNumInicialBacterias() {
@@ -104,17 +104,18 @@ public class Poblacion {
     //creamos el toString para cuando se seleccione la opción 6, para visualizar la info de la población
     public String toString(){ //aqui no es necesario que le pase el nombre de la bacteria?
         String stringToRepresentPoblacion = "La población "
-                + this.nombre +":"
+                + this.nombrePoblacion +":"
                 +"\nFecha de inicio: "+this.fechaInicio
                 + "\nFecha de fin: "+ this.fechaFin
                 + "\nCantidad de bacterias inicialmente: "+ this.numInicialBacterias
-                + "Temperatura a la cual están sometidas las bacterias: "+ this.temperatura
+                + "\nTemperatura a la cual están sometidas las bacterias: "+ this.temperatura
+                + "\nLuminosidad: "+this.luminosidad
                 + "\nDosis de comida diaria: "+ comida.toString(); //Importante tener entre los atributos de poblacion un tipo Comida comida, para poder usar su método
         return stringToRepresentPoblacion;
     }
 
     public String toStringInfoPobFile(String nombrePoblacion) {
-        String stringToRepresentInfoPobFile = this.nombre
+        String stringToRepresentInfoPobFile = this.nombrePoblacion
                 + "; " + this.fechaInicio
                 + "; " + this.fechaFin
                 + "; " + this.numInicialBacterias

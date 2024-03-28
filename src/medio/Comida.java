@@ -1,7 +1,6 @@
-package Medio;
+package medio;
 import java.time.LocalDate;
 import java.util.Arrays;
-import java.util.Date;
 
 import static java.time.temporal.ChronoUnit.DAYS;
 
@@ -18,6 +17,13 @@ public class Comida {
 
     final int duracion=30;
 
+    public Comida (float cantidadInicial, LocalDate fechaInicial, float cantidadPico, LocalDate fechaPico, float cantidadFinal, LocalDate fechaFinal){
+        this.cantidadInicial=cantidadInicial;
+        this.fechaInicial=fechaInicial;
+        this.cantidadPico=cantidadPico;
+        this.fechaPico=fechaPico;
+        this.cantidadFinal=cantidadFinal;
+    }
     public Comida(float cantidadInicial, float [] cantidadComida, LocalDate fechaInicial,
                   LocalDate fechaFinal, float cantidadPico, float cantidadFinal, LocalDate fechaPico) {
         this.cantidadInicial = cantidadInicial;

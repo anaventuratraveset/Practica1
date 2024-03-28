@@ -1,4 +1,4 @@
-package Medio;
+package medio;
 
 public class Luminosidad {
 
