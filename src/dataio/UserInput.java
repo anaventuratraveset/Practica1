@@ -55,7 +55,7 @@ public class UserInput {
         return miInt;
     }
 
-    public static float readFloat(String peticion) {
+    public static float readFloat(String peticion)  {
         System.out.println(peticion);
         boolean hecho = false;
         float miFloat = 0;
@@ -63,6 +63,7 @@ public class UserInput {
             try {
                 Scanner sc = new Scanner(System.in);
                 miFloat = sc.nextFloat();
+                hecho=true;
             } catch (Exception e) {
                 System.out.println("ERROR al introducir por teclado.");
                 e.printStackTrace();
@@ -120,6 +121,7 @@ public class UserInput {
                 //en el formato fecha que le hayamos dicho, y ese es el parse
                 fechaADevolver = fecha.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
                 //ese paso es para convertir a LocalDate con el método toInstant() de date
+                hecho=true;
             }catch(ParseException pe){
                 hecho = false;
                 System.out.println("ERROR. La fecha introducida no es correcta o no se ha parseado correctamente.");

@@ -3,6 +3,7 @@ import laboratorio.Experimento;
 import laboratorio.Poblacion;
 import medio.*;
 
+import java.text.ParseException;
 import java.time.LocalDate;
 import java.util.Iterator;
 import java.util.List;
@@ -13,12 +14,12 @@ public class GestionLab {
 
     // Gestiono el lab
     // Gestiono los distintos experimentos
-    // crearPoblacion(), AddPoblacion(), deletePoblacion(), etc
+    // createPoblacion(), AddPoblacion(), deletePoblacion(), etc
 
     //Primero de todo gestion de experimentos:
 
     //CREAR población
-    public static Poblacion createPoblacion(Experimento e){
+    public static Poblacion createPoblacion(Experimento e) throws Exception, ParseException {
         Poblacion p= new Poblacion();
         int dias=30;
         float comidaInicial;
@@ -26,7 +27,17 @@ public class GestionLab {
         float comidaFinal;
         Comida comida=new Comida();
 
-        System.out.println("Comida pico: ");
+        String nombreP = readString("Escriba el nombre de su nueva población: ");
+        p.setNombrePoblacion(nombreP);
+
+        float temp = readInt("Escriba la temperatura: ");
+        p.setTemperatura(temp);
+
+
+        Luminosidad.luminosidad lum = readLuminosidad("Escriba el nivel de luminosidad {ALTA, MEDIA, BAJA}: ");
+        p.setLuminosidad(lum);
+
+
         while (true) {
             comidaInicial  = readFloat("Introduzca la cantidad de comida inicial: ");
             if (comidaInicial < 0) {
@@ -70,7 +81,7 @@ public class GestionLab {
         while (true) {
             fechaInicial= readDate("Introduzca la fecha dónde empieza su experimento: ");
             fechaMedia = readDate("Introduzca la fecha dónde hay el pico en su experimento: ");
-            fechaFinal = readDate("Introduzca la fecha dónde acaba su experimento: ");
+            fechaFinal=fechaInicial.plusDays(30);
             if (fechaMedia.isBefore(fechaInicial) || fechaMedia.isAfter(fechaFinal)) {
                 System.out.println("La fecha introducida no es correcta. Por favor vuelva a intentarlo.");
             } else {
@@ -79,11 +90,13 @@ public class GestionLab {
                 comida.setFechaPico(fechaMedia);
                 comida.setFechaFinal(fechaFinal);
                 p.setFechaFin(fechaFinal);
+
+                comida.setCantidadComida(comida.calcularComida());
+                p.setComida(comida);
                 break;
             }
         }
-        comida.setCantidadComida(comida.calcularComida());
-        p.setComida(comida);
+
 
         int numIniBact;
         while (true) {
@@ -96,22 +109,13 @@ public class GestionLab {
             }
         }
 
-        String nombreP = readString("Escriba el nombre de su nueva población: ");
-        p.setNombrePoblacion(nombreP);
-
-        float temp = readInt("Escriba la temperatura: ");
-        p.setTemperatura(temp);
-
-
-        Luminosidad.luminosidad lum = readLuminosidad("Escriba el nivel de luminosidad {ALTA, MEDIA, BAJA}: ");
-        p.setLuminosidad(lum);
 
         addPoblacion(p,e);
         return p;
     }
 
     //AÑADIR población
-    public static void addPoblacion(Poblacion p, Experimento e){
+    public static void addPoblacion(Poblacion p, Experimento e)throws Exception{
         e.getPoblacionesList().add(p);
     }
 

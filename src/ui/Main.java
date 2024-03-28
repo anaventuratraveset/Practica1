@@ -3,7 +3,7 @@ import dataio.FileManager;
 import dataio.*;
 import laboratorio.Experimento;
 import laboratorio.Poblacion;
-
+import java.lang.NullPointerException;
 import java.io.FileNotFoundException;
 import java.text.ParseException;
 

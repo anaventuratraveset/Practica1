@@ -3,6 +3,7 @@ import medio.Luminosidad;
 import medio.Comida;
 
 import java.io.Serializable;
+import java.text.ParseException;
 import java.time.LocalDate;
 import java.util.Iterator;
 import java.util.LinkedList;
