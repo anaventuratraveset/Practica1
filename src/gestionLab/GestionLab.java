@@ -24,40 +24,40 @@ public class GestionLab {
         float comidaInicial;
         float comidaPico;
         float comidaFinal;
-        Comida comida=null; //Hay que inicializarla
+        Comida comida=new Comida();
 
         System.out.println("Comida pico: ");
         while (true) {
             comidaInicial  = readFloat("Introduzca la cantidad de comida inicial: ");
-            comida.setCantidadInicial(comidaInicial);
             if (comidaInicial < 0) {
                 System.out.println("La cantidad de comida no puede ser negativa.");
             } else if (comidaInicial > 300) {
                 System.out.println("La cantidad de comida no puede ser superior a 300.");
             } else {
+                comida.setCantidadInicial(comidaInicial);
                 break;
             }
         }
         while (true) {
             comidaPico  = readFloat("Introduzca la cantidad de comida más alta: ");
-            comida.setCantidadPico(comidaPico);
             if (comidaPico < 0) {
                 System.out.println("La cantidad de comida no puede ser negativa.");
             } else if (comidaPico > 300) {
                 System.out.println("La cantidad de comida no puede ser superior a 300.");
             } else {
+                comida.setCantidadPico(comidaPico);
                 break;
             }
         }
 
         while (true) {
             comidaFinal = readFloat("Introduzca la cantidad de comida final: ");
-            comida.setCantidadFinal(comidaFinal);
             if (comidaFinal < 0) {
                 System.out.println("La cantidad de comida no puede ser negativa.");
             } else if (comidaFinal > 300) {
                 System.out.println("La cantidad de comida no puede ser superior a 300.");
             } else {
+                comida.setCantidadFinal(comidaFinal);
                 break;
             }
         }

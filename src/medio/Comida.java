@@ -17,6 +17,9 @@ public class Comida {
 
     final int duracion=30;
 
+    public Comida() {
+
+    }
     public Comida (float cantidadInicial, LocalDate fechaInicial, float cantidadPico, LocalDate fechaPico, float cantidadFinal, LocalDate fechaFinal){
         this.cantidadInicial=cantidadInicial;
         this.fechaInicial=fechaInicial;

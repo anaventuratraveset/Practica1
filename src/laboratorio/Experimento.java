@@ -8,7 +8,7 @@ import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 
-public class Experimento implements Serializable { //tiene que implementarlo para poder ser escrito y leido de fichero
+public class Experimento {
 
     private String nombreExperimento;
     protected LocalDate fechaInicio;
