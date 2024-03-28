@@ -34,7 +34,7 @@ public class FileManager {
         FileInputStream fileInputStream = null;
         ObjectInputStream objectInputStream = null;
         try {
-            file = new File( nombreExperimento + ".txt"); // Especifico el nombre del archivo,
+            file = new File( "./"+nombreExperimento + ".txt"); // Especifico el nombre del archivo,
             // lo cual no es una ruta absoluta, sino una ruta de acceso relativa
             // en realidad el nombreArchivo tendría este path: "C:\\Users\\AnaVentura\\nombreExperimento.txt"
             // debería poner en lo de new File, el path o lo otro?
@@ -61,7 +61,7 @@ public class FileManager {
     // en este caso voy a usar el mismo método para guardar y guardar como
     // simplemente en el segundo caso, se le pasará el String de como se quiera guardar
     public boolean guardarArchivo(String nombreExperimento, Experimento experimento) {
-        File file = new File("C:\\Users\\Ana Ventura-Traveset\\Desktop\\Java 2021-22\\JavaPractica2022\\" + nombreExperimento + ".txt");
+        File file = new File( "./"+nombreExperimento + ".txt");
         PrintWriter printWriter = null;
         try {
             printWriter = new PrintWriter(file);

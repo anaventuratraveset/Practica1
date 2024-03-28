@@ -15,6 +15,7 @@ public class Main {
 
     public static void main(String[] args) {
 
+
         //el main nunca lanza excepciones pq es el último
 
         int opcion = 0;

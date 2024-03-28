@@ -102,6 +102,7 @@ public class Poblacion {
     }
 
     //creamos el toString para cuando se seleccione la opción 6, para visualizar la info de la población
+    @Override
     public String toString(){ //aqui no es necesario que le pase el nombre de la bacteria?
         String stringToRepresentPoblacion = "La población "
                 + this.nombrePoblacion +":"
@@ -128,3 +129,5 @@ public class Poblacion {
 
 
 }
+
+
