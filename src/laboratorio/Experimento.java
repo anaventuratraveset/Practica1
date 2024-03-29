@@ -13,12 +13,6 @@ import java.util.List;
 public class Experimento {
 
     private String nombreExperimento;
-    protected LocalDate fechaInicio;
-    protected LocalDate fechaFin;
-    protected int numBacterias;
-    protected double temperatura;
-    protected Luminosidad.luminosidad luminosidad;
-    protected Comida dosisComida;
     private final int dias = 30; // duración del experimento
     protected int numPoblaciones;
     private ArrayList<Poblacion> poblacionesList; //Uso una list, pq igual de repente le sumo poblaciones al experimento y no cabrían en un array
@@ -32,21 +26,9 @@ public class Experimento {
     public Experimento(String nombreNuevoExperimento, int numPoblaciones){
         this.nombreExperimento=nombreNuevoExperimento;
         this.numPoblaciones=numPoblaciones;
-    }
-    public Experimento(String nombreExperimento, LocalDate fechaInicio, LocalDate fechaFin, int numBacterias,
-                       double temperatura, Luminosidad.luminosidad luminosidad, Comida dosisComida,
-                       int numPoblaciones) {
-        this.nombreExperimento = nombreExperimento;
-        this.fechaInicio = fechaInicio;
-        this.fechaFin = fechaFin;
-        this.numBacterias = numBacterias;
-        this.temperatura = temperatura;
-        this.luminosidad = luminosidad;
-        this.dosisComida = dosisComida;
-        this.numPoblaciones = numPoblaciones;
         this.poblacionesList = new ArrayList<Poblacion>();
-    }
 
+    }
 
     //Getters y setters
     public String getNombreExperimento() {
@@ -55,54 +37,6 @@ public class Experimento {
 
     public void setNombreExperimento(String nombreExperimento) {
         this.nombreExperimento = nombreExperimento;
-    }
-
-    public LocalDate getFechaInicio() {
-        return fechaInicio;
-    }
-
-    public void setFechaInicio(LocalDate fechaInicio) {
-        this.fechaInicio = fechaInicio;
-    }
-
-    public LocalDate getFechaFin() {
-        return fechaFin;
-    }
-
-    public void setFechaFin(LocalDate fechaFin) {
-        this.fechaFin = fechaFin;
-    }
-
-    public int getNumBacterias() {
-        return numBacterias;
-    }
-
-    public void setNumBacterias(int numBacterias) {
-        this.numBacterias = numBacterias;
-    }
-
-    public double getTemperatura() {
-        return temperatura;
-    }
-
-    public void setTemperatura(double temperatura) {
-        this.temperatura = temperatura;
-    }
-
-    public Luminosidad.luminosidad getLuminosidad() {
-        return luminosidad;
-    }
-
-    public void setLuminosidad(Luminosidad.luminosidad luminosidad) {
-        this.luminosidad = luminosidad;
-    }
-
-    public Comida getDosisComida() {
-        return dosisComida;
-    }
-
-    public void setDosisComida(Comida dosisComida) {
-        this.dosisComida = dosisComida;
     }
 
     public int getDias() {
@@ -120,6 +54,7 @@ public class Experimento {
     public ArrayList<Poblacion> getPoblacionesList() {
         return this.poblacionesList;
     }
+
     public void setPoblacionesList(ArrayList<Poblacion> lista){
         this.poblacionesList=lista;
     }
@@ -144,11 +79,17 @@ public class Experimento {
     public String toStringNombres() {
         String stringToRepresentNombrePoblacionesExperimento = "Nombre Experimento: " + this.nombreExperimento
                 + "\nNombre de poblaciones:\n";
-        for (int i=0; i<poblacionesList.size();i++) {
+        for (int i=0; i<this.poblacionesList.size();i++) {
             stringToRepresentNombrePoblacionesExperimento += "Nombre de la poblacion " + (i + 1) + ": " + poblacionesList.get(i).getNombrePoblacion();
             i++;
         }
         return stringToRepresentNombrePoblacionesExperimento;
+    }
+
+    public String toStringInfoExperimentoToFile(){
+        String stringToRepresentInExperimentobFile = this.nombreExperimento+
+                ";"+this.numPoblaciones;
+        return stringToRepresentInExperimentobFile;
     }
 
 

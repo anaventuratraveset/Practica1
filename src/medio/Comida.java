@@ -95,18 +95,20 @@ public class Comida {
     }
 
     public float[] calcularComida(){
-            int diasIncremento =(int) DAYS.between(this.fechaInicial, this.fechaPico);
-    int diasDecremento = (int) DAYS.between(fechaPico, fechaFinal);
-    float interseccion= cantidadPico-((cantidadPico-this.cantidadFinal)/diasDecremento);//funcion f(x)= a*x+b,
-    // en este caso a es negativo pq decremento y b es lo que he llamado intersección
-    float CantidadIncremento= this.cantidadPico - this.cantidadInicial;
-    float CantidadDecremento= this.cantidadPico - this.cantidadFinal;
-        for (int i=1; i<=diasIncremento; i++){
-        cantidadComida[i]=((this.cantidadPico-this.cantidadInicial)/diasIncremento)*i+this.cantidadInicial;
-    }
-           for(int j=diasIncremento+1; j<30; j++){
-        cantidadComida[j]= ((cantidadPico-this.cantidadFinal)/diasDecremento)*j+interseccion;
-    }
+        int diasIncremento =(int) DAYS.between(this.fechaInicial, this.fechaPico);
+        int diasDecremento = (int) DAYS.between(fechaPico, fechaFinal);
+        float interseccion= cantidadPico-((cantidadPico-this.cantidadFinal)/diasDecremento);//funcion f(x)= a*x+b,
+        // en este caso a es negativo pq decremento y b es lo que he llamado intersección
+        float CantidadIncremento= this.cantidadPico - this.cantidadInicial;
+        float CantidadDecremento= this.cantidadPico - this.cantidadFinal;
+        float cantidadComida[]=new float [30];
+
+        for (int i=0; i<diasIncremento; i++){
+            cantidadComida[i]=((CantidadIncremento)/diasIncremento)*i+this.cantidadInicial;
+        }
+        for(int j=diasIncremento+1; j<30; j++){
+            cantidadComida[j]= ((CantidadDecremento)/diasDecremento)*j+interseccion;
+        }
         return cantidadComida;
     }
 

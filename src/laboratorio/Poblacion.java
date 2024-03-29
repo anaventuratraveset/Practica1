@@ -6,11 +6,11 @@ import java.time.LocalDate;
 public class Poblacion {
 
     protected String nombrePoblacion;
+    private int duracion;
     protected int numInicialBacterias;
     protected float temperatura;
     protected LocalDate fechaInicio, fechaFin;
     protected Luminosidad.luminosidad luminosidad; // llamo al enum luminosidad de la clase Luminosidad
-
     protected Comida comida;
     protected float [] dosisComidaDiaria;
     protected final int comidaMax=300;
@@ -22,12 +22,12 @@ public class Poblacion {
     }
 
     public Poblacion(String nombrePoblacion, int numInicialBacterias, float temperatura, LocalDate fechaInicio,
-                     LocalDate fechaFin, Luminosidad.luminosidad luminosidad) {
+                     Luminosidad.luminosidad luminosidad) {
         this.nombrePoblacion = nombrePoblacion;
         this.numInicialBacterias = numInicialBacterias;
         this.temperatura = temperatura;
         this.fechaInicio = fechaInicio;
-        this.fechaFin = fechaFin;
+        this.fechaFin = fechaInicio.plusDays(duracion);
         this.luminosidad = luminosidad;
     }
 
@@ -115,7 +115,7 @@ public class Poblacion {
         return stringToRepresentPoblacion;
     }
 
-    public String toStringInfoPobFile(String nombrePoblacion) {
+    public String toStringInfoPobFile() {
         String stringToRepresentInfoPobFile = this.nombrePoblacion
                 + "; " + this.fechaInicio
                 + "; " + this.fechaFin
