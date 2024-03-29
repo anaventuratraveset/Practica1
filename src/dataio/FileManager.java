@@ -37,33 +37,8 @@ public class FileManager {
             inputStreamReader = new InputStreamReader(fileInputStream);
             bufferedReader=new BufferedReader(inputStreamReader);
             String texto=bufferedReader.readLine();
+            texto.split(";");
 
-
-            //CREO experimento
-            int numPoblaciones;
-            while (true) {
-                numPoblaciones = UserInput.readInt("Escriba el número de poblaciones que tiene su nuevo experimento: ");
-                if (numPoblaciones < 0) {
-                    System.out.println("El número de días no puede ser negativo.");
-                } else {
-                    break;
-                }
-            }
-            experimento = new Experimento(nombreExperimento, numPoblaciones);
-            for (int i = 0; i < numPoblaciones; i++) {
-                try {
-                    int numPoblacion = i + 1;
-                    System.out.println("Poblacion " + numPoblacion + ":\n");
-                    createPoblacion(experimento);
-                    texto+=experimento.getPoblacionesList().get(i).toStringInfoPobFile();
-                } catch (IOException ioe) {
-                    System.out.println("ERROR");
-                    ioe.printStackTrace();
-                } catch (Exception e) { //esto es para el InputStreamReader
-                    System.out.println("Se ha producido un error antes de terminar las escrituras");
-                    e.printStackTrace();
-                }
-            }
         }catch (Exception e){
             System.out.println("ERROR.");
         }
@@ -80,8 +55,8 @@ public class FileManager {
         boolean comprobacion=false;
         try {
             printWriter = new PrintWriter(file1);
-            String experimentoInfoFile = experimento.getNombreExperimento() + ';' + experimento.getDias() + ';' + experimento.getNumPoblaciones();
-            printWriter.println(experimentoInfoFile);//escribe en el fichero
+            String experimentoInfoFile = experimento.getNombreExperimento() + ';' + experimento.getDias() + ';' + experimento.getNumPoblaciones()+";";
+            printWriter.print(experimentoInfoFile);//escribe en el fichero
             String infoPoblacionesFile = "";
             for (int i = 0; i < experimento.getPoblacionesList().size(); i++) {
                 infoPoblacionesFile += experimento.getPoblacionesList().get(i).toStringInfoPobFile();

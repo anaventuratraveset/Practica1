@@ -118,4 +118,8 @@ public class Comida {
                 + Arrays.toString(cantidadComida);//para representar la cantidad de comida de cada día
         return stringToRepresentDosisComida;
     }
+
+    public String toStringToFile(){
+       return Arrays.toString(cantidadComida);
+    }
 }

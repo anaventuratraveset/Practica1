@@ -122,7 +122,7 @@ public class Poblacion {
                 + "; " + this.numInicialBacterias
                 + "; " + this.temperatura
                 + "; " + this.luminosidad
-                + "; " + comida.toString();
+                + "; " + comida.toStringToFile();
 
         return stringToRepresentInfoPobFile;
     }
