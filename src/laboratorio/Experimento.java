@@ -27,7 +27,6 @@ public class Experimento {
         this.nombreExperimento=nombreNuevoExperimento;
         this.numPoblaciones=numPoblaciones;
         this.poblacionesList = new ArrayList<Poblacion>();
-
     }
 
     //Getters y setters
@@ -59,6 +58,10 @@ public class Experimento {
         this.poblacionesList=lista;
     }
 
+    public void setPoblacionNueva (Poblacion p){
+      this.poblacionesList.add(p);
+    }
+
     // Métodos para que al meter esta clase en un System.out.println() salga
     // algo legible
    @Override //Este nos enseña TODA la info del experimento
@@ -79,9 +82,8 @@ public class Experimento {
     public String toStringNombres() {
         String stringToRepresentNombrePoblacionesExperimento = "Nombre Experimento: " + this.nombreExperimento
                 + "\nNombre de poblaciones:\n";
-        for (int i=0; i<this.poblacionesList.size();i++) {
-            stringToRepresentNombrePoblacionesExperimento += "Nombre de la poblacion " + (i + 1) + ": " + poblacionesList.get(i).getNombrePoblacion();
-            i++;
+        for (int i=0; i<this.poblacionesList.size() ; i++) {
+            stringToRepresentNombrePoblacionesExperimento += "Nombre de la poblacion " + (i + 1) + ": " + poblacionesList.get(i).getNombrePoblacion()+"\n";
         }
         return stringToRepresentNombrePoblacionesExperimento;
     }

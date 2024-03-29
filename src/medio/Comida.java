@@ -114,12 +114,16 @@ public class Comida {
 
     @Override
     public String toString(){
-        String stringToRepresentDosisComida= "Dosis de comida para cada día del experimento: "
-                + Arrays.toString(cantidadComida);//para representar la cantidad de comida de cada día
-        return stringToRepresentDosisComida;
+        return Arrays.toString(cantidadComida);//para representar la cantidad de comida de cada día
     }
 
     public String toStringToFile(){
-       return Arrays.toString(cantidadComida);
+        String stringToRepresentDosisComidaToFile = this.fechaInicial
+        + "; " + this.cantidadInicial
+        + "; " + this.fechaPico
+        + "; " + this.cantidadPico
+        + "; " + this.fechaFinal
+        + "; " + this.cantidadFinal;
+       return stringToRepresentDosisComidaToFile;
     }
 }

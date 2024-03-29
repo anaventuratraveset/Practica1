@@ -112,13 +112,13 @@ public class GestionLab {
         }
         System.out.println("Creada población: "+nombreP);
 
-        addPoblacion(p,e);
+        //añado la poblacion al experimento
+        e.setPoblacionNueva(p);
         return p;
     }
 
-    //AÑADIR población
-    public static void addPoblacion(Poblacion p, Experimento e)throws Exception{
-        e.getPoblacionesList().add(p);
+    public static void addPoblacion (Poblacion pob, Experimento exp){
+        exp.setPoblacionNueva(pob);
     }
 
     //ELIMINAR población
@@ -137,19 +137,15 @@ public class GestionLab {
     }
 
     public static Poblacion buscarPoblacion(String nombrePoblacion, Experimento e) {
-        boolean hecho = false;
         int i;
-        do {for (i = 0; i < e.getPoblacionesList().size(); i++) {
+        for (i = 0; i < e.getPoblacionesList().size(); i++) {
                 if (nombrePoblacion.equals(e.getPoblacionesList().get(i).getNombrePoblacion())) {
-                    hecho = true;
                     e.getPoblacionesList().get(i);
-                    i++;
                 } else {
-                    hecho = false;
                     System.out.println("No se ha encontrado la población.");
                 }
             }
-        } while (hecho == false);
+
         return e.getPoblacionesList().get(i);
     }
 

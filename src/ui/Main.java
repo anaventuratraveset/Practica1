@@ -31,7 +31,7 @@ public class Main {
 
         //FileManager utilidadesFile = new FileManager();
         while (opcion != 9) {
-            System.out.println("Selecione una opción:" +
+            System.out.println("\nSelecione una opción:" +
                     "\n1. Abrir un archivo que contenga un experimento" +
                     "\n2. Crear un nuevo experimento" +
                     "\n3. Crear una población de bacterias y añadirla al experimento actual" +
@@ -52,17 +52,14 @@ public class Main {
 
             switch (opcion) {
                 case 1: //Abrir un archivo que contenga un experimento
-                    while (true) {
                         try {
                             String nombreExperimentoAbrir = UserInput.readString("Escriba el nombre de su experimento: ");
-                             experimento = FileManager.abrirArchivo(nombreExperimentoAbrir);
-                            break;
+                            experimento = FileManager.abrirArchivo(nombreExperimentoAbrir);
                         } catch (FileNotFoundException fnf) {
                             System.out.println("No se ha encontrado el archivo. ");
                         } catch (Exception ex) {
                             System.out.println("ERROR.");
                         }
-                    }
                     break;
 
                 case 2: //Crear un nuevo experimento
@@ -91,7 +88,7 @@ public class Main {
                     }
 
                     System.out.println(experimento.toString());
-                    System.out.println("Experimento " + experimento.getNombreExperimento() + " ha sido creado correctamente.");
+                    System.out.println("\nExperimento " + experimento.getNombreExperimento() + " ha sido creado correctamente.");
 
                     break;
 
@@ -112,7 +109,6 @@ public class Main {
                 case 4: //Mostrar nombre poblaciones
                     if (experimento== null) {
                         System.out.println("No tiene ningún experimento cargado en memoria.");
-                        break;
                     }
                     else {
                         String nombres = experimento.toStringNombres();
@@ -123,7 +119,6 @@ public class Main {
                 case 5: //Borrar una población de bacterias del experimento actual
                     if (experimento== null) {
                         System.out.println("No tiene ningún experimento cargado en memoria.");
-                        break;
                     }
                     String pobDeletear = (UserInput.readString("Escriba el nombre de la población que desea eliminar: "));
                     deletePoblacion(pobDeletear,experimento);
