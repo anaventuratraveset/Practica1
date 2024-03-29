@@ -117,10 +117,10 @@ public class Poblacion {
 
     public String toStringInfoPobFile() {
         String stringToRepresentInfoPobFile = this.nombrePoblacion
-                + "; " + this.numInicialBacterias
-                + "; " + this.temperatura
-                + "; " + this.luminosidad
-                + "; " + comida.toStringToFile();
+                + ";" + Integer.toString(this.numInicialBacterias)
+                + ";" + this.temperatura
+                + ";" + this.luminosidad
+                + ";" + comida.toStringToFile();
 
         return stringToRepresentInfoPobFile;
     }

@@ -10,6 +10,7 @@ import java.lang.NullPointerException;
 import java.io.FileNotFoundException;
 import java.text.ParseException;
 
+import static dataio.FileManager.abrirArchivo;
 import static dataio.UserInput.readInt;
 import static dataio.UserInput.readString;
 import static gestionLab.GestionLab.*;
@@ -27,7 +28,7 @@ public class Main {
 
         int opcion = 0;
         Experimento experimento=null;
-
+        FileManager fileManager=null;
 
         //FileManager utilidadesFile = new FileManager();
         while (opcion != 9) {
@@ -120,22 +121,25 @@ public class Main {
                     if (experimento== null) {
                         System.out.println("No tiene ningún experimento cargado en memoria.");
                     }
-                    String pobDeletear = (UserInput.readString("Escriba el nombre de la población que desea eliminar: "));
-                    deletePoblacion(pobDeletear,experimento);
+                    else {
+                        String pobDeletear = (UserInput.readString("Escriba el nombre de la población que desea eliminar: "));
+                        deletePoblacion(pobDeletear, experimento);
+                    }
                     break;
 
                 case 6: //Ver información detallada de una población de bacterias del experimento actual
                     if (experimento== null) {
                         System.out.println("No tiene ningún experimento cargado en memoria");
-                        break;
                     }
-                    String pobVerInfo = (UserInput.readString("Escriba el nombre de la población que desea ver la info: "));
+                    else {
+                        String pobVerInfo = (UserInput.readString("Escriba el nombre de la población que desea ver la info: "));
 
-                    try {
-                        Poblacion poblacionEncontrada = buscarPoblacion(pobVerInfo, experimento);
-                        System.out.println(poblacionEncontrada.toString());
-                    } catch (Exception e) {
-                        System.out.println("La población no existe en este experimento.");
+                        try {
+                            Poblacion poblacionEncontrada = buscarPoblacion(pobVerInfo, experimento);
+                            System.out.println(poblacionEncontrada.toString());
+                        } catch (Exception e) {
+                            System.out.println("La población no existe en este experimento.");
+                        }
                     }
 
                     break;

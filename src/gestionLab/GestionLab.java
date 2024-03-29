@@ -127,7 +127,7 @@ public class GestionLab {
         int indice = 0;
 
         for (int i = 0; i < e.getPoblacionesList().size(); i++) {
-            if (!nombrePoblacion.equals(e.getPoblacionesList().get(indice).getNombrePoblacion())) {
+            if (!nombrePoblacion.equals(e.getPoblacionesList().get(i).getNombrePoblacion())) {
                 copiaPoblacionesList.add(e.getPoblacionesList().get(indice));
                 indice++;
             }

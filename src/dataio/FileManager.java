@@ -25,58 +25,63 @@ public class FileManager {
 
     }
 
-
     // ABRIR archivo, que es para leerlo
-    public static Experimento abrirArchivo(String nombreExperimento) throws Exception { //es correcto
+    public static Experimento abrirArchivo(String nombreExperimento) throws Exception {
         File file = new File("./" + nombreExperimento + ".txt"); //abrimos flujo de datos
-        Experimento experimento = null;
+        Experimento experimento =null;
 
         // Para flujo de entrada (leer)
         FileInputStream fileInputStream = null; //sirve para leer flujo de datos en bruto
         InputStreamReader inputStreamReader = null;
         BufferedReader bufferedReader = null;
-
         try {
             // lo leo
             bufferedReader = new BufferedReader(new InputStreamReader(new FileInputStream(file)));
-            String texto = bufferedReader.readLine();
-            String [] misArgs = texto.split(";");
+            String [] todosArgs = bufferedReader.readLine().split("\n");
+            String [] infoExperimento = todosArgs[0].split(";");
+            String nombreExpFromFile = infoExperimento[0];
+
+
 
             //leo info del experimento
-            String nombreExpFromFile = misArgs[0];
-            int diasExpFromFile = Integer.parseInt(misArgs[1]);
-            int numPoblacionesFromFile = Integer.parseInt(misArgs[2]);
+            int diasExpFromFile = Integer.parseInt(infoExperimento[1]);
+            int numPoblacionesFromFile = Integer.parseInt(infoExperimento[2]);
 
             //creo el experimento
-            new Experimento(nombreExpFromFile, numPoblacionesFromFile);
+            experimento = new Experimento(nombreExpFromFile, numPoblacionesFromFile);
             //fin leer info experimento
 
-            //Empiezo a leer info de poblaciones
-            for (int i=3; i<numPoblacionesFromFile;i++) {
+            System.out.println(todosArgs.length+ "mi length");
+
+            String line;
+            while ((line = bufferedReader.readLine()) != null) {
+                String [] infoPoblacion = line.split(";");
+
+                //Empiezo a leer info de poblaciones
                 Poblacion poblacion = new Poblacion();
 
-                String nombrePoblacionFromFile = misArgs[3];
+                String nombrePoblacionFromFile = infoPoblacion[0];
                 poblacion.setNombrePoblacion(nombrePoblacionFromFile);
 
-                int numBacteriasFromFile = Integer.parseInt(misArgs[4]);
+                int numBacteriasFromFile = Integer.parseInt(infoPoblacion[1]);
                 poblacion.setNumInicialBacterias(numBacteriasFromFile);
 
-                float temperaturaFromFile = Float.parseFloat(misArgs[5]);
+                float temperaturaFromFile = Float.parseFloat(infoPoblacion[2]);
                 poblacion.setTemperatura(temperaturaFromFile);
 
-                Luminosidad.luminosidad luminosidadFromFile = Luminosidad.luminosidad.valueOf(misArgs[6]);
+                Luminosidad.luminosidad luminosidadFromFile = Luminosidad.luminosidad.valueOf(infoPoblacion[3]);
                 poblacion.setLuminosidad(luminosidadFromFile);
 
                 // leo el toStringToFile de comida
                 DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-                LocalDate fechaInicioFromFile = LocalDate.parse(misArgs[7], dtf);
+                LocalDate fechaInicioFromFile = LocalDate.parse(infoPoblacion[4], dtf);
                 poblacion.setFechaInicio(fechaInicioFromFile);
-                int cantidadInicialFromFile = Integer.parseInt(misArgs[8]);
-                LocalDate fechaPicoFromFile = LocalDate.parse(misArgs[9], dtf);
-                int cantidadPicoFromFile = Integer.parseInt(misArgs[10]);
-                LocalDate fechaFinFromFile = LocalDate.parse(misArgs[11], dtf);
+                float cantidadInicialFromFile = Float.parseFloat(infoPoblacion[5]);
+                LocalDate fechaPicoFromFile = LocalDate.parse(infoPoblacion[6], dtf);
+                float cantidadPicoFromFile = Float.parseFloat(infoPoblacion[7]);
+                LocalDate fechaFinFromFile = LocalDate.parse(infoPoblacion[8], dtf);
                 poblacion.setFechaFin(fechaFinFromFile);
-                int cantidadFinalFromFile = Integer.parseInt(misArgs[12]);
+                float cantidadFinalFromFile = Float.parseFloat(infoPoblacion[9]);
 
                 Comida comida = new Comida(cantidadInicialFromFile, fechaInicioFromFile, cantidadPicoFromFile, fechaPicoFromFile, cantidadFinalFromFile, fechaFinFromFile);
                 poblacion.setComida(comida);
@@ -84,9 +89,9 @@ public class FileManager {
                 System.out.println("Estoy en abrir archivo");
                 System.out.println(experimento.toString());
 
-                bufferedReader.close();
                 GestionLab.addPoblacion(poblacion,experimento);
             }
+            bufferedReader.close();
         }catch (Exception e){
             System.out.println("ERROR FileManager leyendo archivo. Puede que no exista nigún archivo con ese nombre");
             e.printStackTrace();
@@ -129,7 +134,7 @@ public class FileManager {
         boolean comprobacion=false;
         try {
             printWriter = new PrintWriter(file1);
-            String experimentoInfoFile = experimento.getNombreExperimento() + ';' + experimento.getDias() + ';' + experimento.getNumPoblaciones()+";";
+            String experimentoInfoFile = experimento.getNombreExperimento() + ';' + experimento.getDias() + ';' + experimento.getNumPoblaciones();
             printWriter.println(experimentoInfoFile);//escribe en el fichero
             for (int i = 0; i < experimento.getPoblacionesList().size(); i++) {
                 String infoPoblacionesFile = "";

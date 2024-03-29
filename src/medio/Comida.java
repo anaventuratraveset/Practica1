@@ -26,6 +26,7 @@ public class Comida {
         this.cantidadPico=cantidadPico;
         this.fechaPico=fechaPico;
         this.cantidadFinal=cantidadFinal;
+        this.fechaFinal=fechaFinal;
     }
     public Comida(float cantidadInicial, float [] cantidadComida, LocalDate fechaInicial,
                   LocalDate fechaFinal, float cantidadPico, float cantidadFinal, LocalDate fechaPico) {
@@ -96,7 +97,7 @@ public class Comida {
 
     public float[] calcularComida(){
         int diasIncremento =(int) DAYS.between(this.fechaInicial, this.fechaPico);
-        int diasDecremento = (int) DAYS.between(fechaPico, fechaFinal);
+        int diasDecremento = (int) DAYS.between(this.fechaPico, this.fechaFinal);
         float interseccion= cantidadPico-((cantidadPico-this.cantidadFinal)/diasDecremento);//funcion f(x)= a*x+b,
         // en este caso a es negativo pq decremento y b es lo que he llamado intersección
         float CantidadIncremento= this.cantidadPico - this.cantidadInicial;
