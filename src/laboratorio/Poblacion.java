@@ -106,12 +106,10 @@ public class Poblacion {
     public String toString(){ //aqui no es necesario que le pase el nombre de la bacteria?
         String stringToRepresentPoblacion = "La población "
                 + this.nombrePoblacion +":"
-                +"\nFecha de inicio: "+this.fechaInicio
-                + "\nFecha de fin: "+ this.fechaFin
                 + "\nCantidad de bacterias inicialmente: "+ this.numInicialBacterias
                 + "\nTemperatura a la cual están sometidas las bacterias: "+ this.temperatura
                 + "\nLuminosidad: "+this.luminosidad
-                + "\nDosis de comida diaria: "+ comida.toString(); //Importante tener entre los atributos de poblacion un tipo Comida comida, para poder usar su método
+                + "\nDosis de comida diaria: "+ this.comida.toString(); //Importante tener entre los atributos de poblacion un tipo Comida comida, para poder usar su método
         return stringToRepresentPoblacion;
     }
 

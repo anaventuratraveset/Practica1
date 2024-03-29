@@ -123,33 +123,30 @@ public class GestionLab {
 
     //ELIMINAR población
     public static void deletePoblacion(String nombrePoblacion, Experimento e) {
-        ArrayList<Poblacion> copiaPoblacionesList=null;
-        int indice = 0;
 
         for (int i = 0; i < e.getPoblacionesList().size(); i++) {
-            if (!nombrePoblacion.equals(e.getPoblacionesList().get(i).getNombrePoblacion())) {
-                copiaPoblacionesList.add(e.getPoblacionesList().get(indice));
-                indice++;
+            if (nombrePoblacion.equals(e.getPoblacionesList().get(i).getNombrePoblacion())) {
+                e.getPoblacionesList().remove(i); // Si lo igualo a algo, me va a mandar la Poblacion que he quitado
+                // si no hago nada mas, simplemente le arranca esa poblacion de mi lista
             }
         }
-        e.setPoblacionesList(copiaPoblacionesList);
         e.setNumPoblaciones(e.getPoblacionesList().size());
     }
 
     public static Poblacion buscarPoblacion(String nombrePoblacion, Experimento e) {
-        int i;
-        for (i = 0; i < e.getPoblacionesList().size(); i++) {
-                if (nombrePoblacion.equals(e.getPoblacionesList().get(i).getNombrePoblacion())) {
-                    e.getPoblacionesList().get(i);
-                } else {
-                    System.out.println("No se ha encontrado la población.");
-                }
+        Poblacion miPoblacion=null;
+        for (int i = 0; i < e.getPoblacionesList().size(); i++) {
+            if (nombrePoblacion.equals(e.getPoblacionesList().get(i).getNombrePoblacion())) {
+                miPoblacion=e.getPoblacionesList().get(i);
+                break;
             }
-
-        return e.getPoblacionesList().get(i);
+        }
+        if(miPoblacion!=null) {
+            return miPoblacion;
+        }
+        else {
+            throw new RuntimeException();
+        }
     }
-
-
-
 
 }

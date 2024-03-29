@@ -27,17 +27,9 @@ public class Comida {
         this.fechaPico=fechaPico;
         this.cantidadFinal=cantidadFinal;
         this.fechaFinal=fechaFinal;
+        this.cantidadComida = this.calcularComida();
     }
-    public Comida(float cantidadInicial, float [] cantidadComida, LocalDate fechaInicial,
-                  LocalDate fechaFinal, float cantidadPico, float cantidadFinal, LocalDate fechaPico) {
-        this.cantidadInicial = cantidadInicial;
-        this.cantidadComida = cantidadComida;
-        this.fechaInicial = fechaInicial;
-        this.fechaFinal = fechaFinal;
-        this.cantidadPico=cantidadPico;
-        this.cantidadFinal=cantidadFinal;
-        this.fechaPico=fechaPico;
-    }
+
 
     public float getCantidadInicial() {
         return cantidadInicial;
@@ -48,12 +40,10 @@ public class Comida {
     }
 
     public float[] getCantidadComida() {
-        return this.cantidadComida;
+        return cantidadComida;
     }
 
-    public void setCantidadComida(float[] cantidadComida) {
-        this.cantidadComida = cantidadComida;
-    }
+    public void setCantidadComida(float[] cantidadComida){this.cantidadComida=cantidadComida;}
 
     public LocalDate getFechaInicial() {
         return fechaInicial;
@@ -115,7 +105,12 @@ public class Comida {
 
     @Override
     public String toString(){
-        return Arrays.toString(cantidadComida);//para representar la cantidad de comida de cada día
+        String stringToRepresentComida =
+                "En la fecha de inicio: "+this.fechaInicial +", cantidad de comida inicial: " + this.cantidadInicial
+                + "\nEn la fecha de pico: "+this.fechaPico +", cantidad de comida pico: " + this.cantidadPico
+                + "\nEn la fecha de fin: "+this.fechaFinal +", cantidad de comida final: " + this.cantidadFinal
+                + "\nCantidad de dosis de comida diaria: " + Arrays.toString(cantidadComida);
+        return stringToRepresentComida;
     }
 
     public String toStringToFile(){
