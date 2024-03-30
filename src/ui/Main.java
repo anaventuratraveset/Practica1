@@ -70,15 +70,15 @@ public class Main {
                     while (true) {
                         numPoblaciones = UserInput.readInt("Escriba el número de poblaciones que tiene su nuevo experimento: ");
                         if (numPoblaciones < 0) {
-                            System.out.println("El número de días no puede ser negativo.");
+                            System.out.println("El número de poblaciones no puede ser negativo.");
                         } else {
                             break;
                         }
                     }
-                    experimento = new Experimento(nombreNuevoExperimento/*, numPoblaciones*/);
+                    experimento = new Experimento(nombreNuevoExperimento);
 
                     for (int i = 0; i < numPoblaciones; i++) {
-                            System.out.println("Poblacion " + (numPoblaciones+1) + ":\n");
+                            System.out.println("Poblacion " + (i+1) + ":\n");
                         try {
                             createPoblacion(experimento);
                         } catch (Exception ex) {

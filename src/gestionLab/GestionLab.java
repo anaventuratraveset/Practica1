@@ -9,6 +9,7 @@ import java.time.LocalDate;
 
 
 import static dataio.UserInput.*;
+import static java.time.temporal.ChronoUnit.DAYS;
 
 public class GestionLab {
 
@@ -80,9 +81,23 @@ public class GestionLab {
             fechaInicial= UserInput.readDate("Introduzca la fecha dónde empieza su experimento: ");
             fechaMedia = UserInput.readDate("Introduzca la fecha dónde hay el pico en su experimento: ");
             fechaFinal=fechaInicial.plusDays(dias);
-            if (fechaMedia.isBefore(fechaInicial) || fechaMedia.isAfter(fechaFinal)) {
-                System.out.println("La fecha introducida no es correcta. Por favor vuelva a intentarlo.");
-            } else {
+            long diasEntreInicioYPico= DAYS.between(fechaInicial, fechaMedia);
+            if (fechaMedia.isBefore(fechaInicial)) {
+                System.out.println("La fecha introducida no es correcta. " +
+                        "\nNo puede ser la fecha pico antes de la fecha inicial del experimento." +
+                        "\nPor favor vuelva a introducir una fecha pico.");
+            }
+            else if(fechaMedia.isAfter(fechaFinal)){
+                System.out.println("La fecha introducida no es correcta. " +
+                        "\nLa fecha pico no puede ser después de la fecha final del experimento que dura 30 días." +
+                        "\nPor favor vuelva a introducir una fecha pico.");
+            }
+            else if((diasEntreInicioYPico>30)){
+                System.out.println("La fecha introducida no es correcta. " +
+                        "\nLa fecha pico no puede ser después de la fecha final del experimento que dura 30 días." +
+                        "\nPor favor vuelva a introducir una fecha pico.");
+            }
+            else {
                 comida.setFechaInicial(fechaInicial);
                 p.setFechaInicio(fechaInicial);
                 comida.setFechaPico(fechaMedia);
