@@ -6,9 +6,7 @@ import medio.*;
 
 import java.text.ParseException;
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
+
 
 import static dataio.UserInput.*;
 

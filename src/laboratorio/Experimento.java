@@ -1,14 +1,6 @@
 package laboratorio;
-import medio.Luminosidad;
-import medio.Comida;
-
-import java.io.Serializable;
-import java.text.ParseException;
-import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.LinkedList;
-import java.util.List;
+
 
 public class Experimento {
 
@@ -23,9 +15,8 @@ public class Experimento {
 
     }*/
 
-    public Experimento(String nombreNuevoExperimento/*, int numPoblaciones*/){
+    public Experimento(String nombreNuevoExperimento){
         this.nombreExperimento=nombreNuevoExperimento;
-        /*this.numPoblaciones=numPoblaciones;*/
         this.poblacionesList = new ArrayList<Poblacion>();
     }
 
@@ -84,8 +75,7 @@ public class Experimento {
     }
 
     public String toStringInfoExperimentoToFile(){
-        String stringToRepresentInExperimentobFile = this.nombreExperimento/*+
-                ";"+this.numPoblaciones*/;
+        String stringToRepresentInExperimentobFile = this.nombreExperimento;
         return stringToRepresentInExperimentobFile;
     }
 }

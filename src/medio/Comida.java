@@ -6,16 +6,14 @@ import static java.time.temporal.ChronoUnit.DAYS;
 
 public class Comida {
 
-    String stringToRepresentAtributos;
-    float cantidadInicial;
-    static float [] cantidadComida;
-    LocalDate fechaInicial;
-    LocalDate fechaFinal;
-    float cantidadPico;
-    float cantidadFinal;
-    LocalDate fechaPico;
-
-    final int duracion=30;
+    private float cantidadInicial;
+    private static float [] cantidadComida;
+    private LocalDate fechaInicial;
+    private LocalDate fechaFinal;
+    private float cantidadPico;
+    private float cantidadFinal;
+    private LocalDate fechaPico;
+    private final int duracion=30;
 
     public Comida() {
 
@@ -31,54 +29,30 @@ public class Comida {
     }
 
 
-    public float getCantidadInicial() {
-        return cantidadInicial;
-    }
-
     public void setCantidadInicial(float cantidadInicial) {
         this.cantidadInicial = cantidadInicial;
     }
 
-    public float[] getCantidadComida() {
-        return cantidadComida;
-    }
 
     public void setCantidadComida(float[] cantidadComida){this.cantidadComida=cantidadComida;}
 
-    public LocalDate getFechaInicial() {
-        return fechaInicial;
-    }
 
     public void setFechaInicial(LocalDate fechaInicial) {
         this.fechaInicial = fechaInicial;
     }
 
-    public LocalDate getFechaFinal() {
-        return fechaFinal;
-    }
 
     public void setFechaFinal(LocalDate fechaFinal) {
         this.fechaFinal = fechaFinal;
     }
 
-    public float getCantidadPico() {
-        return cantidadPico;
-    }
 
     public void setCantidadPico(float cantidadPico) {
         this.cantidadPico = cantidadPico;
     }
 
-    public float getCantidadFinal() {
-        return cantidadFinal;
-    }
-
     public void setCantidadFinal(float cantidadFinal) {
         this.cantidadFinal = cantidadFinal;
-    }
-
-    public LocalDate getFechaPico() {
-        return fechaPico;
     }
 
     public void setFechaPico(LocalDate fechaPico) {
@@ -92,14 +66,14 @@ public class Comida {
         // en este caso a es negativo pq decremento y b es lo que he llamado intersección
         float CantidadIncremento= this.cantidadPico - this.cantidadInicial;
         float CantidadDecremento= this.cantidadPico - this.cantidadFinal;
-        float cantidadComida[]=new float [30];
+        float cantidadComida[]=new float [duracion];
 
         for (int i=0; i<diasIncremento; i++){
             cantidadComida[i]=((CantidadIncremento)/diasIncremento)*i+this.cantidadInicial;
         }
-        for(int j=diasIncremento+1; j<30; j++){
+        for(int j=diasIncremento+1; j<duracion; j++){
             cantidadComida[j]= ((CantidadDecremento)/diasDecremento)*j+interseccion;
-        }
+        }   
         return cantidadComida;
     }
 

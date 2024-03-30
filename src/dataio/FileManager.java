@@ -44,10 +44,9 @@ public class FileManager {
 
             //leo info del experimento
             int diasExpFromFile = Integer.parseInt(infoExperimento[1]);
-            //int numPoblacionesFromFile = Integer.parseInt(infoExperimento[2]);
 
             //creo el experimento
-            experimento = new Experimento(nombreExpFromFile/*, numPoblacionesFromFile*/);
+            experimento = new Experimento(nombreExpFromFile);
             //fin leer info experimento
 
             System.out.println(todosArgs.length+ "mi length");
@@ -132,7 +131,7 @@ public class FileManager {
         boolean comprobacion=false;
         try {
             printWriter = new PrintWriter(file1);
-            String experimentoInfoFile = experimento.getNombreExperimento() + ';' + experimento.getDias() /*+ ';' + experimento.getNumPoblaciones()*/;
+            String experimentoInfoFile = experimento.getNombreExperimento() + ';' + experimento.getDias();
             printWriter.println(experimentoInfoFile);//escribe en el fichero
             for (int i = 0; i < experimento.getPoblacionesList().size(); i++) {
                 String infoPoblacionesFile = "";
@@ -152,8 +151,5 @@ public class FileManager {
         }
     return comprobacion;
     }
-
-
-
 
 }
