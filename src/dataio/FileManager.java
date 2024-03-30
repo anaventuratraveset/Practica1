@@ -34,14 +34,13 @@ public class FileManager {
         FileInputStream fileInputStream = null; //sirve para leer flujo de datos en bruto
         InputStreamReader inputStreamReader = null;
         BufferedReader bufferedReader = null;
+        String stringInfoTotal="";
         try {
             // lo leo
             bufferedReader = new BufferedReader(new InputStreamReader(new FileInputStream(file)));
             String [] todosArgs = bufferedReader.readLine().split("\n");
             String [] infoExperimento = todosArgs[0].split(";");
             String nombreExpFromFile = infoExperimento[0];
-
-
 
             //leo info del experimento
             int diasExpFromFile = Integer.parseInt(infoExperimento[1]);
@@ -52,7 +51,7 @@ public class FileManager {
             //fin leer info experimento
 
             System.out.println(todosArgs.length+ "mi length");
-
+            stringInfoTotal+=experimento.toStringInfoExperimentoToFile()+"\n";
             String line;
             while ((line = bufferedReader.readLine()) != null) {
                 String [] infoPoblacion = line.split(";");
@@ -85,16 +84,15 @@ public class FileManager {
 
                 Comida comida = new Comida(cantidadInicialFromFile, fechaInicioFromFile, cantidadPicoFromFile, fechaPicoFromFile, cantidadFinalFromFile, fechaFinFromFile);
                 poblacion.setComida(comida);
-                System.out.println("\nINFORMACION DEL FICHERO CARGADO EN MEMORIA\n");
-                System.out.println("Estoy en abrir archivo");
-                System.out.println(experimento.toString());
-
                 GestionLab.addPoblacion(poblacion,experimento);
+                stringInfoTotal+=poblacion.toStringInfoPobFile()+"\n";
+                //System.out.println(experimento.toStringInfoExperimentoToFile()+"\n"+poblacion.toStringInfoPobFile());
             }
+            System.out.println("\nFICHERO CARGADO EN MEMORIA\n");
+            System.out.println(stringInfoTotal);
             bufferedReader.close();
         }catch (Exception e){
-            System.out.println("ERROR FileManager leyendo archivo. Puede que no exista nigún archivo con ese nombre");
-            e.printStackTrace();
+            System.out.println("ERROR FileManager leyendo archivo. Puede que no exista ningún archivo con ese nombre");
         }
         finally {
             if (bufferedReader != null){

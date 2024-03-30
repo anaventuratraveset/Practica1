@@ -78,8 +78,7 @@ public class Main {
                     experimento = new Experimento(nombreNuevoExperimento, numPoblaciones);
 
                     for (int i = 0; i < numPoblaciones; i++) {
-                            int numPoblacion = i + 1;
-                            System.out.println("Poblacion " + numPoblacion + ":\n");
+                            System.out.println("Poblacion " + (numPoblaciones+1) + ":\n");
                         try {
                             createPoblacion(experimento);
                         } catch (Exception ex) {
@@ -88,9 +87,8 @@ public class Main {
                         }
                     }
 
-                    System.out.println(experimento.toString());
                     System.out.println("\nExperimento " + experimento.getNombreExperimento() + " ha sido creado correctamente.");
-
+                    System.out.println(experimento.toString());
                     break;
 
                 case 3: //Crear una población de bacterias y añadirla al experimento actual
@@ -100,7 +98,7 @@ public class Main {
                     }
                     try {
                         Poblacion recienCreada=createPoblacion(experimento);
-                        addPoblacion(recienCreada,experimento);
+                        //addPoblacion(recienCreada,experimento);
                         System.out.println(experimento.toString());
                     } catch (Exception ex) {
                         System.out.println("ERROR.");
@@ -109,7 +107,7 @@ public class Main {
 
                 case 4: //Mostrar nombre poblaciones
                     if (experimento== null) {
-                        System.out.println("No tiene ningún experimento cargado en memoria.");
+                        System.out.println("No tiene ningún experimento cargado en memoria. Primero debe abrir un archivo.");
                     }
                     else {
                         String nombres = experimento.toStringNombres();
@@ -119,21 +117,21 @@ public class Main {
 
                 case 5: //Borrar una población de bacterias del experimento actual
                     if (experimento== null) {
-                        System.out.println("No tiene ningún experimento cargado en memoria.");
+                        System.out.println("No tiene ningún experimento cargado en memoria. Primero debe abrir un archivo.");
                     }
                     else {
                         String pobDeletear = (UserInput.readString("Escriba el nombre de la población que desea eliminar: "));
                         deletePoblacion(pobDeletear, experimento);
+                        System.out.println("Su población se ha borrado correctamente.");
                     }
                     break;
 
                 case 6: //Ver información detallada de una población de bacterias del experimento actual
                     if (experimento== null) {
-                        System.out.println("No tiene ningún experimento cargado en memoria");
+                        System.out.println("No tiene ningún experimento cargado en memoria. Primero debe abrir un archivo.");
                     }
                     else {
                         String pobVerInfo = (UserInput.readString("Escriba el nombre de la población que desea ver la info: "));
-
                         try {
                             Poblacion poblacionEncontrada = buscarPoblacion(pobVerInfo, experimento);
                             System.out.println(poblacionEncontrada.toString());
@@ -141,29 +139,35 @@ public class Main {
                             System.out.println("La población no existe en este experimento.");
                         }
                     }
-
                     break;
 
                 case 7: //Guardar (se supone que para usar esta opción previamente hemos abierto un archivo)
 
-                    boolean guardado = FileManager.guardarArchivo(experimento.getNombreExperimento(), experimento);
-
-                    if (guardado) {
-                        System.out.println("Experimento guardado correctamente.");
-                    } else {
-                        System.out.println("Fallo al guardar el experimento.");
+                    if (experimento== null) {
+                        System.out.println("No tiene ningún experimento cargado en memoria. Primero debe abrir un archivo.");
+                    }else{
+                        boolean guardado = FileManager.guardarArchivo(experimento.getNombreExperimento(), experimento);
+                        if (guardado) {
+                            System.out.println("Experimento guardado correctamente.");
+                        } else {
+                            System.out.println("Fallo al guardar el experimento.");
+                        }
                     }
 
                     break;
 
                 case 8: //Guardar como
-                    String nombreExperimento = UserInput.readString("Introduzca el nombre del experimento que desea guardar: ");
-                    experimento.setNombreExperimento(nombreExperimento);
-                    boolean guardadoComo = FileManager.guardarArchivo(nombreExperimento, experimento);
-                    if (guardadoComo) {
-                        System.out.println("Experimento guardado correctamente.");
-                    } else {
-                        System.out.println("Fallo al guardar el experimento.");
+                    if (experimento== null) {
+                        System.out.println("No tiene ningún experimento cargado en memoria. Primero debe abrir un archivo.");
+                    }else {
+                        String nombreExperimento = UserInput.readString("Introduzca el nombre del experimento que desea guardar: ");
+                        experimento.setNombreExperimento(nombreExperimento);
+                        boolean guardadoComo = FileManager.guardarArchivo(nombreExperimento, experimento);
+                        if (guardadoComo) {
+                            System.out.println("Experimento guardado correctamente.");
+                        } else {
+                            System.out.println("Fallo al guardar el experimento.");
+                        }
                     }
                     break;
 

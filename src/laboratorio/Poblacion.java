@@ -5,15 +5,13 @@ import java.time.LocalDate;
 
 public class Poblacion {
 
-    protected String nombrePoblacion;
-    private int duracion;
-    protected int numInicialBacterias;
-    protected float temperatura;
-    protected LocalDate fechaInicio, fechaFin;
-    protected Luminosidad.luminosidad luminosidad; // llamo al enum luminosidad de la clase Luminosidad
-    protected Comida comida;
-    protected float [] dosisComidaDiaria;
-    protected final int comidaMax=300;
+    private String nombrePoblacion;
+    private int numInicialBacterias;
+    private float temperatura;
+    private LocalDate fechaInicio, fechaFin;
+    private Luminosidad.luminosidad luminosidad;
+    private Comida comida;
+    private float [] dosisComidaDiaria;
 
     //Constructores
     //Vacío para poder usar los getters y setters y crear new Polbacion()
@@ -21,15 +19,15 @@ public class Poblacion {
 
     }
 
-    public Poblacion(String nombrePoblacion, int numInicialBacterias, float temperatura, LocalDate fechaInicio,
+   /* public Poblacion(String nombrePoblacion, int numInicialBacterias, float temperatura, LocalDate fechaInicio,
                      Luminosidad.luminosidad luminosidad) {
         this.nombrePoblacion = nombrePoblacion;
         this.numInicialBacterias = numInicialBacterias;
         this.temperatura = temperatura;
         this.fechaInicio = fechaInicio;
-        this.fechaFin = fechaInicio.plusDays(duracion);
+        this.fechaFin = fechaInicio.plusDays(30);
         this.luminosidad = luminosidad;
-    }
+    }*/
 
     //Getters y setters
     public String getNombrePoblacion() {
@@ -40,66 +38,63 @@ public class Poblacion {
         this.nombrePoblacion = nombrePoblacion;
     }
 
-    public int getNumInicialBacterias() {
+   /* public int getNumInicialBacterias() {
         return numInicialBacterias;
-    }
+    }*/
 
     public void setNumInicialBacterias(int numInicialBacterias) {
         this.numInicialBacterias = numInicialBacterias;
     }
 
-    public float getTemperatura() {
+   /* public float getTemperatura() {
         return temperatura;
-    }
+    }*/
 
     public void setTemperatura(float temperatura) {
         this.temperatura = temperatura;
     }
 
-    public LocalDate getFechaInicio() {
+   /* public LocalDate getFechaInicio() {
         return fechaInicio;
     }
-
+*/
     public void setFechaInicio(LocalDate fechaInicio) {
         this.fechaInicio = fechaInicio;
     }
 
-    public LocalDate getFechaFin() {
+    /*public LocalDate getFechaFin() {
         return fechaFin;
-    }
+    }*/
 
     public void setFechaFin(LocalDate fechaFin) {
         this.fechaFin = fechaFin;
     }
 
-    public Luminosidad.luminosidad getLuminosidad() {
+    /*public Luminosidad.luminosidad getLuminosidad() {
         return luminosidad;
-    }
+    }*/
 
     public void setLuminosidad(Luminosidad.luminosidad luminosidad) {
         this.luminosidad = luminosidad;
     }
 
-    public Comida getComida() {
+    /*public Comida getComida() {
         return comida;
-    }
+    }*/
 
     public void setComida(Comida comida) {
         this.comida = comida;
         this.dosisComidaDiaria=comida.calcularComida(); //Importante este paso (me ha costado)
     }
 
-    public float[] getDosisComidaDiaria() {
+   /* public float[] getDosisComidaDiaria() {
         return dosisComidaDiaria;
     }
 
     public void setDosisComidaDiaria(float[] dosisComidaDiaria) {
         this.dosisComidaDiaria = dosisComidaDiaria;
     }
-
-    public int getComidaMax() {
-        return comidaMax;
-    }
+*/
 
     //creamos el toString para cuando se seleccione la opción 6, para visualizar la info de la población
     @Override
@@ -122,7 +117,6 @@ public class Poblacion {
 
         return stringToRepresentInfoPobFile;
     }
-
 
 }
 

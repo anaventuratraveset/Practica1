@@ -35,10 +35,8 @@ public class GestionLab {
         float temp = UserInput.readInt("Escriba la temperatura: ");
         p.setTemperatura(temp);
 
-
         Luminosidad.luminosidad lum = UserInput.readLuminosidad("Escriba el nivel de luminosidad {ALTA, MEDIA, BAJA}: ");
         p.setLuminosidad(lum);
-
 
         while (true) {
             comidaInicial  = UserInput.readFloat("Introduzca la cantidad de comida inicial: ");
@@ -83,7 +81,7 @@ public class GestionLab {
         while (true) {
             fechaInicial= UserInput.readDate("Introduzca la fecha dónde empieza su experimento: ");
             fechaMedia = UserInput.readDate("Introduzca la fecha dónde hay el pico en su experimento: ");
-            fechaFinal=fechaInicial.plusDays(30);
+            fechaFinal=fechaInicial.plusDays(dias);
             if (fechaMedia.isBefore(fechaInicial) || fechaMedia.isAfter(fechaFinal)) {
                 System.out.println("La fecha introducida no es correcta. Por favor vuelva a intentarlo.");
             } else {
@@ -99,7 +97,6 @@ public class GestionLab {
             }
         }
 
-
         int numIniBact;
         while (true) {
             numIniBact = UserInput.readInt("Escriba el número inicial de bacterias: ");
@@ -113,11 +110,13 @@ public class GestionLab {
         System.out.println("Creada población: "+nombreP);
 
         //añado la poblacion al experimento
+        e.setNumPoblaciones(e.getNumPoblaciones()+1);
         e.setPoblacionNueva(p);
         return p;
     }
 
     public static void addPoblacion (Poblacion pob, Experimento exp){
+        exp.setNumPoblaciones(exp.getNumPoblaciones()+1);
         exp.setPoblacionNueva(pob);
     }
 

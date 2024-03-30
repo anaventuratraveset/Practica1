@@ -14,14 +14,14 @@ public class Experimento {
 
     private String nombreExperimento;
     private final int dias = 30; // duración del experimento
-    protected int numPoblaciones;
+    private int numPoblaciones; //antes estaba protected
     private ArrayList<Poblacion> poblacionesList; //Uso una list, pq igual de repente le sumo poblaciones al experimento y no cabrían en un array
 
 
     //constructor
-    public Experimento(){
+   /* public Experimento(){
 
-    }
+    }*/
 
     public Experimento(String nombreNuevoExperimento, int numPoblaciones){
         this.nombreExperimento=nombreNuevoExperimento;
@@ -54,10 +54,6 @@ public class Experimento {
         return this.poblacionesList;
     }
 
-    public void setPoblacionesList(ArrayList<Poblacion> lista){
-        this.poblacionesList=lista;
-    }
-
     public void setPoblacionNueva (Poblacion p){
       this.poblacionesList.add(p);
     }
@@ -71,8 +67,7 @@ public class Experimento {
                 + "\n\nInformación de las poblaciones:\n";
         if(poblacionesList!=null) {
             for (int i = 0; i < poblacionesList.size(); i++) {
-                stringToRepresentInfoPoblacionesExperimento += "\nPOBLACIÓN " + (i + 1) + ": " + poblacionesList.get(i).toString();
-                i++;
+                stringToRepresentInfoPoblacionesExperimento += "\nPOBLACIÓN " + (i + 1) + ": " + poblacionesList.get(i).toString()+"\n";
             }
         }
         return stringToRepresentInfoPoblacionesExperimento;

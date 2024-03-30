@@ -33,11 +33,11 @@ public class UserInput {
     }
 
     public static int readInt(String peticion) {
-        System.out.println(peticion);
         boolean hecho = false;
         int miInt = 0;
         do {
             try {
+                System.out.println(peticion);
                 Scanner sc = new Scanner(System.in);
                 miInt = sc.nextInt();
 
@@ -47,8 +47,7 @@ public class UserInput {
                     hecho = true;
                 }
             } catch (Exception e) {
-                System.out.println("ERROR al introducir por teclado.");
-                e.printStackTrace();
+                System.out.println("ERROR al introducir por teclado. Debe introducir un número entero.");
                 hecho = false;
             }
         } while (hecho == false);
@@ -56,17 +55,16 @@ public class UserInput {
     }
 
     public static float readFloat(String peticion)  {
-        System.out.println(peticion);
         boolean hecho = false;
         float miFloat = 0;
         do {
             try {
+                System.out.println(peticion);
                 Scanner sc = new Scanner(System.in);
                 miFloat = sc.nextFloat();
                 hecho=true;
             } catch (Exception e) {
-                System.out.println("ERROR al introducir por teclado.");
-                e.printStackTrace();
+                System.out.println("ERROR al introducir por teclado. Debe introducir un número real.");
                 hecho = false;
             }
         } while (hecho == false);
@@ -74,21 +72,21 @@ public class UserInput {
     }
 
     public static Luminosidad.luminosidad readLuminosidad(String peticion) {
-        System.out.println(peticion);
         Luminosidad.luminosidad luminosidad = null;
         String lum;
         boolean hecho=false;
         do{
             try {
+                System.out.println(peticion);
                 Scanner sc = new Scanner(System.in);
                 lum = sc.nextLine();
-                if (lum.equals("ALTA")) {
+                if (lum.equalsIgnoreCase("ALTA")) {
                     luminosidad = Luminosidad.luminosidad.ALTA;
                     hecho=true;
-                } else if (lum.equals("MEDIA")) {
+                } else if (lum.equalsIgnoreCase("MEDIA")) {
                     luminosidad = Luminosidad.luminosidad.MEDIA;
                     hecho=true;
-                } else if (lum.equals("BAJA")) {
+                } else if (lum.equalsIgnoreCase("BAJA")) {
                     luminosidad = Luminosidad.luminosidad.BAJA;
                     hecho=true;
                 } else {
@@ -97,22 +95,20 @@ public class UserInput {
                 }
             } catch (Exception e) {
                 System.out.println("ERROR al introducir por teclado.");
-                e.printStackTrace();
                 hecho=false;
             }
         }while (hecho == false) ;
-
         return luminosidad;
     }
 
     public static LocalDate readDate(String peticion){
-        System.out.println(peticion);
         Date fecha;
         LocalDate fechaADevolver=null;
         boolean hecho=false;
 
         do{
             try{
+                System.out.println(peticion);
                 System.out.println("Introducir las fechas en este formato: yyyy.MM.dd");
                 Scanner sc = new Scanner(System.in);
                 SimpleDateFormat formato = new SimpleDateFormat("yyyy.MM.dd");
@@ -125,7 +121,6 @@ public class UserInput {
             }catch(ParseException pe){
                 hecho = false;
                 System.out.println("ERROR. La fecha introducida no es correcta o no se ha parseado correctamente.");
-                pe.printStackTrace();
             }
         }while(hecho==false);
         return fechaADevolver;

@@ -115,11 +115,11 @@ public class Comida {
 
     public String toStringToFile(){
         String stringToRepresentDosisComidaToFile = this.fechaInicial
-        + "; " + this.cantidadInicial
-        + "; " + this.fechaPico
-        + "; " + this.cantidadPico
-        + "; " + this.fechaFinal
-        + "; " + this.cantidadFinal;
+        + ";" + this.cantidadInicial
+        + ";" + this.fechaPico
+        + ";" + this.cantidadPico
+        + ";" + this.fechaFinal
+        + ";" + this.cantidadFinal;
        return stringToRepresentDosisComidaToFile;
     }
 }
