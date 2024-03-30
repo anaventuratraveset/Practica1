@@ -7,7 +7,7 @@ import static java.time.temporal.ChronoUnit.DAYS;
 public class Comida {
 
     private float cantidadInicial;
-    private static float [] cantidadComida;
+    private float [] cantidadComida;
     private LocalDate fechaInicial;
     private LocalDate fechaFinal;
     private float cantidadPico;
