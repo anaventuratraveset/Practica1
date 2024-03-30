@@ -23,9 +23,9 @@ public class Experimento {
 
     }*/
 
-    public Experimento(String nombreNuevoExperimento, int numPoblaciones){
+    public Experimento(String nombreNuevoExperimento/*, int numPoblaciones*/){
         this.nombreExperimento=nombreNuevoExperimento;
-        this.numPoblaciones=numPoblaciones;
+        /*this.numPoblaciones=numPoblaciones;*/
         this.poblacionesList = new ArrayList<Poblacion>();
     }
 
@@ -84,10 +84,8 @@ public class Experimento {
     }
 
     public String toStringInfoExperimentoToFile(){
-        String stringToRepresentInExperimentobFile = this.nombreExperimento+
-                ";"+this.numPoblaciones;
+        String stringToRepresentInExperimentobFile = this.nombreExperimento/*+
+                ";"+this.numPoblaciones*/;
         return stringToRepresentInExperimentobFile;
     }
-
-
 }

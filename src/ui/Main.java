@@ -75,7 +75,7 @@ public class Main {
                             break;
                         }
                     }
-                    experimento = new Experimento(nombreNuevoExperimento, numPoblaciones);
+                    experimento = new Experimento(nombreNuevoExperimento/*, numPoblaciones*/);
 
                     for (int i = 0; i < numPoblaciones; i++) {
                             System.out.println("Poblacion " + (numPoblaciones+1) + ":\n");
@@ -153,7 +153,6 @@ public class Main {
                             System.out.println("Fallo al guardar el experimento.");
                         }
                     }
-
                     break;
 
                 case 8: //Guardar como
