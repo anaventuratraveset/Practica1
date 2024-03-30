@@ -77,25 +77,22 @@ public class GestionLab {
         LocalDate fechaMedia;
         LocalDate fechaFinal;
         //Para controlar que fecha media no sea antes que la de inicio ni después que la de fin
+        fechaInicial= UserInput.readDate("Introduzca la fecha dónde empieza su experimento: ");
         while (true) {
-            fechaInicial= UserInput.readDate("Introduzca la fecha dónde empieza su experimento: ");
             fechaMedia = UserInput.readDate("Introduzca la fecha dónde hay el pico en su experimento: ");
             fechaFinal=fechaInicial.plusDays(dias);
             long diasEntreInicioYPico= DAYS.between(fechaInicial, fechaMedia);
             if (fechaMedia.isBefore(fechaInicial)) {
                 System.out.println("La fecha introducida no es correcta. " +
-                        "\nNo puede ser la fecha pico antes de la fecha inicial del experimento." +
-                        "\nPor favor vuelva a introducir una fecha pico.");
+                        "\nNo puede ser la fecha pico antes de la fecha inicial del experimento." );
             }
             else if(fechaMedia.isAfter(fechaFinal)){
                 System.out.println("La fecha introducida no es correcta. " +
-                        "\nLa fecha pico no puede ser después de la fecha final del experimento que dura 30 días." +
-                        "\nPor favor vuelva a introducir una fecha pico.");
+                        "\nLa fecha pico no puede ser después de la fecha final del experimento que dura 30 días." );
             }
             else if((diasEntreInicioYPico>30)){
                 System.out.println("La fecha introducida no es correcta. " +
-                        "\nLa fecha pico no puede ser después de la fecha final del experimento que dura 30 días." +
-                        "\nPor favor vuelva a introducir una fecha pico.");
+                        "\nLa fecha pico no puede ser después de la fecha final del experimento que dura 30 días." );
             }
             else {
                 comida.setFechaInicial(fechaInicial);
