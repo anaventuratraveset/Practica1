@@ -1,36 +1,21 @@
 package ui;
-import dataio.FileManager;
 import dataio.*;
+import gestionLab.GestionLab;
 import laboratorio.Experimento;
 import laboratorio.Poblacion;
-
-import java.io.File;
-import java.io.FileInputStream;
-import java.lang.NullPointerException;
 import java.io.FileNotFoundException;
-import java.text.ParseException;
 
-import static dataio.FileManager.abrirArchivo;
-import static dataio.UserInput.readInt;
-import static dataio.UserInput.readString;
-import static gestionLab.GestionLab.*;
 
 public class Main {
 
     public static void main(String[] args)  {
 
-       /* File f=new File("./ExpPrueba.txt");
-        Experimento e=new Experimento("exp1", 2);
-        FileInputStream fileInputStream=new FileInputStream(f);*/
-        //FileManager.guardarArchivo(e.getNombreExperimento(),e);
 
         //el main nunca lanza excepciones pq es el último
 
         int opcion = 0;
         Experimento experimento=null;
-        FileManager fileManager=null;
 
-        //FileManager utilidadesFile = new FileManager();
         while (opcion != 9) {
             System.out.println("\nSelecione una opción:" +
                     "\n1. Abrir un archivo que contenga un experimento" +
@@ -45,7 +30,7 @@ public class Main {
 
             System.out.println("\nIntroduzca las fechas siempre en este formato \"yyyy.MM.dd\"");
             do {
-                opcion = readInt("Seleccione una opción: ");
+                opcion = UserInput.readInt("Seleccione una opción: ");
                 if (opcion < 1 || opcion > 9) {
                     System.out.println("¡ Opción no valida ! ");
                 }
@@ -80,7 +65,7 @@ public class Main {
                     for (int i = 0; i < numPoblaciones; i++) {
                             System.out.println("Poblacion " + (i+1) + ":\n");
                         try {
-                            createPoblacion(experimento);
+                            GestionLab.createPoblacion(experimento);
                         } catch (Exception ex) {
                             System.out.println("Ha ocurrido un error.");
                             ex.printStackTrace();
@@ -97,9 +82,9 @@ public class Main {
                         break;
                     }
                     try {
-                        Poblacion recienCreada=createPoblacion(experimento);
+                        Poblacion recienCreada=GestionLab.createPoblacion(experimento);
                         //addPoblacion(recienCreada,experimento);
-                        System.out.println(experimento.toString());
+                        System.out.println(recienCreada.toString());
                     } catch (Exception ex) {
                         System.out.println("ERROR.");
                     }
@@ -121,7 +106,7 @@ public class Main {
                     }
                     else {
                         String pobDeletear = (UserInput.readString("Escriba el nombre de la población que desea eliminar: "));
-                        deletePoblacion(pobDeletear, experimento);
+                        GestionLab.deletePoblacion(pobDeletear, experimento);
                         System.out.println("Su población se ha borrado correctamente.");
                     }
                     break;
@@ -133,7 +118,7 @@ public class Main {
                     else {
                         String pobVerInfo = (UserInput.readString("Escriba el nombre de la población que desea ver la info: "));
                         try {
-                            Poblacion poblacionEncontrada = buscarPoblacion(pobVerInfo, experimento);
+                            Poblacion poblacionEncontrada = GestionLab.buscarPoblacion(pobVerInfo, experimento);
                             System.out.println(poblacionEncontrada.toString());
                         } catch (Exception e) {
                             System.out.println("La población no existe en este experimento.");
