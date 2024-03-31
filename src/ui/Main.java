@@ -1,9 +1,14 @@
 package ui;
-import dataio.*;
+import dataio.FileManager;
+import static dataio.UserInput.readInt; //al hacer este import del método readInt(),
+// al usar el método, no tengo que hacer UserInput.readInt(), sino directamente readInt()
+// si sólo hiciese import de dataio.UserInput así en general => debería hacer UserInput.ReadInt()
+import static dataio.UserInput.readString;
 import gestionLab.GestionLab;
 import laboratorio.Experimento;
 import laboratorio.Poblacion;
 import java.io.FileNotFoundException;
+
 
 
 public class Main {
@@ -30,7 +35,7 @@ public class Main {
 
             System.out.println("\nIntroduzca las fechas siempre en este formato \"yyyy.MM.dd\"");
             do {
-                opcion = UserInput.readInt("Seleccione una opción: ");
+                opcion = readInt("Seleccione una opción: ");
                 if (opcion < 1 || opcion > 9) {
                     System.out.println("¡ Opción no valida ! ");
                 }
@@ -39,7 +44,7 @@ public class Main {
             switch (opcion) {
                 case 1: //Abrir un archivo que contenga un experimento
                         try {
-                            String nombreExperimentoAbrir = UserInput.readString("Escriba el nombre de su experimento: ");
+                            String nombreExperimentoAbrir = readString("Escriba el nombre de su experimento: ");
                             experimento = FileManager.abrirArchivo(nombreExperimentoAbrir);
                         } catch (FileNotFoundException fnf) {
                             System.out.println("No se ha encontrado el archivo. ");
@@ -49,11 +54,11 @@ public class Main {
                     break;
 
                 case 2: //Crear un nuevo experimento
-                    String nombreNuevoExperimento = UserInput.readString("Escriba el nombre de su nuevo experimento: ");
+                    String nombreNuevoExperimento = readString("Escriba el nombre de su nuevo experimento: ");
                     int numPoblaciones;
 
                     while (true) {
-                        numPoblaciones = UserInput.readInt("Escriba el número de poblaciones que tiene su nuevo experimento: ");
+                        numPoblaciones = readInt("Escriba el número de poblaciones que tiene su nuevo experimento: ");
                         if (numPoblaciones < 0) {
                             System.out.println("El número de poblaciones no puede ser negativo.");
                         } else {
@@ -105,7 +110,7 @@ public class Main {
                         System.out.println("No tiene ningún experimento cargado en memoria. Primero debe abrir un archivo.");
                     }
                     else {
-                        String pobDeletear = (UserInput.readString("Escriba el nombre de la población que desea eliminar: "));
+                        String pobDeletear = (readString("Escriba el nombre de la población que desea eliminar: "));
                         GestionLab.deletePoblacion(pobDeletear, experimento);
                         System.out.println("Su población se ha borrado correctamente.");
                     }
@@ -116,7 +121,7 @@ public class Main {
                         System.out.println("No tiene ningún experimento cargado en memoria. Primero debe abrir un archivo.");
                     }
                     else {
-                        String pobVerInfo = (UserInput.readString("Escriba el nombre de la población que desea ver la info: "));
+                        String pobVerInfo = (readString("Escriba el nombre de la población que desea ver la info: "));
                         try {
                             Poblacion poblacionEncontrada = GestionLab.buscarPoblacion(pobVerInfo, experimento);
                             System.out.println(poblacionEncontrada.toString());
@@ -144,7 +149,7 @@ public class Main {
                     if (experimento== null) {
                         System.out.println("No tiene ningún experimento cargado en memoria. Primero debe abrir un archivo.");
                     }else {
-                        String nombreExperimento = UserInput.readString("Introduzca el nombre del experimento que desea guardar: ");
+                        String nombreExperimento = readString("Introduzca el nombre del experimento que desea guardar: ");
                         experimento.setNombreExperimento(nombreExperimento);
                         boolean guardadoComo = FileManager.guardarArchivo(nombreExperimento, experimento);
                         if (guardadoComo) {
