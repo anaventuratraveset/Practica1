@@ -5,12 +5,9 @@ import laboratorio.Experimento;
 import laboratorio.Poblacion;
 import medio.Comida;
 import medio.Luminosidad;
-
 import java.io.*;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-
-import static gestionLab.GestionLab.createPoblacion;
 
 
 // Crear archivo en el que meto experimento
@@ -21,12 +18,12 @@ import static gestionLab.GestionLab.createPoblacion;
 public class FileManager {
 
     // su constructor, para poder usarlo en el main y crear y tal archivos
-    public FileManager() {
+    /*public FileManager() {
 
-    }
+    }*/
 
     // ABRIR archivo, que es para leerlo
-    public static Experimento abrirArchivo(String nombreExperimento) throws Exception {
+    public static Experimento abrirArchivo(String nombreExperimento) throws FileNotFoundException {
         File file = new File("./" + nombreExperimento + ".txt"); //abrimos flujo de datos
         Experimento experimento =null;
 
@@ -85,7 +82,6 @@ public class FileManager {
                 poblacion.setComida(comida);
                 GestionLab.addPoblacion(poblacion,experimento);
                 stringInfoTotal+=poblacion.toStringInfoPobFile()+"\n";
-                //System.out.println(experimento.toStringInfoExperimentoToFile()+"\n"+poblacion.toStringInfoPobFile());
             }
             System.out.println("\nFICHERO CARGADO EN MEMORIA\n");
             System.out.println(stringInfoTotal);
@@ -101,21 +97,21 @@ public class FileManager {
                     System.out.println(ioe.getMessage());
                 }
             }
-        }
 
-        if(inputStreamReader != null){
-            try{
-                inputStreamReader.close();
+            if(inputStreamReader != null){
+                try{
+                    inputStreamReader.close();
+                }
+                catch(IOException ioException){
+                    System.out.println(ioException.getMessage());
+                }
             }
-            catch(IOException ioException){
-                System.out.println(ioException.getMessage());
-            }
-        }
-        if (fileInputStream != null) {
-            try {
-                fileInputStream.close();
-            } catch (IOException ex) {
-                System.out.println(ex.getMessage());
+            if (fileInputStream != null) {
+                try {
+                    fileInputStream.close();
+                } catch (IOException ex) {
+                    System.out.println(ex.getMessage());
+                }
             }
         }
         return experimento;
