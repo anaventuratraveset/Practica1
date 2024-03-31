@@ -88,7 +88,6 @@ public class Main {
                     }
                     try {
                         Poblacion recienCreada=GestionLab.createPoblacion(experimento);
-                        //addPoblacion(recienCreada,experimento);
                         System.out.println(recienCreada.toString());
                     } catch (Exception ex) {
                         System.out.println("ERROR.");
@@ -160,7 +159,7 @@ public class Main {
                     }
                     break;
 
-                case 9:
+                case 9: //Salir del programa
                     System.out.println("Salió del programa.");
                     System.out.println("Adiós y muchas gracias.");
                     break;
