@@ -3,9 +3,23 @@ import java.time.LocalDate;
 import static java.time.temporal.ChronoUnit.DAYS;
 import java.util.Arrays;
 
-
+/**
+ * @author Ana Ventura-Traveset
+ */
 public class Comida {
 
+    /**
+     * Atributos de Comida
+     *
+     * cantidadInicial
+     * cantidadComida
+     * fechaInicial
+     * fechaFinal
+     * cantidadPico
+     * cantidadFinal
+     * fechaPico
+     * duracion
+     */
     private float cantidadInicial;
     private float [] cantidadComida;
     private LocalDate fechaInicial;
@@ -15,9 +29,22 @@ public class Comida {
     private LocalDate fechaPico;
     private final int duracion=30;
 
+    /**
+     * Constructor vacío de Comida
+     */
     public Comida() {
 
     }
+
+    /**
+     * Constructor de Comida
+     * @param cantidadInicial
+     * @param fechaInicial
+     * @param cantidadPico
+     * @param fechaPico
+     * @param cantidadFinal
+     * @param fechaFinal
+     */
     public Comida (float cantidadInicial, LocalDate fechaInicial, float cantidadPico, LocalDate fechaPico, float cantidadFinal, LocalDate fechaFinal){
         this.cantidadInicial=cantidadInicial;
         this.fechaInicial=fechaInicial;
@@ -29,41 +56,71 @@ public class Comida {
     }
 
 
+    /**
+     * Permite modificar la cantidad inicial de comida
+     * @param cantidadInicial
+     */
     public void setCantidadInicial(float cantidadInicial) {
         this.cantidadInicial = cantidadInicial;
     }
 
-
+    /**
+     * Permite modificar la cantidad diaría de comida
+     * @param cantidadComida
+     */
     public void setCantidadComida(float[] cantidadComida){this.cantidadComida=cantidadComida;}
 
 
+    /**
+     * Permite modificar la fecha inicial cuando se empieza el experimento
+     * @param fechaInicial
+     */
     public void setFechaInicial(LocalDate fechaInicial) {
         this.fechaInicial = fechaInicial;
     }
 
 
+    /**
+     * Permite modificar la fecha final cuando se acaba el experimento
+     * @param fechaFinal
+     */
     public void setFechaFinal(LocalDate fechaFinal) {
         this.fechaFinal = fechaFinal;
     }
 
 
+    /**
+     * Permite modificar la cantidad pico de comida
+     * @param cantidadPico
+     */
     public void setCantidadPico(float cantidadPico) {
         this.cantidadPico = cantidadPico;
     }
 
+    /**
+     * Permite modificar la cantidad final de comida
+     * @param cantidadFinal
+     */
     public void setCantidadFinal(float cantidadFinal) {
         this.cantidadFinal = cantidadFinal;
     }
 
+    /**
+     * Permite modificar la fecha en la que se produce el pido de comida
+     * @param fechaPico
+     */
     public void setFechaPico(LocalDate fechaPico) {
         this.fechaPico = fechaPico;
     }
 
+    /**
+     * Calcula la cantidad de comida diaria
+     * @return
+     */
     public float[] calcularComida(){
         int diasIncremento =(int) DAYS.between(this.fechaInicial, this.fechaPico);
         int diasDecremento = (int) DAYS.between(this.fechaPico, this.fechaFinal);
-        float interseccion= cantidadPico-((cantidadPico-this.cantidadFinal)/diasDecremento);//funcion f(x)= a*x+b,
-        // en este caso a es negativo pq decremento y b es lo que he llamado intersección
+        float interseccion= cantidadPico-((cantidadPico-this.cantidadFinal)/diasDecremento);
         float CantidadIncremento= this.cantidadPico - this.cantidadInicial;
         float CantidadDecremento= this.cantidadPico - this.cantidadFinal;
         float cantidadComida[]=new float [duracion];
@@ -77,6 +134,10 @@ public class Comida {
         return cantidadComida;
     }
 
+    /**
+     * Muestra la información de la comida, incluida la cantidad de comida de cada día
+     * @return stringToRepresentComida
+     */
     @Override
     public String toString(){
         String stringToRepresentComida =
@@ -87,6 +148,10 @@ public class Comida {
         return stringToRepresentComida;
     }
 
+    /**
+     * Muestra la información de la comida separada por ";" (modo fichero)
+     * @return stringToRepresentDosisComidaToFile
+     */
     public String toStringToFile(){
         String stringToRepresentDosisComidaToFile = this.fechaInicial
         + ";" + this.cantidadInicial

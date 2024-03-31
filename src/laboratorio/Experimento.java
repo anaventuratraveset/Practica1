@@ -1,57 +1,106 @@
 package laboratorio;
 import java.util.ArrayList;
 
-
+/**
+ * @author Ana Ventura-Traveset
+ */
 public class Experimento {
 
+    /**
+     * Atributos experimento
+     *
+     * nombreExperimento
+     * dias
+     * numPoblaciones
+     * poblacionesList
+     */
     private String nombreExperimento;
-    private final int dias = 30; // duración del experimento
-    private int numPoblaciones; //antes estaba protected
-    private ArrayList<Poblacion> poblacionesList; //Uso una list, pq igual de repente le sumo poblaciones al experimento y no cabrían en un array
+    private final int dias = 30;
+    private int numPoblaciones;
+    private ArrayList<Poblacion> poblacionesList;
 
 
-    //constructor
-   /* public Experimento(){
-
-    }*/
-
+    /**
+     * Constructor de experimento
+     * @param nombreNuevoExperimento
+     */
     public Experimento(String nombreNuevoExperimento){
         this.nombreExperimento=nombreNuevoExperimento;
         this.poblacionesList = new ArrayList<Poblacion>();
     }
 
+    /**
+     * Getters y setters de los atributos privados de Experimento
+     *
+     */
     //Getters y setters
+
+    /**
+     * getNombreExperimento
+     * @return String nombreExperiment0
+     */
     public String getNombreExperimento() {
         return nombreExperimento;
     }
 
+    /**
+     * setNombreExperimento
+     * @param nombreExperimento
+     */
     public void setNombreExperimento(String nombreExperimento) {
         this.nombreExperimento = nombreExperimento;
     }
 
+    /**
+     * getDias
+     * @return int dias
+     */
     public int getDias() {
         return dias;
     }
 
+    /**
+     * getNumPoblaciones
+     * @return int numPoblaciones
+     */
     public int getNumPoblaciones() {
         return numPoblaciones;
     }
 
+    /**
+     * setNumPoblaciones
+     * @param numPoblaciones
+     */
     public void setNumPoblaciones(int numPoblaciones) {
         this.numPoblaciones = numPoblaciones;
     }
 
+    /**
+     * getPoblacionesList()
+     * @return ArrayList<Poblacion> this.poblacionesList: la lista de Poblaciones
+     */
     public ArrayList<Poblacion> getPoblacionesList() {
         return this.poblacionesList;
     }
 
+    /**
+     * setPoblacionNueva
+     * Añade la población a la lista de poblaciones
+     * @param p
+     */
     public void setPoblacionNueva (Poblacion p){
       this.poblacionesList.add(p);
     }
 
     // Métodos para que al meter esta clase en un System.out.println() salga
     // algo legible
-   @Override //Este nos enseña TODA la info del experimento
+
+    /**
+     * toString
+     * Este nos enseña TODA la info del experimento
+     * @return
+     */
+    @Override
     public String toString() {
         String stringToRepresentInfoPoblacionesExperimento = "Nombre Experimento: " + this.nombreExperimento
                 + "\nNumero de días: " + this.dias
@@ -64,7 +113,11 @@ public class Experimento {
         return stringToRepresentInfoPoblacionesExperimento;
     }
 
-    //Este nos enseña todos los nombres de las poblaciones del experimento
+
+    /**
+     * Muestra el nombre de todas las poblaciones del experimento
+     * @return toStringNombres(
+     */
     public String toStringNombres() {
         String stringToRepresentNombrePoblacionesExperimento = "Nombre Experimento: " + this.nombreExperimento
                 + "\nNombre de poblaciones:\n";
@@ -74,6 +127,10 @@ public class Experimento {
         return stringToRepresentNombrePoblacionesExperimento;
     }
 
+    /**
+     * Muestra la información del experimento separada por ";" (modo fichero)
+     * @return
+     */
     public String toStringInfoExperimentoToFile(){
         String stringToRepresentInExperimentobFile = this.nombreExperimento;
         return stringToRepresentInExperimentobFile;

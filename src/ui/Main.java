@@ -1,8 +1,6 @@
 package ui;
 import dataio.FileManager;
-import static dataio.UserInput.readInt; //al hacer este import del método readInt(),
-// al usar el método, no tengo que hacer UserInput.readInt(), sino directamente readInt()
-// si sólo hiciese import de dataio.UserInput así en general => debería hacer UserInput.ReadInt()
+import static dataio.UserInput.readInt;
 import static dataio.UserInput.readString;
 import gestionLab.GestionLab;
 import laboratorio.Experimento;
@@ -10,13 +8,14 @@ import laboratorio.Poblacion;
 import java.io.FileNotFoundException;
 
 
-
+/**
+ * @author Ana Ventura-Traveset
+ *
+ * Esta es la clase principal que contiene el método main.
+ * Se utiliza como punto de entrada para la aplicación.
+ */
 public class Main {
-
     public static void main(String[] args)  {
-
-
-        //el main nunca lanza excepciones pq es el último
 
         int opcion = 0;
         Experimento experimento=null;
@@ -166,7 +165,5 @@ public class Main {
             }
 
         }
-
-
     }
 }

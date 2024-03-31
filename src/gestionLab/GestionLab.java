@@ -3,23 +3,27 @@ import dataio.UserInput;
 import laboratorio.Experimento;
 import laboratorio.Poblacion;
 import medio.*;
-
 import java.text.ParseException;
 import java.time.LocalDate;
-
-
-import static dataio.UserInput.*;
 import static java.time.temporal.ChronoUnit.DAYS;
 
+/**
+ * @author Ana Ventura-Traveset
+ */
+
+/**
+ * Gestion del laboratorio (crear, añadir, borrar y buscar poblaciones)
+ */
 public class GestionLab {
 
-    // Gestiono el lab
-    // Gestiono los distintos experimentos
-    // createPoblacion(), AddPoblacion(), deletePoblacion(), etc
-
-    //Primero de todo gestion de experimentos:
-
-    //CREAR población
+    /**
+     *
+     * CREAR población
+     * @param e
+     * @return
+     * @throws Exception
+     * @throws ParseException
+     */
     public static Poblacion createPoblacion(Experimento e) throws Exception, ParseException {
         Poblacion p= new Poblacion();
         int dias=30;
@@ -76,6 +80,7 @@ public class GestionLab {
         LocalDate fechaInicial;
         LocalDate fechaMedia;
         LocalDate fechaFinal;
+
         //Para controlar que fecha media no sea antes que la de inicio ni después que la de fin
         fechaInicial= UserInput.readDate("Introduzca la fecha dónde empieza su experimento: ");
         while (true) {
@@ -125,18 +130,30 @@ public class GestionLab {
         return p;
     }
 
+    /**
+     *
+     * AÑADIR poblacion al experimento
+     * @param pob
+     * @param exp
+     */
     public static void addPoblacion (Poblacion pob, Experimento exp){
         exp.setNumPoblaciones(exp.getNumPoblaciones()+1);
         exp.setPoblacionNueva(pob);
     }
 
-    //ELIMINAR población
+
+    /**
+     *
+     * ELIMINAR población del experimento
+     * @param nombrePoblacion
+     * @param e
+     */
     public static void deletePoblacion(String nombrePoblacion, Experimento e) {
 
         for (int i = 0; i < e.getPoblacionesList().size(); i++) {
             if (nombrePoblacion.equals(e.getPoblacionesList().get(i).getNombrePoblacion())) {
                 e.getPoblacionesList().remove(i); // Si lo igualo a algo, me va a mandar la Poblacion que he quitado
-                // si no hago nada mas, simplemente le arranca esa poblacion de mi lista
+                // si no hago nada más, simplemente le arranca esa poblacion de mi lista
             }
         }
         e.setNumPoblaciones(e.getPoblacionesList().size());
@@ -157,5 +174,4 @@ public class GestionLab {
             throw new RuntimeException();
         }
     }
-
 }

@@ -7,17 +7,23 @@ import java.time.ZoneId;
 import java.util.Date;
 import java.util.Scanner;
 
+/**
+ * Clase para leer de teclado
+ * @author Ana Ventura-Traveset
+ */
 public class UserInput {
 
-    //Para leer de teclado ya sea String, int, float, Luminosidad o LocalDate
-    // en los catch, lo de printStackTrace(), para que me imprima en rojo el tipo de error, la línea, etc
+    /**
+     * Para leer por teclado Strings
+     * @param peticion
+     * @return miString
+     */
     public static String readString(String peticion) {
         System.out.println(peticion);
         boolean hecho;
-        String miString = ""; //tengo q inicializarlo, pq sino al estar dentro del try catch no puedo returnarlo
+        String miString = "";
         do {
             try {
-                //Uso scanner bc bufferReader tengo entendido q es mas para leer de fichero
                 Scanner sc = new Scanner(System.in); //creo el scanner Object
                 miString = sc.nextLine(); //leo el input del usuario
                 hecho = true;
@@ -28,9 +34,13 @@ public class UserInput {
             }
         } while (hecho == false);
         return miString;
-
     }
 
+    /**
+     * Para leer por teclado enteros, excluyendo los negativos que no se usan en esta práctica
+     * @param peticion
+     * @return miInt
+     */
     public static int readInt(String peticion) {
         boolean hecho;
         int miInt = 0;
@@ -39,9 +49,9 @@ public class UserInput {
                 System.out.println(peticion);
                 Scanner sc = new Scanner(System.in);
                 miInt = sc.nextInt();
-                hecho=true;
                 if (miInt < 0) {
                     System.out.println("ERROR. El número introducido es negativo.");
+                    hecho=false;
                 } else {
                     hecho = true;
                 }
@@ -53,6 +63,11 @@ public class UserInput {
         return miInt;
     }
 
+    /**
+     * Para leer por teclado reales
+     * @param peticion
+     * @return miFloat
+     */
     public static float readFloat(String peticion)  {
         boolean hecho;
         float miFloat = 0;
@@ -70,6 +85,11 @@ public class UserInput {
         return miFloat;
     }
 
+    /**
+     * Para leer por teclado un String y asociarlo con un elemento del enum luminosidad
+     * @param peticion
+     * @return lum
+     */
     public static Luminosidad.luminosidad readLuminosidad(String peticion) {
         Luminosidad.luminosidad luminosidad = null;
         String lum;
@@ -100,6 +120,16 @@ public class UserInput {
         return luminosidad;
     }
 
+    /**
+     * Para leer por teclado fechas
+     *
+     * SimpleDateFormat tiene un método para convertir String
+     * en el formato fecha que le hayamos dicho, y ese es el parse
+     * se utiliza el método toInstant de Date().atZone().toLocalDate() para pasar de Date a LocalDate
+     *
+     * @param peticion
+     * @return fechaADevolver
+     */
     public static LocalDate readDate(String peticion){
         Date fecha;
         LocalDate fechaADevolver=null;
@@ -112,10 +142,7 @@ public class UserInput {
                 Scanner sc = new Scanner(System.in);
                 SimpleDateFormat formato = new SimpleDateFormat("yyyy.MM.dd");
                 fecha = formato.parse(sc.nextLine());
-                //SimpleDateFormat tiene un método para convertir String
-                //en el formato fecha que le hayamos dicho, y ese es el parse
                 fechaADevolver = fecha.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
-                //ese paso es para convertir a LocalDate con el método toInstant() de date
                 hecho=true;
             }catch(ParseException pe){
                 hecho = false;
@@ -124,5 +151,4 @@ public class UserInput {
         }while(hecho==false);
         return fechaADevolver;
     }
-
 }

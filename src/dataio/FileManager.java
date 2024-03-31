@@ -1,5 +1,4 @@
 package dataio;
-//Importo todo aqui, pq es dónde estoy creando los experimentos
 import gestionLab.GestionLab;
 import laboratorio.Experimento;
 import laboratorio.Poblacion;
@@ -10,25 +9,23 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
 
-// Crear archivo en el que meto experimento
-// Abrir un archivo que contenga un experimento
-// Guardar (se supone que para usar esta opción previamente hemos abierto unarchivo)
-// Guardar como
-
+/**
+ * Gestion de archivos
+ * @author Ana Ventura-Traveset
+ */
 public class FileManager {
 
-    // su constructor, para poder usarlo en el main y crear y tal archivos
-    /*public FileManager() {
-
-    }*/
-
-    // ABRIR archivo, que es para leerlo
+    /**
+     * Abre archivo y lo carga en memoria
+     * @param nombreExperimento
+     * @return experimento
+     * @throws FileNotFoundException
+     */
     public static Experimento abrirArchivo(String nombreExperimento) throws FileNotFoundException {
-        File file = new File("./" + nombreExperimento + ".txt"); //abrimos flujo de datos
+        File file = new File("./" + nombreExperimento + ".txt");
         Experimento experimento =null;
 
-        // Para flujo de entrada (leer)
-        FileInputStream fileInputStream = null; //sirve para leer flujo de datos en bruto
+        FileInputStream fileInputStream = null;
         InputStreamReader inputStreamReader = null;
         BufferedReader bufferedReader = null;
         String stringInfoTotal="";
@@ -38,23 +35,20 @@ public class FileManager {
             String [] todosArgs = bufferedReader.readLine().split("\n");
             String [] infoExperimento = todosArgs[0].split(";");
             String nombreExpFromFile = infoExperimento[0];
-
-            //leo info del experimento
             int diasExpFromFile = Integer.parseInt(infoExperimento[1]);
 
-            //creo el experimento
             experimento = new Experimento(nombreExpFromFile);
-            //fin leer info experimento
 
             System.out.println(todosArgs.length+ "mi length");
             stringInfoTotal+=experimento.toStringInfoExperimentoToFile()+"\n";
+
             String line;
             while ((line = bufferedReader.readLine()) != null) {
                 String [] infoPoblacion = line.split(";");
 
-                //Empiezo a leer info de poblaciones
                 Poblacion poblacion = new Poblacion();
 
+                //Empiezo con la info de poblaciones
                 String nombrePoblacionFromFile = infoPoblacion[0];
                 poblacion.setNombrePoblacion(nombrePoblacionFromFile);
 
@@ -67,7 +61,7 @@ public class FileManager {
                 Luminosidad.luminosidad luminosidadFromFile = Luminosidad.luminosidad.valueOf(infoPoblacion[3]);
                 poblacion.setLuminosidad(luminosidadFromFile);
 
-                // leo el toStringToFile de comida
+                // Empiezo con la info de comida
                 DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd");
                 LocalDate fechaInicioFromFile = LocalDate.parse(infoPoblacion[4], dtf);
                 poblacion.setFechaInicio(fechaInicioFromFile);
@@ -118,9 +112,12 @@ public class FileManager {
     }
 
 
-    // GUARDAR/GUARDAR COMO archivo
-    // en este caso voy a usar el mismo método para guardar y guardar como
-    // simplemente en el segundo caso, se le pasará el String de como se quiera guardar
+    /**
+     * Guarda/guarda como experimento en archivo
+     * @param nombreExperimento
+     * @param experimento
+     * @return comprobacion
+     */
     public static boolean guardarArchivo(String nombreExperimento, Experimento experimento) {
         File file1 = new File( "./"+nombreExperimento + ".txt");
         PrintWriter printWriter = null;
@@ -128,11 +125,11 @@ public class FileManager {
         try {
             printWriter = new PrintWriter(file1);
             String experimentoInfoFile = experimento.getNombreExperimento() + ';' + experimento.getDias();
-            printWriter.println(experimentoInfoFile);//escribe en el fichero
+            printWriter.println(experimentoInfoFile);//escribe en el fichero primero la info del experimento
             for (int i = 0; i < experimento.getPoblacionesList().size(); i++) {
                 String infoPoblacionesFile = "";
                 infoPoblacionesFile += experimento.getPoblacionesList().get(i).toStringInfoPobFile();
-                printWriter.print(infoPoblacionesFile); //lo escribimos en el fichero
+                printWriter.print(infoPoblacionesFile); //escribe en el fichero ahora la info de cada población
                 printWriter.println();
             }
             printWriter.close();
@@ -147,5 +144,4 @@ public class FileManager {
         }
     return comprobacion;
     }
-
 }
