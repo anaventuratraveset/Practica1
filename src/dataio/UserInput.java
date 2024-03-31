@@ -1,6 +1,5 @@
 package dataio;
 import medio.Luminosidad;
-
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
@@ -14,7 +13,7 @@ public class UserInput {
     // en los catch, lo de printStackTrace(), para que me imprima en rojo el tipo de error, la línea, etc
     public static String readString(String peticion) {
         System.out.println(peticion);
-        boolean hecho = false;
+        boolean hecho;
         String miString = ""; //tengo q inicializarlo, pq sino al estar dentro del try catch no puedo returnarlo
         do {
             try {
@@ -33,14 +32,14 @@ public class UserInput {
     }
 
     public static int readInt(String peticion) {
-        boolean hecho = false;
+        boolean hecho;
         int miInt = 0;
         do {
             try {
                 System.out.println(peticion);
                 Scanner sc = new Scanner(System.in);
                 miInt = sc.nextInt();
-
+                hecho=true;
                 if (miInt < 0) {
                     System.out.println("ERROR. El número introducido es negativo.");
                 } else {
@@ -55,7 +54,7 @@ public class UserInput {
     }
 
     public static float readFloat(String peticion)  {
-        boolean hecho = false;
+        boolean hecho;
         float miFloat = 0;
         do {
             try {
@@ -74,7 +73,7 @@ public class UserInput {
     public static Luminosidad.luminosidad readLuminosidad(String peticion) {
         Luminosidad.luminosidad luminosidad = null;
         String lum;
-        boolean hecho=false;
+        boolean hecho;
         do{
             try {
                 System.out.println(peticion);
@@ -104,7 +103,7 @@ public class UserInput {
     public static LocalDate readDate(String peticion){
         Date fecha;
         LocalDate fechaADevolver=null;
-        boolean hecho=false;
+        boolean hecho;
 
         do{
             try{
