@@ -90,7 +90,7 @@ public class GestionLab {
                 System.out.println("La fecha introducida no es correcta. " +
                         "\nLa fecha pico no puede ser después de la fecha final del experimento que dura 30 días." );
             }
-            else if((diasEntreInicioYPico>30)){
+            else if((diasEntreInicioYPico>29)){
                 System.out.println("La fecha introducida no es correcta. " +
                         "\nLa fecha pico no puede ser después de la fecha final del experimento que dura 30 días." );
             }
