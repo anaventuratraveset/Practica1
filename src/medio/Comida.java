@@ -71,7 +71,7 @@ public class Comida {
         for (int i=0; i<diasIncremento; i++){
             cantidadComida[i]=((CantidadIncremento)/diasIncremento)*i+this.cantidadInicial;
         }
-        for(int j=diasIncremento+1; j<duracion; j++){
+        for(int j=diasIncremento; j<duracion; j++){
             cantidadComida[j]= ((CantidadDecremento)/diasDecremento)*j+interseccion;
         }   
         return cantidadComida;
