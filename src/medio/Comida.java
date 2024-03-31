@@ -1,8 +1,8 @@
 package medio;
 import java.time.LocalDate;
+import static java.time.temporal.ChronoUnit.DAYS;
 import java.util.Arrays;
 
-import static java.time.temporal.ChronoUnit.DAYS;
 
 public class Comida {
 

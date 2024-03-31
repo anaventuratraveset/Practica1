@@ -81,7 +81,7 @@ public class GestionLab {
         while (true) {
             fechaMedia = UserInput.readDate("Introduzca la fecha dónde hay el pico en su experimento: ");
             fechaFinal=fechaInicial.plusDays(dias);
-            long diasEntreInicioYPico= DAYS.between(fechaInicial, fechaMedia);
+            int diasEntreInicioYPico= (int) DAYS.between(fechaInicial, fechaMedia);
             if (fechaMedia.isBefore(fechaInicial)) {
                 System.out.println("La fecha introducida no es correcta. " +
                         "\nNo puede ser la fecha pico antes de la fecha inicial del experimento." );
