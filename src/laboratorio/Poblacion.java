@@ -48,6 +48,26 @@ public class Poblacion {
         return nombrePoblacion;
     }
 
+
+    /**
+     * Creo los getters de los siguientes atributos para poder hacer el test unitario
+     */
+    public int getNumInicialBacterias() {
+        return numInicialBacterias;
+    }
+
+    public float getTemperatura() {
+        return temperatura;
+    }
+
+    public LocalDate getFechaInicio() {
+        return fechaInicio;
+    }
+
+    public LocalDate getFechaFin() {
+        return fechaFin;
+    }
+
     /**
      * Permite modificar el nombre de la Población
      * @param nombrePoblacion

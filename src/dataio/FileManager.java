@@ -91,7 +91,6 @@ public class FileManager {
                     System.out.println(ioe.getMessage());
                 }
             }
-
             if(inputStreamReader != null){
                 try{
                     inputStreamReader.close();
