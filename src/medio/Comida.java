@@ -122,6 +122,10 @@ public class Comida {
         return cantidadInicial;
     }
 
+    public float getCantidadPico() {
+        return cantidadPico;
+    }
+
     /**
      * Calcula la cantidad de comida diaria
      * @return

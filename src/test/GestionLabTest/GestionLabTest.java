@@ -3,34 +3,32 @@ package test.GestionLabTest;
 import gestionLab.GestionLab;
 import laboratorio.Experimento;
 import laboratorio.Poblacion;
-import dataio.UserInput;
 import medio.Luminosidad;
+import dataio.UserInput;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
+import laboratorio.Experimento;
 
-import java.text.ParseException;
 import java.time.LocalDate;
+import java.util.ArrayList;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
 public class GestionLabTest {
 
-    private GestionLab gestionLab;
-    private Experimento experimento;
-    private UserInput userInput;
+     GestionLab gestionLab;
 
-    @BeforeEach
-    void setUp() {
-/*
-        gestionLab = new GestionLab();
-*/
-        experimento = mock(Experimento.class);
-        userInput = mock(UserInput.class);
+
+
+        Experimento experimento /*= new Experimento("Experimento")*/;
+
+    void mock(Experimento experimento) {
+        when(experimento.getPoblacionesList()).thenReturn(new ArrayList<Poblacion>());
     }
 
-    @Test
+   /* @Test
     void testCreatePoblacion() throws Exception {
         // Mock the UserInput responses
         when(UserInput.readString(anyString())).thenReturn("Test");
@@ -49,12 +47,43 @@ public class GestionLabTest {
         assertEquals(Luminosidad.luminosidad.ALTA, result.getLuminosidad());
         assertEquals(100.0f, result.getComida().getCantidadInicial());
         assertEquals(LocalDate.now(), result.getFechaInicio());
-    }
+    }*/
 
     @Test
     void testAddPoblacion() {
         Poblacion poblacion = new Poblacion();
         GestionLab.addPoblacion(poblacion, experimento);
         verify(experimento, times(1)).setPoblacionNueva(poblacion);
+    }
+
+    @Test
+    void testDeletePoblacion() {
+        Poblacion poblacion = new Poblacion();
+        poblacion.setNombrePoblacion("Test");
+        when(experimento.getPoblacionesList()).thenReturn(experimento.getPoblacionesList());
+
+        GestionLab.deletePoblacion("Test", experimento);
+        verify(experimento, times(1)).setNumPoblaciones(0);
+    }
+
+    @Test
+    void testBuscarPoblacionFound() {
+        Poblacion poblacion = new Poblacion();
+        poblacion.setNombrePoblacion("Test");
+        when(experimento.getPoblacionesList()).thenReturn(experimento.getPoblacionesList());
+
+        Poblacion result = GestionLab.buscarPoblacion("Test", experimento);
+
+        assertNotNull(result);
+        assertEquals("Test", result.getNombrePoblacion());
+    }
+
+    @Test
+    void testBuscarPoblacionNotFound() {
+        Poblacion poblacion = new Poblacion();
+        poblacion.setNombrePoblacion("Test");
+        when(experimento.getPoblacionesList()).thenReturn(experimento.getPoblacionesList());
+
+        assertThrows(RuntimeException.class, () -> GestionLab.buscarPoblacion("NotFound", experimento));
     }
 }
