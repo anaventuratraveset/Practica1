@@ -125,6 +125,19 @@ public class Poblacion {
         this.dosisComidaDiaria=comida.calcularComida();
     }
 
+    /**
+     * Getters para los test
+     */
+
+    public Luminosidad.luminosidad getLuminosidad() {
+        return luminosidad;
+    }
+
+    public Comida getComida() {
+        return comida;
+    }
+
+
 
     /**
      * toString para cuando se seleccione la opción 6, para visualizar la info de la población

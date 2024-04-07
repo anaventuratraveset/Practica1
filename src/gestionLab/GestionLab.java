@@ -63,7 +63,6 @@ public class GestionLab {
                 break;
             }
         }
-
         while (true) {
             comidaFinal = UserInput.readFloat("Introduzca la cantidad de comida final: ");
             if (comidaFinal < 0) {
@@ -75,7 +74,6 @@ public class GestionLab {
                 break;
             }
         }
-
         //pido el resto de cosas para calcular la comida, que son las fechas
         LocalDate fechaInicial;
         LocalDate fechaMedia;

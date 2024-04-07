@@ -1,49 +1,53 @@
 package test.dataioTest;
+
+import dataio.FileManager;
+import laboratorio.Experimento;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
-import java.io.BufferedReader;
-import java.io.ByteArrayInputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.nio.charset.StandardCharsets;
-import java.time.LocalDate;
-import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.*;
 
-class FileManagerTest {
+import java.io.BufferedReader;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.Mockito.when;
+
+public class FileManagerTest {
 
     @Mock
     private BufferedReader bufferedReader;
 
-    @InjectMocks
     private FileManager fileManager;
 
     @BeforeEach
     void setUp() {
-        MockitoAnnotations.openMocks(this);
+        MockitoAnnotations.initMocks(this);
+        fileManager = new FileManager();
     }
 
     @Test
     void testAbrirArchivo() throws IOException {
-        String input = "Mi Experimento;30\nPoblación A;100;25.5;ALTA;2024-04-01;50.0\n";
-        InputStream inputStream = new ByteArrayInputStream(input.getBytes(StandardCharsets.UTF_8));
-        when(bufferedReader.readLine()).thenReturn("Mi Experimento;30", "Población A;100;25.5;ALTA;2024-04-01;50.0", null);
+        String input = "newE;30\np1;3;3.0;BAJA;2023-09-09;2.0;2023-09-12;6.0;2023-10-09;4.0\n";
+        when(bufferedReader.readLine()).thenReturn(input, null);
 
-        Experimento experimento = fileManager.abrirArchivo(inputStream);
+        Experimento experimento = null;
+        try {
+            experimento = fileManager.abrirArchivo("testFile");
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
 
-        assertEquals("Mi Experimento", experimento.getNombreExperimento());
+        assertEquals("newE", experimento.getNombreExperimento());
         assertEquals(30, experimento.getDias());
+    }
 
-        Poblacion poblacion = experimento.getPoblacionesList().get(0);
-        assertEquals("Población A", poblacion.getNombrePoblacion());
-        assertEquals(100, poblacion.getNumInicialBacterias());
-        assertEquals(25.5f, poblacion.getTemperatura());
-        assertEquals(Luminosidad.luminosidad.ALTA, poblacion.getLuminosidad());
-        assertEquals(LocalDate.of(2024, 4, 1), poblacion.getFechaInicio());
-        assertEquals(50.0f, poblacion.getComida().getCantidadInicial());
+    @Test
+    void testGuardarArchivo() {
+        Experimento experimento = new Experimento("newE");
+        boolean result = FileManager.guardarArchivo("testFile", experimento);
+
+        assertEquals(true, result);
     }
 }

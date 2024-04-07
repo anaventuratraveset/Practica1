@@ -113,6 +113,15 @@ public class Comida {
         this.fechaPico = fechaPico;
     }
 
+
+    /**
+     * getter para los test
+     */
+
+    public float getCantidadInicial() {
+        return cantidadInicial;
+    }
+
     /**
      * Calcula la cantidad de comida diaria
      * @return
