@@ -92,6 +92,13 @@ public class Experimento {
       this.poblacionesList.add(p);
     }
 
+    /**
+     * get para los unit test
+     */
+    public Poblacion getPoblacionNueva(){
+        return this.poblacionesList.get(this.poblacionesList.size()-1);
+    }
+
     // Métodos para que al meter esta clase en un System.out.println() salga
     // algo legible
 

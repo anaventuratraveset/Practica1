@@ -9,81 +9,86 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 import laboratorio.Experimento;
+import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.*;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
 
+import static gestionLab.GestionLab.buscarPoblacion;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
 public class GestionLabTest {
 
-     GestionLab gestionLab;
-
-
-
-        Experimento experimento /*= new Experimento("Experimento")*/;
-
-    void mock(Experimento experimento) {
-        when(experimento.getPoblacionesList()).thenReturn(new ArrayList<Poblacion>());
-    }
-
-   /* @Test
-    void testCreatePoblacion() throws Exception {
-        // Mock the UserInput responses
-        when(UserInput.readString(anyString())).thenReturn("Test");
-        when(UserInput.readInt(anyString())).thenReturn(25);
-        when(UserInput.readFloat(anyString())).thenReturn(100.0f);
-        when(UserInput.readLuminosidad(anyString())).thenReturn(Luminosidad.luminosidad.ALTA);
-        when(UserInput.readDate(anyString())).thenReturn(LocalDate.now());
-
-        // Call the method to test
-        Poblacion result = GestionLab.createPoblacion(experimento);
-
-        // Verify the result
-        assertNotNull(result);
-        assertEquals("Test", result.getNombrePoblacion());
-        assertEquals(25, result.getTemperatura());
-        assertEquals(Luminosidad.luminosidad.ALTA, result.getLuminosidad());
-        assertEquals(100.0f, result.getComida().getCantidadInicial());
-        assertEquals(LocalDate.now(), result.getFechaInicio());
-    }*/
-
     @Test
-    void testAddPoblacion() {
+    public void testCreatePoblacion() throws Exception {
+        // Arrange
         Poblacion poblacion = new Poblacion();
+        Experimento experimento = new Experimento("Experiment");
+
+        // Act
+        GestionLab.createPoblacion( experimento);
+
+        // Assert
+        assertEquals(1, experimento.getNumPoblaciones()); // Verify that numPoblaciones is incremented
+        assertEquals(poblacion, experimento.getPoblacionNueva()); // Verify that poblacionNueva is set correctly
+    }
+    @Test
+    public void testAddPoblacion() {
+        // Arrange
+        Poblacion poblacion = new Poblacion();
+        Experimento experimento = new Experimento("Experiment");
+
+        // Act
         GestionLab.addPoblacion(poblacion, experimento);
-        verify(experimento, times(1)).setPoblacionNueva(poblacion);
+
+        // Assert
+        assertEquals(1, experimento.getNumPoblaciones()); // Verify that numPoblaciones is incremented
+        assertEquals(poblacion, experimento.getPoblacionNueva()); // Verify that poblacionNueva is set correctly
     }
+
 
     @Test
-    void testDeletePoblacion() {
+    public void testDeletePoblacion() {
+        // Arrange
         Poblacion poblacion = new Poblacion();
-        poblacion.setNombrePoblacion("Test");
-        when(experimento.getPoblacionesList()).thenReturn(experimento.getPoblacionesList());
+        poblacion.setNombrePoblacion("NombrePoblacionToRemove");
+        Experimento experimento = new Experimento("Experiment");
+        experimento.getPoblacionesList().add(poblacion); // Add the poblacion to the list
 
-        GestionLab.deletePoblacion("Test", experimento);
-        verify(experimento, times(1)).setNumPoblaciones(0);
+        // Act
+        GestionLab.deletePoblacion("NombrePoblacionToRemove", experimento); // Replace with actual poblacion name
+
+        // Assert
+        assertEquals(0, experimento.getNumPoblaciones()); // Verify that numPoblaciones is updated
+        assertEquals(0, experimento.getPoblacionesList().size()); // Verify that poblacion is removed
     }
 
-    @Test
-    void testBuscarPoblacionFound() {
-        Poblacion poblacion = new Poblacion();
-        poblacion.setNombrePoblacion("Test");
-        when(experimento.getPoblacionesList()).thenReturn(experimento.getPoblacionesList());
 
-        Poblacion result = GestionLab.buscarPoblacion("Test", experimento);
+        @Test
+        void testBuscarPoblacion_ExistingPopulation() {
+            // Arrange
+            Experimento e = new Experimento("Experimento"); // Create an instance of Experimento
+            Poblacion existingPoblacion = new Poblacion(); // Create an existing population
+            existingPoblacion.setNombrePoblacion("PoblacionAEncontrar");
+            e.getPoblacionesList().add(existingPoblacion);
 
-        assertNotNull(result);
-        assertEquals("Test", result.getNombrePoblacion());
-    }
+            // Act
+            Poblacion result = buscarPoblacion("PoblacionAEncontrar", e);
 
-    @Test
-    void testBuscarPoblacionNotFound() {
-        Poblacion poblacion = new Poblacion();
-        poblacion.setNombrePoblacion("Test");
-        when(experimento.getPoblacionesList()).thenReturn(experimento.getPoblacionesList());
+            // Assert
+            assertNotNull(result);
+            assertEquals(existingPoblacion, result);
+        }
 
-        assertThrows(RuntimeException.class, () -> GestionLab.buscarPoblacion("NotFound", experimento));
-    }
+        @Test
+        void testBuscarPoblacion_NonExistingPopulation() {
+            // Arrange
+            Experimento e = new Experimento("Experimento"); // Create an instance of Experimento
+
+            // Act and Assert
+            assertThrows(RuntimeException.class, () -> buscarPoblacion("NonExistingCity", e));
+        }
+
 }
