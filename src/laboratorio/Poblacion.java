@@ -1,5 +1,5 @@
 package laboratorio;
-import medio.Comida;
+import medio.ComidaPadre;
 import medio.Luminosidad;
 import java.time.LocalDate;
 
@@ -19,13 +19,18 @@ public class Poblacion {
      * luminosidad
      * comida
      * dosisComidaDiaria
+     * numeroPatronComida
+     * comidaMax
      */
     private String nombrePoblacion;
     private int numInicialBacterias;
     private float temperatura;
     private LocalDate fechaInicio, fechaFin;
     private Luminosidad.luminosidad luminosidad;
-    private Comida comida;
+    private ComidaPadre comida;
+    private int numeroPatronComida;
+    private final float comidaMax = 300000;
+
     private float [] dosisComidaDiaria;
 
     /**
@@ -33,6 +38,27 @@ public class Poblacion {
      */
     public Poblacion(){
     }
+
+    /**
+     * Constructor de poblacion
+     * @param numInicialBacterias
+     * @param nombrePoblacion
+     * @param temperatura
+     * @param fechaInicio
+     * @param fechaFin
+     * @param luminosidad
+     * @param numeroPatronComida
+     */
+    public Poblacion(int numInicialBacterias, String nombrePoblacion, float temperatura, LocalDate fechaInicio, LocalDate fechaFin, Luminosidad.luminosidad luminosidad, int numeroPatronComida) {
+        this.numInicialBacterias = numInicialBacterias;
+        this.nombrePoblacion = nombrePoblacion;
+        this.temperatura = temperatura;
+        this.fechaInicio = fechaInicio;
+        this.fechaFin = fechaFin;
+        this.luminosidad = luminosidad;
+        this.numeroPatronComida = numeroPatronComida;
+    }
+
 
     /**
      * Getters y setters
@@ -67,6 +93,26 @@ public class Poblacion {
     public LocalDate getFechaFin() {
         return fechaFin;
     }
+
+    public float getComidaMax() {
+        return comidaMax;
+    }
+
+    public float[] getDosisComidaDiaria() {
+        return dosisComidaDiaria;
+    }
+
+    public void setDosisComidaDiaria(float[] dosisComidaDiaria) {
+        this.dosisComidaDiaria = dosisComidaDiaria;
+    }
+
+    public void setNumeroPatronComida(int numeroPatronComida) {
+        this.numeroPatronComida = numeroPatronComida;
+    }
+    public int getNumeroPatronComida() {
+        return numeroPatronComida;
+    }
+
 
     /**
      * Permite modificar el nombre de la Población
@@ -120,7 +166,7 @@ public class Poblacion {
      * Permite modificar la comida de la Población
      * @param comida
      */
-    public void setComida(Comida comida) {
+    public void setComida(ComidaPadre comida) {
         this.comida = comida;
         this.dosisComidaDiaria=comida.calcularComida();
     }
@@ -133,11 +179,9 @@ public class Poblacion {
         return luminosidad;
     }
 
-    public Comida getComida() {
+    public ComidaPadre getComida() {
         return comida;
     }
-
-
 
     /**
      * toString para cuando se seleccione la opción 6, para visualizar la info de la población
@@ -145,11 +189,26 @@ public class Poblacion {
      */
     @Override
     public String toString(){
+        String opcionPatron = "";
+        if (this.numeroPatronComida == 1) {
+            opcionPatron = this.numeroPatronComida + ". Patrón de incremento lineal seguido de decremento lineal.";
+        } else if (this.numeroPatronComida == 2) {
+            opcionPatron = this.numeroPatronComida + ". Patrón de cantidad de comida constante durante toda la duración del experimento.";
+        } else if (this.numeroPatronComida == 3) {
+            opcionPatron = this.numeroPatronComida + ". Patrón de incremento lineal de la cantidad de comida.";
+        } else if (this.numeroPatronComida == 4) {
+            opcionPatron = this.numeroPatronComida + ". Patrón con cantidad de comida constante durante todo el experimento un día, y al siguiente no proporcionar comida y así sucesivamente";
+        }
+
+
         String stringToRepresentPoblacion = "La población "
                 + this.nombrePoblacion +":"
+                + "\nFecha de inicio del experimento: "+ this.fechaInicio
+                + "\nFecha de fin del experimento: "+ this.fechaFin
                 + "\nCantidad de bacterias inicialmente: "+ this.numInicialBacterias
                 + "\nTemperatura a la cual están sometidas las bacterias: "+ this.temperatura
                 + "\nLuminosidad: "+this.luminosidad
+                + "\nPatrón de comida: " + opcionPatron
                 + "\nDosis de comida diaria: "+ this.comida.toString();
         return stringToRepresentPoblacion;
     }
@@ -160,9 +219,10 @@ public class Poblacion {
      */
     public String toStringInfoPobFile() {
         String stringToRepresentInfoPobFile = this.nombrePoblacion
-                + ";" + Integer.toString(this.numInicialBacterias)
+                + ";" + this.numInicialBacterias
                 + ";" + this.temperatura
                 + ";" + this.luminosidad
+                + ";" + this.numeroPatronComida
                 + ";" + comida.toStringToFile();
 
         return stringToRepresentInfoPobFile;

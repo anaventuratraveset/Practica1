@@ -13,6 +13,8 @@ import java.util.Scanner;
  */
 public class UserInput {
 
+    // lo he hecho de manera iterativa, no recursiva
+
     /**
      * Para leer por teclado Strings
      * @param peticion

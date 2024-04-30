@@ -15,7 +15,7 @@ public class Experimento {
      * poblacionesList
      */
     private String nombreExperimento;
-    private final int dias = 30;
+    private int dias;
     private int numPoblaciones;
     private ArrayList<Poblacion> poblacionesList;
 
@@ -33,7 +33,6 @@ public class Experimento {
      * Getters y setters de los atributos privados de Experimento
      *
      */
-    //Getters y setters
 
     /**
      * getNombreExperimento
@@ -57,6 +56,14 @@ public class Experimento {
      */
     public int getDias() {
         return dias;
+    }
+
+    /**
+     * setDias
+     * @param dias
+     */
+    public void setDias(int dias) {
+        this.dias = dias;
     }
 
     /**
@@ -98,6 +105,7 @@ public class Experimento {
     public Poblacion getPoblacionNueva(){
         return this.poblacionesList.get(this.poblacionesList.size()-1);
     }
+
 
     // Métodos para que al meter esta clase en un System.out.println() salga
     // algo legible

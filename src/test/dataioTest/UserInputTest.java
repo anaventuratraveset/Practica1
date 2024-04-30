@@ -3,16 +3,12 @@ package test.dataioTest;
 import dataio.UserInput;
 import medio.Luminosidad;
 import org.junit.jupiter.api.Test;
-
 import java.io.ByteArrayInputStream;
-import java.io.InputStream;
 import java.time.LocalDate;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class UserInputTest {
-
-
     void inputDeUsuario(String data){
         ByteArrayInputStream in = new ByteArrayInputStream(data.getBytes());
         System.setIn(in);

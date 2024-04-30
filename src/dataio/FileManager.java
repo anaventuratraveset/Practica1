@@ -2,7 +2,7 @@ package dataio;
 import gestionLab.GestionLab;
 import laboratorio.Experimento;
 import laboratorio.Poblacion;
-import medio.Comida;
+import medio.ComidaPadre;
 import medio.Luminosidad;
 import java.io.*;
 import java.time.LocalDate;
@@ -29,6 +29,8 @@ public class FileManager {
         InputStreamReader inputStreamReader = null;
         BufferedReader bufferedReader = null;
         String stringInfoTotal="";
+
+        // hacer esto en varios métodos
         try {
             // lo leo
             bufferedReader = new BufferedReader(new InputStreamReader(new FileInputStream(file)));
@@ -47,6 +49,8 @@ public class FileManager {
                 String [] infoPoblacion = line.split(";");
 
                 Poblacion poblacion = new Poblacion();
+
+                // tengo q conseguir hacerlo de otra manera para q recorra el array
 
                 //Empiezo con la info de poblaciones
                 String nombrePoblacionFromFile = infoPoblacion[0];
@@ -72,7 +76,7 @@ public class FileManager {
                 poblacion.setFechaFin(fechaFinFromFile);
                 float cantidadFinalFromFile = Float.parseFloat(infoPoblacion[9]);
 
-                Comida comida = new Comida(cantidadInicialFromFile, fechaInicioFromFile, cantidadPicoFromFile, fechaPicoFromFile, cantidadFinalFromFile, fechaFinFromFile);
+                ComidaPadre comida = new ComidaPadre(cantidadInicialFromFile, fechaInicioFromFile, cantidadPicoFromFile, fechaPicoFromFile, cantidadFinalFromFile, fechaFinFromFile);
                 poblacion.setComida(comida);
                 GestionLab.addPoblacion(poblacion,experimento);
                 stringInfoTotal+=poblacion.toStringInfoPobFile()+"\n";
@@ -86,14 +90,14 @@ public class FileManager {
         finally {
             if (bufferedReader != null){
                 try{
-                    bufferedReader.close();
+                    bufferedReader.close(); // cuando deja de leer
                 }catch(IOException ioe){
                     System.out.println(ioe.getMessage());
                 }
             }
             if(inputStreamReader != null){
                 try{
-                    inputStreamReader.close();
+                    inputStreamReader.close(); // cuando dejan de entrar datos
                 }
                 catch(IOException ioException){
                     System.out.println(ioException.getMessage());
@@ -133,7 +137,7 @@ public class FileManager {
             }
             printWriter.close();
             comprobacion=true;
-        } catch (IOException e) {
+        } catch (IOException e) { // Cacheo esta excepción porque el constructor de  PrintWriter lanza esa excepción
             e.printStackTrace();
             comprobacion=false;
         } finally {

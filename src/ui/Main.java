@@ -1,5 +1,7 @@
 package ui;
 import dataio.FileManager;
+
+import static dataio.FileManager.abrirArchivo;
 import static dataio.UserInput.readInt;
 import static dataio.UserInput.readString;
 import gestionLab.GestionLab;
@@ -7,7 +9,8 @@ import laboratorio.Experimento;
 import laboratorio.Poblacion;
 import java.io.FileNotFoundException;
 
-
+/*
+* Poner los html, en una carpeta de javadoc*/
 /**
  * @author Ana Ventura-Traveset
  *
@@ -44,7 +47,7 @@ public class Main {
                 case 1: //Abrir un archivo que contenga un experimento
                         try {
                             String nombreExperimentoAbrir = readString("Escriba el nombre de su experimento: ");
-                            experimento = FileManager.abrirArchivo(nombreExperimentoAbrir);
+                            experimento = abrirArchivo(nombreExperimentoAbrir);
                         } catch (FileNotFoundException fnf) {
                             System.out.println("No se ha encontrado el archivo. ");
                         } catch (Exception ex) {
