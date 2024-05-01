@@ -1,6 +1,7 @@
 package gestionLab;
 import dataio.UserInput;
 import excepciones.ComidaMaxExcepcion;
+import excepciones.FechaExcepcion;
 import laboratorio.Experimento;
 import laboratorio.Poblacion;
 import medio.*;
@@ -70,7 +71,7 @@ public class GestionLab {
                 System.out.println("La cantidad de comida no puede ser negativa.");
             } else if (cantidadInicial > p.getComidaMax()) {
                 try {
-                    throw new ComidaMaxExcepcion("La comida introducida supera el máximo permitido.");
+                    throw new ComidaMaxExcepcion("La comida introducida supera el máximo permitido (300000 microgramos.");
                 } catch (ComidaMaxExcepcion ex) {
                     //sirve para avisar de que ha ido mal la excepción, en caso de que asi sea
                     ex.printStackTrace();
@@ -85,8 +86,12 @@ public class GestionLab {
         fechaFinal = UserInput.readDate("Introduzca la fecha dónde termina su experimento: ");
         while (true) {
             if (fechaFinal.isBefore(fechaInicial)) {
-                System.out.println("La fecha introducida no es correcta. " +
-                        "\nNo puede ser la fecha final antes de la fecha inicial del experimento." );
+                try {
+                    throw new FechaExcepcion("La fecha introducida no es correcta. " +
+                            "\nNo puede ser la fecha final antes de la fecha inicial del experimento.");
+                } catch (FechaExcepcion ex) {
+                    ex.printStackTrace();
+                }
             }
             else {
                 break;
@@ -96,10 +101,56 @@ public class GestionLab {
         switch (numPatronComida) {
             case 1:
                 p.setNumeroPatronComida(1);
+                float cantidadPico;
+                float cantidadFinal;
+                LocalDate fechaPico;
+                // hay que declararlos fuera del bucle pq sino no puedo usarlos fuera de este
+                while (true) {
+                    cantidadFinal = readFloat("Introduzca la cantidad de comida final: ");
+                    if (cantidadFinal < 0) {
+                        System.out.println("La cantidad de comida no puede ser negativa.");
+                    } else if (cantidadFinal > p.getComidaMax()) {
+                        try {
+                            throw new ComidaMaxExcepcion("La comida introducida supera el máximo permitido (300000 microgramos.");
+                        } catch (ComidaMaxExcepcion ex) {
+                            ex.printStackTrace();
+                        }
+                    } else {
+                        break;
+                    }
+                }
 
-                float cantidadPico = readFloat("Introduzca la cantidad de comida más alta: ");
-                LocalDate fechaPico = UserInput.readDate("Introduzca la fecha dónde hay el pico en su experimento: ");
-                float cantidadFinal = readFloat("Introduzca la cantidad de comida final: ");
+                while (true) {
+                    cantidadPico = readFloat("Introduzca la cantidad de comida más alta: ");
+                    if (cantidadPico < 0) {
+                        System.out.println("La cantidad de comida no puede ser negativa.");
+                    } else if (cantidadPico <= cantidadFinal || cantidadPico <= cantidadInicial) {
+                        System.out.println("La comida media debe ser el pico. Por favor vuelva a intentarlo.");
+                    } else if (cantidadPico > p.getComidaMax()) {
+                        try {
+                            throw new ComidaMaxExcepcion("La comida introducida supera el máximo permitido (300000 microgramos.");
+                        } catch (ComidaMaxExcepcion ex) {
+                            ex.printStackTrace();
+                        }
+                    } else {
+                        break;
+                    }
+                }
+                while (true) {
+                    fechaPico = UserInput.readDate("Introduzca la fecha dónde hay el pico en su experimento: ");
+                    if (fechaFinal.isBefore(fechaPico) || fechaPico.isBefore(fechaInicial)) {
+                        try {
+                            throw new FechaExcepcion("La fecha introducida no es correcta. " +
+                                    "\nLa fecha pico debe encontrarse entre la fecha de inicio y la de fin.");
+                        } catch (FechaExcepcion ex) {
+                            ex.printStackTrace();
+                        }
+                    }
+                    else {
+                        break;
+                    }
+                }
+
                 ComidaPico comidaPico = new ComidaPico(cantidadInicial, fechaInicial, cantidadPico, fechaPico, cantidadFinal, fechaFinal);
                 comidaPico.calcularComida();
                 p.setComida(comidaPico);
@@ -107,9 +158,6 @@ public class GestionLab {
                 break;
             case 2:
                 p.setNumeroPatronComida(2);
-                cantidadInicial = readFloat("Introduzca la cantidad de comida inicial: ");
-                fechaInicial = UserInput.readDate("Introduzca la fecha dónde empieza su experimento: ");
-                fechaFinal = UserInput.readDate("Introduzca la fecha dónde termina su experimento: ");
                 ComidaCte comidaCte = new ComidaCte(cantidadInicial, fechaInicial, fechaFinal);
                 comidaCte.calcularComida();
                 p.setComida(comidaCte);
@@ -117,10 +165,22 @@ public class GestionLab {
                 break;
             case 3:
                 p.setNumeroPatronComida(3);
-                cantidadInicial = readFloat("Introduzca la cantidad de comida inicial: ");
-                fechaInicial = UserInput.readDate("Introduzca la fecha dónde empieza su experimento: ");
-                cantidadFinal = readFloat("Introduzca la cantidad de comida final: ");
-                fechaFinal = UserInput.readDate("Introduzca la fecha dónde termina su experimento: ");
+                while (true) {
+                    cantidadFinal = readFloat("Introduzca la cantidad de comida final: ");
+                    if (cantidadFinal < 0) {
+                        System.out.println("La cantidad de comida no puede ser negativa.");
+                    } else if (cantidadFinal <= cantidadInicial) {
+                        System.out.println("La comida final debe ser superior a la cantidad inicial. Por favor vuelva a intentarlo.");
+                    } else if (cantidadFinal > p.getComidaMax()) {
+                        try {
+                            throw new ComidaMaxExcepcion("La comida introducida supera el máximo permitido (300000 microgramos.");
+                        } catch (ComidaMaxExcepcion ex) {
+                            ex.printStackTrace();
+                        }
+                    } else {
+                        break;
+                    }
+                }
                 ComidaIncremento comidaIncremento = new ComidaIncremento(cantidadInicial, fechaInicial, fechaFinal, cantidadFinal);
                 comidaIncremento.calcularComida();
                 p.setComida(comidaIncremento);
@@ -128,9 +188,6 @@ public class GestionLab {
                 break;
             case 4:
                 p.setNumeroPatronComida(4);
-                cantidadInicial = readFloat("Introduzca la cantidad de comida inicial: ");
-                fechaInicial = UserInput.readDate("Introduzca la fecha dónde empieza su experimento: ");
-                fechaFinal = UserInput.readDate("Introduzca la fecha dónde termina su experimento: ");
                 ComidaIntermitente comidaIntermitente = new ComidaIntermitente(cantidadInicial, fechaInicial, fechaFinal);
                 comidaIntermitente.calcularComida();
                 p.setComida(comidaIntermitente);
@@ -138,82 +195,6 @@ public class GestionLab {
                 break;
         }
 
-
-
-        //ComidaPadre comida = new ComidaPadre();
-        p.setNombrePoblacion(nombreP);
-        float comidaInicial;
-        float comidaPico;
-        float comidaFinal;
-        ComidaPadre comida=new ComidaPadre();
-        while (true) {
-            comidaInicial  = readFloat("Introduzca la cantidad de comida inicial: ");
-            if (comidaInicial < 0) {
-                System.out.println("La cantidad de comida no puede ser negativa.");
-            } else if (comidaInicial > 300) {
-                System.out.println("La cantidad de comida no puede ser superior a 300.");
-            } else {
-                comida.setCantidadInicial(comidaInicial);
-                break;
-            }
-        }
-        while (true) {
-            comidaPico  = readFloat("Introduzca la cantidad de comida más alta: ");
-            if (comidaPico < 0) {
-                System.out.println("La cantidad de comida no puede ser negativa.");
-            } else if (comidaPico > 300) {
-                System.out.println("La cantidad de comida no puede ser superior a 300.");
-            } else {
-                comida.setCantidadPico(comidaPico);
-                break;
-            }
-        }
-        while (true) {
-            comidaFinal = readFloat("Introduzca la cantidad de comida final: ");
-            if (comidaFinal < 0) {
-                System.out.println("La cantidad de comida no puede ser negativa.");
-            } else if (comidaFinal > 300) {
-                System.out.println("La cantidad de comida no puede ser superior a 300.");
-            } else {
-                comida.setCantidadFinal(comidaFinal);
-                break;
-            }
-        }
-        //pido el resto de cosas para calcular la comida, que son las fechas
-        LocalDate fechaInicial;
-        LocalDate fechaMedia;
-        LocalDate fechaFinal;
-
-        //Para controlar que fecha media no sea antes que la de inicio ni después que la de fin
-        fechaInicial= UserInput.readDate("Introduzca la fecha dónde empieza su experimento: ");
-        while (true) {
-            fechaMedia = UserInput.readDate("Introduzca la fecha dónde hay el pico en su experimento: ");
-            fechaFinal=fechaInicial.plusDays(dias);
-            int diasEntreInicioYPico= (int) DAYS.between(fechaInicial, fechaMedia);
-            if (fechaMedia.isBefore(fechaInicial)) {
-                System.out.println("La fecha introducida no es correcta. " +
-                        "\nNo puede ser la fecha pico antes de la fecha inicial del experimento." );
-            }
-            else if(fechaMedia.isAfter(fechaFinal)){
-                System.out.println("La fecha introducida no es correcta. " +
-                        "\nLa fecha pico no puede ser después de la fecha final del experimento que dura 30 días." );
-            }
-            else if((diasEntreInicioYPico>29)){
-                System.out.println("La fecha introducida no es correcta. " +
-                        "\nLa fecha pico no puede ser después de la fecha final del experimento que dura 30 días." );
-            }
-            else {
-                comida.setFechaInicial(fechaInicial);
-                p.setFechaInicio(fechaInicial);
-                comida.setFechaPico(fechaMedia);
-                comida.setFechaFinal(fechaFinal);
-                p.setFechaFin(fechaFinal);
-
-                comida.setCantidadComida(comida.calcularComida());
-                p.setComida(comida);
-                break;
-            }
-        }
 
         int numIniBact;
         while (true) {
