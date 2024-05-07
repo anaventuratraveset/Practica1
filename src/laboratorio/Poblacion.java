@@ -29,9 +29,11 @@ public class Poblacion {
     private Luminosidad.luminosidad luminosidad;
     private ComidaPadre comida;
     private int numeroPatronComida;
-    private final float comidaMax = 300000;
+    private final int comidaMax = 300000;
 
-    private float [] dosisComidaDiaria;
+
+
+    private int [] dosisComidaDiaria;
 
     /**
      * Constructor vacío de poblacion
@@ -60,10 +62,13 @@ public class Poblacion {
     }
 
 
+
     /**
      * Getters y setters
      * @return
      */
+
+
 
     /**
      * Muestra el nombre de la poblacion
@@ -98,11 +103,11 @@ public class Poblacion {
         return comidaMax;
     }
 
-    public float[] getDosisComidaDiaria() {
+    public int[] getDosisComidaDiaria() {
         return dosisComidaDiaria;
     }
 
-    public void setDosisComidaDiaria(float[] dosisComidaDiaria) {
+    public void setDosisComidaDiaria(int[] dosisComidaDiaria) {
         this.dosisComidaDiaria = dosisComidaDiaria;
     }
 
@@ -182,6 +187,10 @@ public class Poblacion {
     public ComidaPadre getComida() {
         return comida;
     }
+
+
+
+
 
     /**
      * toString para cuando se seleccione la opción 6, para visualizar la info de la población

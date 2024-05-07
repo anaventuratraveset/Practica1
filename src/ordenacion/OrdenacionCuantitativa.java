@@ -3,15 +3,35 @@ package ordenacion;
 import laboratorio.Poblacion;
 import java.util.Comparator;
 
+/**
+ * @author Ana Ventura-Traveset
+ */
 public class OrdenacionCuantitativa implements Comparator<Poblacion> {
+
+    /**
+     * Ordenación cuantitativa de poblaciones
+     * Se ordena por número de bacterias iniciales. Si el número de bacterias iniciales es el mismo, se ordena por fecha de inicio.
+     * Si la fecha de inicio es la misma, se ordena por nombre de población.
+     * @param p1, p2
+     * * */
     @Override
     public int compare(Poblacion p1, Poblacion p2) {
-        if (p1.getNumInicialBacterias() > p2.getNumInicialBacterias()) {
-            return 1;
-        } else if (p1.getNumInicialBacterias() < p2.getNumInicialBacterias()) {
-            return -1;
+        if (p1.getNumInicialBacterias() == p2.getNumInicialBacterias()) {
+            if (p1.getFechaInicio().equals(p2.getFechaInicio())) {
+                return p1.getNombrePoblacion().compareTo(p2.getNombrePoblacion());
+                // compareTo() devuelve el valor 0 si ambas cadenas son lexicográficamente iguales.
+                // Si la cadena comparada es mayor lexicográficamente, entonces se devuelve el valor positivo;
+                // de lo contrario, se devuelve el valor negativo.
+            } else {
+                    return p1.getFechaInicio().compareTo(p2.getFechaInicio());
+            }
         } else {
-            return 0;
+            if (p1.getNumInicialBacterias() < p2.getNumInicialBacterias()) {
+                return 1;
+            }
+            else {
+                return -1;
+            }
         }
     }
 }

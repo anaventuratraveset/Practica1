@@ -5,8 +5,14 @@ import excepciones.FechaExcepcion;
 import laboratorio.Experimento;
 import laboratorio.Poblacion;
 import medio.*;
+import ordenacion.OrdenacionAlfabetica;
+import ordenacion.OrdenacionCronologica;
+import ordenacion.OrdenacionCuantitativa;
+
 import java.text.ParseException;
 import java.time.LocalDate;
+import java.util.Arrays;
+import java.util.Collections;
 
 import static dataio.UserInput.readFloat;
 import static dataio.UserInput.readInt;
@@ -62,11 +68,11 @@ public class GestionLab {
         p.setNumeroPatronComida(numPatronComida);
 
         //Pido todos los cosos de la clase ComidaPadre
-        float cantidadInicial;
+        int cantidadInicial;
         LocalDate fechaInicial, fechaFinal;
 
         while (true) {
-            cantidadInicial = readFloat("Introduzca la cantidad de comida inicial: "); //he importado la clase y su método para poder usarlo pq es static el método
+            cantidadInicial = readInt("Introduzca la cantidad de comida inicial: "); //he importado la clase y su método para poder usarlo pq es static el método
             if (cantidadInicial < 0) {
                 System.out.println("La cantidad de comida no puede ser negativa.");
             } else if (cantidadInicial > p.getComidaMax()) {
@@ -101,12 +107,12 @@ public class GestionLab {
         switch (numPatronComida) {
             case 1:
                 p.setNumeroPatronComida(1);
-                float cantidadPico;
-                float cantidadFinal;
+                int cantidadPico;
+                int cantidadFinal;
                 LocalDate fechaPico;
                 // hay que declararlos fuera del bucle pq sino no puedo usarlos fuera de este
                 while (true) {
-                    cantidadFinal = readFloat("Introduzca la cantidad de comida final: ");
+                    cantidadFinal = readInt("Introduzca la cantidad de comida final: ");
                     if (cantidadFinal < 0) {
                         System.out.println("La cantidad de comida no puede ser negativa.");
                     } else if (cantidadFinal > p.getComidaMax()) {
@@ -121,7 +127,7 @@ public class GestionLab {
                 }
 
                 while (true) {
-                    cantidadPico = readFloat("Introduzca la cantidad de comida más alta: ");
+                    cantidadPico = readInt("Introduzca la cantidad de comida más alta: ");
                     if (cantidadPico < 0) {
                         System.out.println("La cantidad de comida no puede ser negativa.");
                     } else if (cantidadPico <= cantidadFinal || cantidadPico <= cantidadInicial) {
@@ -166,7 +172,7 @@ public class GestionLab {
             case 3:
                 p.setNumeroPatronComida(3);
                 while (true) {
-                    cantidadFinal = readFloat("Introduzca la cantidad de comida final: ");
+                    cantidadFinal = readInt("Introduzca la cantidad de comida final: ");
                     if (cantidadFinal < 0) {
                         System.out.println("La cantidad de comida no puede ser negativa.");
                     } else if (cantidadFinal <= cantidadInicial) {
@@ -225,6 +231,42 @@ public class GestionLab {
         exp.setPoblacionNueva(pob);
     }
 
+
+    /**
+     * ORDENAR poblaciones del experimento
+     * */
+    public void ordenarPoblaciones(Experimento experimento) {
+        int opcion = 0;
+        System.out.println("\nMétodos de ordenación:");
+        System.out.println("1 - Ordenar por nombre.");
+        System.out.println("2 - Ordenar por fecha de inicio.");
+        System.out.println("3 - Ordenar por número de bacterias.");
+
+        do {
+            opcion = readInt("\nSeleccione una opción: ");
+            if (opcion < 1 || opcion > 3) {
+                System.out.println("¡ Opción no valida ! ");
+            }
+        } while (opcion < 1 || opcion > 3);
+
+
+        // TENGO QUE ESTUDIARME MEJOR ESTO
+        switch (opcion) {
+            case 1:
+                OrdenacionAlfabetica ordenaNombre = new OrdenacionAlfabetica();
+                Collections.sort(experimento.getPoblacionesList(), ordenaNombre); // en vez de usar Arrays.sort() que es para arrays,
+                // uso Collections.sort() que es para listas, arrayList, etc
+                break;
+            case 2:
+                OrdenacionCronologica ordenaFecha = new OrdenacionCronologica();
+                Collections.sort(experimento.getPoblacionesList(), ordenaFecha);
+                break;
+            case 3:
+                OrdenacionCuantitativa ordenaCantidad = new OrdenacionCuantitativa();
+                Collections.sort(experimento.getPoblacionesList(), ordenaCantidad);
+                break;
+        }
+    }
 
     /**
      *

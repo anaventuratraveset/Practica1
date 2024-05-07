@@ -14,11 +14,11 @@ public class ComidaPico extends ComidaPadre{
      * fechaPico
      */
 
-    private float cantidadPico, cantidadFinal;
+    private int cantidadPico, cantidadFinal;
     private LocalDate fechaPico;
 
-    public ComidaPico(float cantidadInicial, LocalDate fechaInicial,float cantidadPico, LocalDate fechaPico,
-                      float cantidadFinal, LocalDate fechaFinal){
+    public ComidaPico(int cantidadInicial, LocalDate fechaInicial,int cantidadPico, LocalDate fechaPico,
+                      int cantidadFinal, LocalDate fechaFinal){
         super(cantidadInicial, fechaInicial, fechaFinal);
         this.cantidadPico=cantidadPico;
         this.fechaPico=fechaPico;
@@ -31,18 +31,18 @@ public class ComidaPico extends ComidaPadre{
      * Permite modificar la cantidad pico de comida
      * @param cantidadPico
      */
-    public void setCantidadPico(float cantidadPico) {
+    public void setCantidadPico(int cantidadPico) {
         this.cantidadPico = cantidadPico;
     }
 
-    public float getCantidadPico() {
+    public int getCantidadPico() {
         return cantidadPico;
     }
     /**
      * Permite modificar la cantidad final de comida
      * @param cantidadFinal
      */
-    public void setCantidadFinal(float cantidadFinal) {
+    public void setCantidadFinal(int cantidadFinal) {
         this.cantidadFinal = cantidadFinal;
     }
 
@@ -62,13 +62,13 @@ public class ComidaPico extends ComidaPadre{
      * y de ahi decreciendo linealmente hasta un valor y fecha finales
      */
     @Override
-    public float[] calcularComida(){
+    public int[] calcularComida(){
         int diasIncremento =(int) DAYS.between(super.fechaInicial, this.fechaPico);
         int diasDecremento = (int) DAYS.between(this.fechaPico, super.fechaFinal);
-        float interseccion= cantidadPico-((cantidadPico-this.cantidadFinal)/diasDecremento);
-        float CantidadIncremento= this.cantidadPico - super.cantidadInicial;
-        float CantidadDecremento= this.cantidadPico - this.cantidadFinal;
-        float cantidadComida[]=new float [super.duracion];
+        int interseccion= cantidadPico-((cantidadPico-this.cantidadFinal)/diasDecremento);
+        int CantidadIncremento= this.cantidadPico - super.cantidadInicial;
+        int CantidadDecremento= this.cantidadPico - this.cantidadFinal;
+        int cantidadComida[]=new int [super.duracion];
 
         for (int i=0; i<diasIncremento; i++){
             cantidadComida[i]=((CantidadIncremento)/diasIncremento)*i+super.cantidadInicial;

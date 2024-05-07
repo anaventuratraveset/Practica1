@@ -16,8 +16,8 @@ public abstract class ComidaPadre {
      * fechaInicial
      * duracion
      */
-    protected float cantidadInicial;
-    protected float[] cantidadComida;
+    protected int cantidadInicial;
+    protected int[] cantidadComida;
     protected LocalDate fechaInicial, fechaFinal;
     protected int duracion; // Atributo de instancia
 
@@ -36,12 +36,12 @@ public abstract class ComidaPadre {
      * @param fechaInicial
      * @param fechaFinal
      */
-    public ComidaPadre(float cantidadInicial, LocalDate fechaInicial, LocalDate fechaFinal) {
+    public ComidaPadre(int cantidadInicial, LocalDate fechaInicial, LocalDate fechaFinal) {
         this.cantidadInicial = cantidadInicial;
         this.fechaInicial = fechaInicial;
         this.fechaFinal = fechaFinal;
         this.duracion = (int) DAYS.between(fechaInicial, fechaFinal);
-        this.cantidadComida = new float[this.duracion]/*this.calcularComida()*/;
+        this.cantidadComida = new int[this.duracion]/*this.calcularComida()*/;
     }
 
 
@@ -50,7 +50,7 @@ public abstract class ComidaPadre {
      *
      * @param cantidadInicial
      */
-    public void setCantidadInicial(float cantidadInicial) {
+    public void setCantidadInicial(int cantidadInicial) {
         this.cantidadInicial = cantidadInicial;
     }
 
@@ -59,11 +59,11 @@ public abstract class ComidaPadre {
      *
      * @param cantidadComida
      */
-    public void setCantidadComida(float[] cantidadComida) {
+    public void setCantidadComida(int[] cantidadComida) {
         this.cantidadComida = cantidadComida;
     }
 
-    public float[] getCantidadComida() {
+    public int[] getCantidadComida() {
         return cantidadComida;
     }
 
@@ -98,7 +98,7 @@ public abstract class ComidaPadre {
      * getter para los test
      */
 
-    public float getCantidadInicial() {
+    public int getCantidadInicial() {
         return cantidadInicial;
     }
 
@@ -122,7 +122,7 @@ public abstract class ComidaPadre {
      * @return
      */
 // tengo
-    public abstract float[] calcularComida(); // para hacer metodo abstract tiene que ser una clase abstracta
+    public abstract int[] calcularComida(); // para hacer metodo abstract tiene que ser una clase abstracta
     // este método lo heredan sus clases hijas y lo tienen que implementar o hacerse abstract tbn, q no nos interesa eso
     // se trata de un caso de polimorfismo ya que el método se va a reutilizar pero con diferentes implementaciones => una sola acción de varias maneras
 

@@ -9,13 +9,13 @@ public class ComidaCte extends ComidaPadre {
     // bc class 'ComidaPadre' is abstract
     // the same for all the 'ComidaS'
 
-    public ComidaCte(float cantidadInicial, LocalDate fechaInicial, LocalDate fechaFinal) {
+    public ComidaCte(int cantidadInicial, LocalDate fechaInicial, LocalDate fechaFinal) {
         super(cantidadInicial,fechaInicial, fechaFinal);
     }
 
     //Patrón de cantidad de comida constante durante toda la duración del experimento
     @Override
-    public float[] calcularComida() {
+    public int[] calcularComida() {
         for (int i = 0; i <super.duracion; i++) {
             cantidadComida[i] = super.cantidadInicial;
         }

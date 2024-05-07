@@ -5,25 +5,25 @@ import java.util.Arrays;
 
 public class ComidaIncremento extends ComidaPadre{
 
-    private float cantidadFinal;
-    public ComidaIncremento(float cantidadInicial, LocalDate fechaInicial, LocalDate fechaFinal,
-                            float cantidadFinal){
+    private int cantidadFinal;
+    public ComidaIncremento(int cantidadInicial, LocalDate fechaInicial, LocalDate fechaFinal,
+                            int cantidadFinal){
         super(cantidadInicial, fechaInicial, fechaFinal);
         this.cantidadFinal = cantidadFinal;
     }
 
-    public void setCantidadFinal(float cantidadFinal) {
+    public void setCantidadFinal(int cantidadFinal) {
         this.cantidadFinal = cantidadFinal;
     }
 
-    public float getCantidadFinal() {
+    public int getCantidadFinal() {
         return cantidadFinal;
     }
 
     @Override
-    public float[] calcularComida(){
-        float cantidadComida[]=new float [super.duracion];
-        float cantidadIncremento = cantidadFinal - cantidadInicial;
+    public int[] calcularComida(){
+        int cantidadComida[]=new int [super.duracion];
+        int cantidadIncremento = cantidadFinal - cantidadInicial;
         for (int i=0; i<super.duracion; i++){
             cantidadComida [i] = cantidadIncremento / super.duracion * i + cantidadInicial;
         }

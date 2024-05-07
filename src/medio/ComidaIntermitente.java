@@ -5,12 +5,12 @@ import java.util.Arrays;
 
 public class ComidaIntermitente extends ComidaPadre{
 
-    public ComidaIntermitente(float cantidadInicial, LocalDate fechaInicial, LocalDate fechaFinal){
+    public ComidaIntermitente(int cantidadInicial, LocalDate fechaInicial, LocalDate fechaFinal){
         super(cantidadInicial, fechaInicial, fechaFinal);
     }
 
     @Override
-    public float[] calcularComida() {
+    public int[] calcularComida() {
         for (int i = 0; i < cantidadComida.length; i++) {
             if (i % 2 == 0) {
                 cantidadComida[i] = super.cantidadInicial;
