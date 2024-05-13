@@ -10,12 +10,10 @@ public class Experimento {
      * Atributos experimento
      *
      * nombreExperimento
-     * dias
      * numPoblaciones
      * poblacionesList
      */
     private String nombreExperimento;
-    private int dias;
     private int numPoblaciones;
     private ArrayList<Poblacion> poblacionesList;
 
@@ -50,21 +48,6 @@ public class Experimento {
         this.nombreExperimento = nombreExperimento;
     }
 
-    /**
-     * getDias
-     * @return int dias
-     */
-    public int getDias() {
-        return dias;
-    }
-
-    /**
-     * setDias
-     * @param dias
-     */
-    public void setDias(int dias) {
-        this.dias = dias;
-    }
 
     /**
      * getNumPoblaciones
@@ -88,6 +71,10 @@ public class Experimento {
      */
     public ArrayList<Poblacion> getPoblacionesList() {
         return this.poblacionesList;
+    }
+
+    public void setPoblacionesList(ArrayList<Poblacion> poblacionesList) {
+        this.poblacionesList = poblacionesList;
     }
 
     /**
@@ -118,7 +105,6 @@ public class Experimento {
     @Override
     public String toString() {
         String stringToRepresentInfoPoblacionesExperimento = "Nombre Experimento: " + this.nombreExperimento
-                + "\nNumero de días: " + this.dias
                 + "\n\nInformación de las poblaciones:\n";
         if(poblacionesList!=null) {
             for (int i = 0; i < poblacionesList.size(); i++) {

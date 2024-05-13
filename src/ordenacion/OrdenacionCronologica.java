@@ -14,7 +14,10 @@ public class OrdenacionCronologica implements Comparator<Poblacion> { //al imple
      * */
     @Override
     public int compare(Poblacion p1, Poblacion p2) {
-            if (p1.getFechaInicio().equals(p2.getFechaInicio())) {
+        if (p1 == null || p2 == null) {
+            throw new IllegalArgumentException("Uno de los objetos es nulo.");
+        } else {
+            /*if (p1.getFechaInicio().equals(p2.getFechaInicio())) {
                 if (p1.getNumInicialBacterias() == p2.getNumInicialBacterias()) {
                     return p1.getNombrePoblacion().compareTo(p2.getNombrePoblacion());
                 } else {
@@ -26,7 +29,8 @@ public class OrdenacionCronologica implements Comparator<Poblacion> { //al imple
                     }                }
             } else {
                 return p1.getFechaInicio().compareTo(p2.getFechaInicio());
-            }
+            }*/
+            return p1.getFechaInicio().compareTo(p2.getFechaInicio());
+        }
     }
-
 }

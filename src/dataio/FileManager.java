@@ -2,8 +2,8 @@ package dataio;
 import gestionLab.GestionLab;
 import laboratorio.Experimento;
 import laboratorio.Poblacion;
-import medio.ComidaPadre;
-import medio.Luminosidad;
+import medio.*;
+
 import java.io.*;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -35,9 +35,10 @@ public class FileManager {
             // lo leo
             bufferedReader = new BufferedReader(new InputStreamReader(new FileInputStream(file)));
             String [] todosArgs = bufferedReader.readLine().split("\n");
-            String [] infoExperimento = todosArgs[0].split(";");
-            String nombreExpFromFile = infoExperimento[0];
-            int diasExpFromFile = Integer.parseInt(infoExperimento[1]);
+//            String [] infoExperimento = todosArgs[0].split(";");
+//            String nombreExpFromFile = infoExperimento[0];
+            //lo hago así ahora porque ya la duracion ya no depende de cada experimento sino que cada poblaicon tiene la suya propia
+            String nombreExpFromFile = todosArgs[0];
 
             experimento = new Experimento(nombreExpFromFile);
 
@@ -65,19 +66,45 @@ public class FileManager {
                 Luminosidad.luminosidad luminosidadFromFile = Luminosidad.luminosidad.valueOf(infoPoblacion[3]);
                 poblacion.setLuminosidad(luminosidadFromFile);
 
+                int numPatronComida = Integer.parseInt(infoPoblacion[4]);
+                poblacion.setNumeroPatronComida(numPatronComida);
+
                 // Empiezo con la info de comida
                 DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-                LocalDate fechaInicioFromFile = LocalDate.parse(infoPoblacion[4], dtf);
-                poblacion.setFechaInicio(fechaInicioFromFile);
-                float cantidadInicialFromFile = Float.parseFloat(infoPoblacion[5]);
-                LocalDate fechaPicoFromFile = LocalDate.parse(infoPoblacion[6], dtf);
-                float cantidadPicoFromFile = Float.parseFloat(infoPoblacion[7]);
-                LocalDate fechaFinFromFile = LocalDate.parse(infoPoblacion[8], dtf);
-                poblacion.setFechaFin(fechaFinFromFile);
-                float cantidadFinalFromFile = Float.parseFloat(infoPoblacion[9]);
+                LocalDate fechaInicioFromFile = LocalDate.parse(infoPoblacion[5], dtf);
+                int cantidadInicialFromFile = Integer.parseInt(infoPoblacion[6]);
+                LocalDate fechaFinFromFile;
 
-                ComidaPadre comida = new ComidaPadre(cantidadInicialFromFile, fechaInicioFromFile, cantidadPicoFromFile, fechaPicoFromFile, cantidadFinalFromFile, fechaFinFromFile);
-                poblacion.setComida(comida);
+                switch (numPatronComida){
+                    case 1:
+                        LocalDate fechaPicoFromFile = LocalDate.parse(infoPoblacion[7], dtf);
+                        int cantidadPicoFromFile = Integer.parseInt(infoPoblacion[8]);
+                        fechaFinFromFile = LocalDate.parse(infoPoblacion[9], dtf);
+                        int cantidadFinalFromFile = Integer.parseInt(infoPoblacion[10]);
+                        ComidaPico comidaPico = new ComidaPico(cantidadInicialFromFile, fechaInicioFromFile, cantidadPicoFromFile, fechaPicoFromFile, cantidadFinalFromFile, fechaFinFromFile);
+                        poblacion.setComida(comidaPico);
+                        break;
+
+                    case 2:
+                        fechaFinFromFile = LocalDate.parse(infoPoblacion[7], dtf);
+                        ComidaCte comidaCte = new ComidaCte(cantidadInicialFromFile, fechaInicioFromFile, fechaFinFromFile);
+                        poblacion.setComida(comidaCte);
+                        break;
+
+                    case 3:
+                        fechaFinFromFile = LocalDate.parse(infoPoblacion[7], dtf);
+                        cantidadFinalFromFile = Integer.parseInt(infoPoblacion[8]);
+                        ComidaIncremento comidaIncremento = new ComidaIncremento(cantidadInicialFromFile, fechaInicioFromFile, fechaFinFromFile, cantidadFinalFromFile);
+                        poblacion.setComida(comidaIncremento);
+                        break;
+
+                    case 4:
+                        fechaFinFromFile = LocalDate.parse(infoPoblacion[7], dtf);
+                        ComidaIntermitente comidaIntermitente = new ComidaIntermitente(cantidadInicialFromFile, fechaInicioFromFile, fechaFinFromFile);
+                        poblacion.setComida(comidaIntermitente);
+                        break;
+                }
+
                 GestionLab.addPoblacion(poblacion,experimento);
                 stringInfoTotal+=poblacion.toStringInfoPobFile()+"\n";
             }
@@ -127,19 +154,19 @@ public class FileManager {
         boolean comprobacion=false;
         try {
             printWriter = new PrintWriter(file1);
-            String experimentoInfoFile = experimento.getNombreExperimento() + ';' + experimento.getDias();
+            String experimentoInfoFile = experimento.getNombreExperimento() ;
             printWriter.println(experimentoInfoFile);//escribe en el fichero primero la info del experimento
             for (int i = 0; i < experimento.getPoblacionesList().size(); i++) {
                 String infoPoblacionesFile = "";
                 infoPoblacionesFile += experimento.getPoblacionesList().get(i).toStringInfoPobFile();
+                infoPoblacionesFile += ";"+experimento.getPoblacionesList().get(i).getComida().toStringToFile();
                 printWriter.print(infoPoblacionesFile); //escribe en el fichero ahora la info de cada población
                 printWriter.println();
             }
             printWriter.close();
             comprobacion=true;
-        } catch (IOException e) { // Cacheo esta excepción porque el constructor de  PrintWriter lanza esa excepción
+        } catch (IOException e) { // Cacheo esta excepción porque el constructor de PrintWriter lanza esa excepción
             e.printStackTrace();
-            comprobacion=false;
         } finally {
             if (printWriter != null) {
                 printWriter.close();

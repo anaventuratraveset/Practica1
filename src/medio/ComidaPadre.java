@@ -148,9 +148,7 @@ public abstract class ComidaPadre {
      * @return stringToRepresentDosisComidaToFile
      */
     public String toStringToFile() {
-        String stringToRepresentDosisComidaToFile = this.duracion
-                + ";" + this.fechaInicial
-                + ";" + this.cantidadInicial;
+        String stringToRepresentDosisComidaToFile = this.fechaInicial + ";" + this.cantidadInicial;
         return stringToRepresentDosisComidaToFile;
     }
 }

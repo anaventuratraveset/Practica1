@@ -2,6 +2,7 @@ package laboratorio;
 import medio.ComidaPadre;
 import medio.Luminosidad;
 import java.time.LocalDate;
+import java.util.ArrayList;
 
 /**
  * @author Ana Ventura-Traveset
@@ -30,10 +31,9 @@ public class Poblacion {
     private ComidaPadre comida;
     private int numeroPatronComida;
     private final int comidaMax = 300000;
-
-
-
     private int [] dosisComidaDiaria;
+    private ArrayList<Bacteria> bacteriasList;
+
 
     /**
      * Constructor vacío de poblacion
@@ -105,6 +105,9 @@ public class Poblacion {
 
     public int[] getDosisComidaDiaria() {
         return dosisComidaDiaria;
+    }
+    public int getDosisComidaXDia(int dia) {
+        return dosisComidaDiaria[dia];
     }
 
     public void setDosisComidaDiaria(int[] dosisComidaDiaria) {
@@ -189,6 +192,30 @@ public class Poblacion {
     }
 
 
+    /**
+     * getBacteriasList()
+     * @return ArrayList<Bacteria> this.bacteriasList: la lista de Bacterias
+     */
+    public ArrayList<Bacteria> getBacteriasList() {
+        return this.bacteriasList;
+    }
+
+    /**
+     * setBacteriaNueva
+     * Añade la bacteria a la lista de bacterias
+     * @param b
+     */
+    public void setBacteriaNueva (Bacteria b){
+        this.bacteriasList.add(b);
+    }
+
+    /**
+     * get para los unit test
+     */
+    public Bacteria getBacteriaNueva(){
+        return this.bacteriasList.get(this.bacteriasList.size()-1);
+    }
+
 
 
 
@@ -212,8 +239,6 @@ public class Poblacion {
 
         String stringToRepresentPoblacion = "La población "
                 + this.nombrePoblacion +":"
-                + "\nFecha de inicio del experimento: "+ this.fechaInicio
-                + "\nFecha de fin del experimento: "+ this.fechaFin
                 + "\nCantidad de bacterias inicialmente: "+ this.numInicialBacterias
                 + "\nTemperatura a la cual están sometidas las bacterias: "+ this.temperatura
                 + "\nLuminosidad: "+this.luminosidad
@@ -232,7 +257,7 @@ public class Poblacion {
                 + ";" + this.temperatura
                 + ";" + this.luminosidad
                 + ";" + this.numeroPatronComida
-                + ";" + comida.toStringToFile();
+                /*+ ";" + comida.toStringToFile()*/; // no sé si debería quitarlo y ponerlo directamente desde comida o dejarlo
 
         return stringToRepresentInfoPobFile;
     }

@@ -2,6 +2,7 @@ package gestionLab;
 import dataio.UserInput;
 import excepciones.ComidaMaxExcepcion;
 import excepciones.FechaExcepcion;
+import laboratorio.Bacteria;
 import laboratorio.Experimento;
 import laboratorio.Poblacion;
 import medio.*;
@@ -103,6 +104,8 @@ public class GestionLab {
                 break;
             }
         }
+        p.setFechaInicio(fechaInicial);
+        p.setFechaFin(fechaFinal);
 
         switch (numPatronComida) {
             case 1:
@@ -212,11 +215,17 @@ public class GestionLab {
                 break;
             }
         }
+
+        for (int i = 0; i < numIniBact; i++) {
+            p.setBacteriaNueva(new Bacteria());
+        }
+
         System.out.println("Creada población: "+nombreP);
 
         //añado la poblacion al experimento
         e.setNumPoblaciones(e.getNumPoblaciones()+1);
         e.setPoblacionNueva(p);
+        e.setPoblacionesList(e.getPoblacionesList());
         return p;
     }
 
@@ -232,38 +241,53 @@ public class GestionLab {
     }
 
 
+
+
     /**
      * ORDENAR poblaciones del experimento
      * */
-    public void ordenarPoblaciones(Experimento experimento) {
+    public static void ordenarPoblaciones(Experimento experimento) {
         int opcion = 0;
         System.out.println("\nMétodos de ordenación:");
         System.out.println("1 - Ordenar por nombre.");
         System.out.println("2 - Ordenar por fecha de inicio.");
         System.out.println("3 - Ordenar por número de bacterias.");
-
+        System.out.println("4 - Sin ordenar.");
         do {
             opcion = readInt("\nSeleccione una opción: ");
-            if (opcion < 1 || opcion > 3) {
+            if (opcion < 1 || opcion > 4) {
                 System.out.println("¡ Opción no valida ! ");
             }
-        } while (opcion < 1 || opcion > 3);
-
+        } while (opcion < 1 || opcion > 4);
 
         // TENGO QUE ESTUDIARME MEJOR ESTO
         switch (opcion) {
             case 1:
-                OrdenacionAlfabetica ordenaNombre = new OrdenacionAlfabetica();
-                Collections.sort(experimento.getPoblacionesList(), ordenaNombre); // en vez de usar Arrays.sort() que es para arrays,
-                // uso Collections.sort() que es para listas, arrayList, etc
+                try {
+                    OrdenacionAlfabetica ordenaNombre = new OrdenacionAlfabetica();
+                    Collections.sort(experimento.getPoblacionesList(), ordenaNombre); // en vez de usar Arrays.sort() que es para arrays,
+                    // uso Collections.sort() que es para listas, arrayList, etc
+                } catch (NullPointerException e) {
+                    throw new RuntimeException(e);
+                }
                 break;
             case 2:
-                OrdenacionCronologica ordenaFecha = new OrdenacionCronologica();
-                Collections.sort(experimento.getPoblacionesList(), ordenaFecha);
+                try {
+                    OrdenacionCronologica ordenaFecha = new OrdenacionCronologica();
+                    Collections.sort(experimento.getPoblacionesList(), ordenaFecha);
+                } catch (NullPointerException e) {
+                    throw new RuntimeException(e);
+                }
                 break;
             case 3:
-                OrdenacionCuantitativa ordenaCantidad = new OrdenacionCuantitativa();
-                Collections.sort(experimento.getPoblacionesList(), ordenaCantidad);
+                try {
+                    OrdenacionCuantitativa ordenaCantidad = new OrdenacionCuantitativa();
+                    experimento.getPoblacionesList().sort(ordenaCantidad);
+                } catch (NullPointerException e) {
+                    throw new RuntimeException(e);
+                }
+                break;
+            case 4:
                 break;
         }
     }
@@ -290,7 +314,7 @@ public class GestionLab {
     public static Poblacion buscarPoblacion(String nombrePoblacion, Experimento e) {
         Poblacion miPoblacion=null;
         for (int i = 0; i < e.getPoblacionesList().size(); i++) {
-            if (nombrePoblacion.equals(e.getPoblacionesList().get(i).getNombrePoblacion())) {
+            if (nombrePoblacion.equalsIgnoreCase(e.getPoblacionesList().get(i).getNombrePoblacion())) {
                 miPoblacion=e.getPoblacionesList().get(i);
                 break;
             }
@@ -299,7 +323,7 @@ public class GestionLab {
             return miPoblacion;
         }
         else {
-            throw new RuntimeException();
+            throw new RuntimeException("Población no encontrada.");
         }
     }
 }

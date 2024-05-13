@@ -62,22 +62,22 @@ public class ComidaPico extends ComidaPadre{
      * y de ahi decreciendo linealmente hasta un valor y fecha finales
      */
     @Override
-    public int[] calcularComida(){
-        int diasIncremento =(int) DAYS.between(super.fechaInicial, this.fechaPico);
-        int diasDecremento = (int) DAYS.between(this.fechaPico, super.fechaFinal);
-        int interseccion= cantidadPico-((cantidadPico-this.cantidadFinal)/diasDecremento);
-        int CantidadIncremento= this.cantidadPico - super.cantidadInicial;
-        int CantidadDecremento= this.cantidadPico - this.cantidadFinal;
-        int cantidadComida[]=new int [super.duracion];
+        public int[] calcularComida(){
+            int diasIncremento =(int) DAYS.between(super.fechaInicial, this.fechaPico);
+            int diasDecremento = (int) DAYS.between(this.fechaPico, super.fechaFinal);
+            int interseccion= cantidadPico-((cantidadPico-this.cantidadFinal)/diasDecremento);
+            int cantidadIncremento= this.cantidadPico - super.cantidadInicial;
+            int cantidadDecremento= this.cantidadPico - this.cantidadFinal;
+            int cantidadComida[]=new int [super.duracion];
 
-        for (int i=0; i<diasIncremento; i++){
-            cantidadComida[i]=((CantidadIncremento)/diasIncremento)*i+super.cantidadInicial;
+            for (int i=0; i<diasIncremento; i++){
+                cantidadComida[i]=(cantidadIncremento/diasIncremento)*i+super.cantidadInicial;
+            }
+            for(int j=diasIncremento; j<super.duracion; j++){
+                cantidadComida[j]= -(cantidadDecremento/diasDecremento)*j+interseccion;
+            }
+            return cantidadComida;
         }
-        for(int j=diasIncremento; j<super.duracion; j++){
-            cantidadComida[j]= ((CantidadDecremento)/diasDecremento)*j+interseccion;
-        }
-        return cantidadComida;
-    }
 
     /**
      * Muestra la información de la comida, incluida la cantidad de comida de cada día

@@ -25,7 +25,7 @@ public class ComidaIncremento extends ComidaPadre{
         int cantidadComida[]=new int [super.duracion];
         int cantidadIncremento = cantidadFinal - cantidadInicial;
         for (int i=0; i<super.duracion; i++){
-            cantidadComida [i] = cantidadIncremento / super.duracion * i + cantidadInicial;
+            cantidadComida [i] = (cantidadIncremento / super.duracion) * i + cantidadInicial;
         }
 
         return cantidadComida;

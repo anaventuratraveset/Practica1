@@ -13,37 +13,52 @@ public class Bacteria {
      * Constructor por defecto de Bacteria
      * */
     public Bacteria() {
-        this.comidaIngerida = 0;
+    }
+
+    /**
+     * Getters y setters de los atributos privados de la clase Bacteria
+     * comida ingerida, x e y
+     * */
+    public void setComidaIngerida(int comidaIngerida) {
+        this.comidaIngerida = comidaIngerida;
+    }
+    public int getX() {
+        return x;
+    }
+    public void setX(int x) {
+        this.x = x;
+    }
+    public int getY() {
+        return y;
+    }
+    public void setY(int y) {
+        this.y = y;
     }
 
     /**
      * Muestra el valor de la comida ingerida por una bacteria
-     *
+     * Esta información se usa en la clase GestionSimulacion
+     * para saber según la cantidad que haya INGERIDO, cuantas veces se reproduce
      * @return int
      */
     public int getComidaIngerida() {
         return comidaIngerida;
     }
 
-    public String toString() {
-
-        String texto = "\nComida Ingerida: " + comidaIngerida;
-        return texto;
-    }
-
     /**
      * Cuenta la cantidad de comida ingerida por la bacteria, sumándole el valor
      * que se le pasa como argumento
-     *
-     * @param comidaAIngerir
+     * @param cantidaComida
      * @return
      */
-    public int generadorNumAleatorio (int comidaAIngerir) {
-        this.comidaIngerida = this.comidaIngerida + comidaAIngerir;
+    public int contarComidaIngerida(int cantidaComida) {
+        this.comidaIngerida = this.comidaIngerida + cantidaComida;
         int aleatorio = (int) (Math.random() * 101);
         return aleatorio;
-
     }
 
-
+    public String toString() {
+        String texto = "\nComida Ingerida: " + comidaIngerida;
+        return texto;
+    }
 }

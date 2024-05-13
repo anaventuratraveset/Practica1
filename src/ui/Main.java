@@ -5,7 +5,9 @@ import static dataio.FileManager.abrirArchivo;
 import static dataio.UserInput.readInt;
 import static dataio.UserInput.readString;
 import gestionLab.GestionLab;
+import gestionLab.GestionSimulacion;
 import laboratorio.Experimento;
+import laboratorio.Plato;
 import laboratorio.Poblacion;
 import java.io.FileNotFoundException;
 
@@ -23,7 +25,7 @@ public class Main {
         int opcion = 0;
         Experimento experimento=null;
 
-        while (opcion != 9) {
+        while (opcion != 10) {
             System.out.println("\nSelecione una opción:" +
                     "\n1. Abrir un archivo que contenga un experimento" +
                     "\n2. Crear un nuevo experimento" +
@@ -31,17 +33,18 @@ public class Main {
                     "\n4. Visualizar los nombres de todas las poblaciones de bacterias del experimento actual" +
                     "\n5. Borrar una población de bacterias del experimento actual" +
                     "\n6. Ver información detallada de una población de bacterias del experimento actual" +
-                    "\n7. Guardar" +
-                    "\n8. Guardar como" +
-                    "\n9. Salir");
+                    "\n7. Realizar y visualizar una simulación de Montecarlo de una población de bacterias del experimento actual" +
+                    "\n8. Guardar" +
+                    "\n9. Guardar como" +
+                    "\n10. Salir");
 
             System.out.println("\nIntroduzca las fechas siempre en este formato \"yyyy.MM.dd\"");
             do {
                 opcion = readInt("Seleccione una opción: ");
-                if (opcion < 1 || opcion > 9) {
+                if (opcion < 1 || opcion > 10) {
                     System.out.println("¡ Opción no valida ! ");
                 }
-            } while (opcion < 1 || opcion > 9);
+            } while (opcion < 1 || opcion > 10);
 
             switch (opcion) {
                 case 1: //Abrir un archivo que contenga un experimento
@@ -63,6 +66,8 @@ public class Main {
                         numPoblaciones = readInt("Escriba el número de poblaciones que tiene su nuevo experimento: ");
                         if (numPoblaciones < 0) {
                             System.out.println("El número de poblaciones no puede ser negativo.");
+                        } else if (numPoblaciones == 0) {
+                            System.out.println("No se ha creado ninguna población.");
                         } else {
                             break;
                         }
@@ -79,6 +84,10 @@ public class Main {
                         }
                     }
 
+                    if(numPoblaciones > 1){
+                        GestionLab.ordenarPoblaciones(experimento);
+                    }
+
                     System.out.println("\nExperimento " + experimento.getNombreExperimento() + " ha sido creado correctamente.");
                     System.out.println(experimento.toString());
                     break;
@@ -91,6 +100,7 @@ public class Main {
                     try {
                         Poblacion recienCreada=GestionLab.createPoblacion(experimento);
                         System.out.println(recienCreada.toString());
+                        GestionLab.ordenarPoblaciones(experimento);
                     } catch (Exception ex) {
                         System.out.println("ERROR.");
                     }
@@ -101,6 +111,11 @@ public class Main {
                         System.out.println("No tiene ningún experimento cargado en memoria. Primero debe abrir un archivo.");
                     }
                     else {
+                        try {
+                            GestionLab.ordenarPoblaciones(experimento);
+                        } catch (Exception e) {
+                            throw new RuntimeException(e);
+                        }
                         String nombres = experimento.toStringNombres();
                         System.out.println(nombres);
                     }
@@ -132,8 +147,28 @@ public class Main {
                     }
                     break;
 
-                case 7: //Guardar (se supone que para usar esta opción previamente hemos abierto un archivo)
+                case 7: // Realizar y visualizar una simulación de Montecarlo de una población de bacterias del experimento actual
+                    if (experimento== null) {
+                        System.out.println("No tiene ningún experimento cargado en memoria. Primero debe abrir un archivo.");
+                    }
+                    else {
+                        String pobSimular = (readString("Escriba el nombre de la población que desea simular: "));
+                        try {
+                            Poblacion poblacionSimulada = GestionLab.buscarPoblacion(pobSimular, experimento);
+                            // aqui me imprime siempre lo de que la poblacion no existe
+                            // pero no entiendo pq ya que en la de ver info si que me la encuentra y hago exactamente lo mismo
+                            Plato platoCultivo = new Plato(poblacionSimulada.getNumInicialBacterias(), poblacionSimulada.getDosisComidaXDia(0));
+                            GestionSimulacion.monteCarlo(poblacionSimulada, platoCultivo);
+                        } catch (RuntimeException e) {
+                            System.out.println("La población no existe en este experimento.");
+                        }
+                        catch (Exception e) {
+                            System.out.println("Error durante la simulación: ");
+                        }
+                    }
+                    break;
 
+                case 8: //Guardar (se supone que para usar esta opción previamente hemos abierto un archivo)
                     if (experimento== null) {
                         System.out.println("No tiene ningún experimento cargado en memoria. Primero debe abrir un archivo.");
                     }else{
@@ -146,7 +181,7 @@ public class Main {
                     }
                     break;
 
-                case 8: //Guardar como
+                case 9: //Guardar como
                     if (experimento== null) {
                         System.out.println("No tiene ningún experimento cargado en memoria. Primero debe abrir un archivo.");
                     }else {
@@ -161,12 +196,11 @@ public class Main {
                     }
                     break;
 
-                case 9: //Salir del programa
+                case 10: //Salir del programa
                     System.out.println("Salió del programa.");
-                    System.out.println("Adiós y muchas gracias.");
+                    System.out.println("¡Adiós y muchas gracias!");
                     break;
             }
-
         }
     }
 }
