@@ -72,7 +72,9 @@ public class FileManager {
                 // Empiezo con la info de comida
                 DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd");
                 LocalDate fechaInicioFromFile = LocalDate.parse(infoPoblacion[5], dtf);
+                poblacion.setFechaInicio(fechaInicioFromFile);
                 int cantidadInicialFromFile = Integer.parseInt(infoPoblacion[6]);
+                //Tengo que ver lo de arriba
                 LocalDate fechaFinFromFile;
 
                 switch (numPatronComida){
@@ -80,6 +82,7 @@ public class FileManager {
                         LocalDate fechaPicoFromFile = LocalDate.parse(infoPoblacion[7], dtf);
                         int cantidadPicoFromFile = Integer.parseInt(infoPoblacion[8]);
                         fechaFinFromFile = LocalDate.parse(infoPoblacion[9], dtf);
+                        poblacion.setFechaFin(fechaFinFromFile);
                         int cantidadFinalFromFile = Integer.parseInt(infoPoblacion[10]);
                         ComidaPico comidaPico = new ComidaPico(cantidadInicialFromFile, fechaInicioFromFile, cantidadPicoFromFile, fechaPicoFromFile, cantidadFinalFromFile, fechaFinFromFile);
                         poblacion.setComida(comidaPico);
@@ -87,12 +90,14 @@ public class FileManager {
 
                     case 2:
                         fechaFinFromFile = LocalDate.parse(infoPoblacion[7], dtf);
+                        poblacion.setFechaFin(fechaFinFromFile);
                         ComidaCte comidaCte = new ComidaCte(cantidadInicialFromFile, fechaInicioFromFile, fechaFinFromFile);
                         poblacion.setComida(comidaCte);
                         break;
 
                     case 3:
                         fechaFinFromFile = LocalDate.parse(infoPoblacion[7], dtf);
+                        poblacion.setFechaFin(fechaFinFromFile);
                         cantidadFinalFromFile = Integer.parseInt(infoPoblacion[8]);
                         ComidaIncremento comidaIncremento = new ComidaIncremento(cantidadInicialFromFile, fechaInicioFromFile, fechaFinFromFile, cantidadFinalFromFile);
                         poblacion.setComida(comidaIncremento);
@@ -100,6 +105,7 @@ public class FileManager {
 
                     case 4:
                         fechaFinFromFile = LocalDate.parse(infoPoblacion[7], dtf);
+                        poblacion.setFechaFin(fechaFinFromFile);
                         ComidaIntermitente comidaIntermitente = new ComidaIntermitente(cantidadInicialFromFile, fechaInicioFromFile, fechaFinFromFile);
                         poblacion.setComida(comidaIntermitente);
                         break;

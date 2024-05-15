@@ -38,7 +38,6 @@ public class Main {
                     "\n9. Guardar como" +
                     "\n10. Salir");
 
-            System.out.println("\nIntroduzca las fechas siempre en este formato \"yyyy.MM.dd\"");
             do {
                 opcion = readInt("Seleccione una opción: ");
                 if (opcion < 1 || opcion > 10) {

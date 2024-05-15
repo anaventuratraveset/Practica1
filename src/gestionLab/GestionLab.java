@@ -72,6 +72,7 @@ public class GestionLab {
         int cantidadInicial;
         LocalDate fechaInicial, fechaFinal;
 
+        System.out.println("La cantidad de comida ha de ser entre 0-300000 microgramos).");
         while (true) {
             cantidadInicial = readInt("Introduzca la cantidad de comida inicial: "); //he importado la clase y su método para poder usarlo pq es static el método
             if (cantidadInicial < 0) {
@@ -89,8 +90,8 @@ public class GestionLab {
         }
 
         //Para controlar que fecha de inicio no sea después que la de fin
-        fechaInicial= UserInput.readDate("Introduzca la fecha dónde empieza su experimento: ");
-        fechaFinal = UserInput.readDate("Introduzca la fecha dónde termina su experimento: ");
+        fechaInicial= UserInput.readDate("Introduzca la fecha donde empieza su experimento (yyyy.MM.dd): ");
+        fechaFinal = UserInput.readDate("Introduzca la fecha donde termina su experimento (yyyy.MM.dd): ");
         while (true) {
             if (fechaFinal.isBefore(fechaInicial)) {
                 try {
@@ -146,7 +147,7 @@ public class GestionLab {
                     }
                 }
                 while (true) {
-                    fechaPico = UserInput.readDate("Introduzca la fecha dónde hay el pico en su experimento: ");
+                    fechaPico = UserInput.readDate("Introduzca la fecha donde hay el pico en su experimento (yyyy.MM.dd): ");
                     if (fechaFinal.isBefore(fechaPico) || fechaPico.isBefore(fechaInicial)) {
                         try {
                             throw new FechaExcepcion("La fecha introducida no es correcta. " +
@@ -204,12 +205,11 @@ public class GestionLab {
                 break;
         }
 
-
         int numIniBact;
         while (true) {
             numIniBact = UserInput.readInt("Escriba el número inicial de bacterias: ");
-            if (numIniBact < 0) {
-                System.out.println("El número inicial de bacterias no puede ser negativo.");
+            if (numIniBact <= 0) {
+                System.out.println("El número inicial de bacterias no puede ser menor o igual que 0.");
             } else {
                 p.setNumInicialBacterias(numIniBact);
                 break;
@@ -217,7 +217,8 @@ public class GestionLab {
         }
 
         for (int i = 0; i < numIniBact; i++) {
-            p.setBacteriaNueva(new Bacteria());
+            Bacteria bacteria = new Bacteria();
+            p.setBacteriaNueva(bacteria);
         }
 
         System.out.println("Creada población: "+nombreP);
@@ -239,9 +240,6 @@ public class GestionLab {
         exp.setNumPoblaciones(exp.getNumPoblaciones()+1);
         exp.setPoblacionNueva(pob);
     }
-
-
-
 
     /**
      * ORDENAR poblaciones del experimento
@@ -326,4 +324,5 @@ public class GestionLab {
             throw new RuntimeException("Población no encontrada.");
         }
     }
+
 }

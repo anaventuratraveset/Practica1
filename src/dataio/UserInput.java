@@ -140,7 +140,6 @@ public class UserInput {
         do{
             try{
                 System.out.println(peticion);
-                System.out.println("Introducir las fechas en este formato: yyyy.MM.dd");
                 Scanner sc = new Scanner(System.in);
                 SimpleDateFormat formato = new SimpleDateFormat("yyyy.MM.dd");
                 fecha = formato.parse(sc.nextLine());
