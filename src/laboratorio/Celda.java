@@ -14,17 +14,21 @@ public class Celda {
      * Además, gestiona la simulación de Montecarlo para las bacterias en una única celda.
      */
     private int comida;
-    private List<Bacteria> listBacterias;
+    private List<Bacteria> listBacterias = new LinkedList<Bacteria>();
+    private int bacteriasVivas;
+    private Poblacion poblacion;
 
     public Celda() {
     }
 
-    public Celda(int comida, int numBacterias) {
+    public Celda (int comida, int bacteriasVivas){
+        this.comida = comida;
+        this.bacteriasVivas = bacteriasVivas;
+    }
+
+    public Celda(int comida) {
         this.comida = comida;
         listBacterias = new LinkedList<Bacteria>();
-        for (int i = 0; i < numBacterias; i++) {
-            listBacterias.add(new Bacteria());
-        }
     }
 
 
@@ -55,7 +59,8 @@ public class Celda {
          * Devuelve la cantidad de comida de la celda
          * @return int
          */
-        public int getComida () {
+        public int getComida (int dia) {
+            poblacion.getDosisComidaXDia(dia);
             return comida;
         }
 

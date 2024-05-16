@@ -3,8 +3,13 @@ package gestionLab;
 import excepciones.ComidaCeldaExcepcion;
 import excepciones.FechaExcepcion;
 import laboratorio.Bacteria;
+import laboratorio.Celda;
 import laboratorio.Plato;
 import laboratorio.Poblacion;
+import medio.ComidaPico;
+import medio.Luminosidad;
+import ui.VistaSimulacion;
+
 import java.time.LocalDate;
 import java.util.Iterator;
 
@@ -13,17 +18,28 @@ import static java.time.temporal.ChronoUnit.DAYS;
 
 public class GestionSimulacion {
 
+    private Celda[][] arrayCeldas;
+    private Integer bacteriasRestantes[][][]; // por día, por celda
+    private Integer comidaRestante[][][]; // por día, por celda
+
+
     /**
      * Este método se encarga de la simulación de Montecarlo, en la que se simula el comportamiento de las bacterias en un plato de cultivo.
+     *
      * @param p
      * @param miPlato
-     * */
-    public static void monteCarlo(Poblacion p, Plato miPlato) throws FechaExcepcion, ComidaCeldaExcepcion {
+     */
+    public void monteCarlo(Poblacion p, Plato miPlato) throws FechaExcepcion, ComidaCeldaExcepcion {
         int duracion = (int) DAYS.between(p.getFechaInicio(), p.getFechaFin());
 
         for (int dia = 0; dia < duracion; dia++) {
             if (dia == 0) {
+                // IMPORTANTE DESDE AQUI
+                // ver lo de calcularComida !!
+                System.out.println(p.getDosisComidaXDia(0));
+                // tengo que llamar a gestionLab
                 miPlato.inicializarPlato(p.getNumInicialBacterias(), p.getDosisComidaXDia(0));
+                System.out.println("hasta aqui llega");
             }
             for (int pasadas = 0; pasadas < 10; pasadas++) {
                 for (int i = 0; i < miPlato.getAltura(); i++) {
@@ -44,9 +60,9 @@ public class GestionSimulacion {
                             if (cantidadAcomer == 20) {
                                 if (aleatorio < 3) {
                                     iteradorBacterias.remove();
-                                //aqui por ejemplo como hay que desplazar a la bacteria una posición a la derecha
-                                // y una posición hacia abajo, si la bacteria ya está en el extremo inferior derecho
-                                // es decir en la posición (19, 19) => se lo salta y se queda en la celda en la que estaba
+                                    //aqui por ejemplo como hay que desplazar a la bacteria una posición a la derecha
+                                    // y una posición hacia abajo, si la bacteria ya está en el extremo inferior derecho
+                                    // es decir en la posición (19, 19) => se lo salta y se queda en la celda en la que estaba
                                 } else if (aleatorio >= 95 && aleatorio < 100 && i != 19 && j != 19) {
                                     iteradorBacterias.remove();
                                     miPlato.getPlato()[i + 1][j + 1].anadirBacteria(cadaBact);
@@ -134,32 +150,58 @@ public class GestionSimulacion {
                 } //filas del plato
             } //fin de las 10 pasadas
 
-
-            // Reproducción
-            // después de las 10 pasadas, si las bacterias siguen vivas =>
-            // según lo que hayan comido en todo el dia se reproducen mas o menos
-            for (int i = 0; i < 20; i++) {
-                for (int j = 0; j < 20; j++) {
-                    int numNuevasBateriasXCelda = 0;
-                    Iterator<Bacteria> itBact = miPlato.getPlato()[i][j].getListBacterias().iterator();
-                    Bacteria bactUnidad = null;
-                    while (itBact.hasNext()) {
-                        bactUnidad = itBact.next();
-                        if (bactUnidad.getComidaIngerida() >= 150) {
-                            numNuevasBateriasXCelda += 3;
-                        } else if (bactUnidad.getComidaIngerida() >= 100 && bactUnidad.getComidaIngerida() < 150) {
-                            numNuevasBateriasXCelda += 2;
-                        } else if (bactUnidad.getComidaIngerida() >= 50 && bactUnidad.getComidaIngerida() < 100) {
-                            numNuevasBateriasXCelda += 1;
-                        }
-                    }
-                    // crea y añade las bacterias hijas a sus respectivas celdas
-                    for (int contador = 0; contador < numNuevasBateriasXCelda; contador++) {
-                        miPlato.getPlato()[i][j].anadirBacteria(bactUnidad);
-                    }
+            /**
+             * Guardo la info de cada día en la matriz
+             * */
+            for (int i = 0; i < miPlato.getAltura(); i++) {
+                for (int j = 0; j < miPlato.getAncho(); j++) {
+                    this.comidaRestante[dia][i][j] = miPlato.getPlato()[i][j].getComida(dia);
+                    this.bacteriasRestantes[dia][i][j] = miPlato.getPlato()[i][j].getListBacterias().size();
                 }
             }
-        }//dia
+            /**
+             * Visualizo la matriz3D con la info de la simulación
+             * */
+            System.out.println("Día " + (dia + 1) + ":");
+            for (int i = 0; i < miPlato.getAltura(); i++) {
+                for (int j = 0; j < miPlato.getAncho(); j++) {
+                    System.out.print("[" + this.bacteriasRestantes[dia][i][j] + ", " + this.comidaRestante[dia][i][j] + "] ");
+                }
+                System.out.println();
+
+                // Reproducción
+                // después de las 10 pasadas, si las bacterias siguen vivas =>
+                // según lo que hayan comido en todo el dia se reproducen mas o menos
+                for ( i = 0; i < 20; i++) {
+                    for (int j = 0; j < 20; j++) {
+                        int numNuevasBateriasXCelda = 0;
+                        Iterator<Bacteria> itBact = miPlato.getPlato()[i][j].getListBacterias().iterator();
+                        Bacteria bactUnidad = null;
+                        while (itBact.hasNext()) {
+                            bactUnidad = itBact.next();
+                            if (bactUnidad.getComidaIngerida() >= 150) {
+                                numNuevasBateriasXCelda += 3;
+                            } else if (bactUnidad.getComidaIngerida() >= 100 && bactUnidad.getComidaIngerida() < 150) {
+                                numNuevasBateriasXCelda += 2;
+                            } else if (bactUnidad.getComidaIngerida() >= 50 && bactUnidad.getComidaIngerida() < 100) {
+                                numNuevasBateriasXCelda += 1;
+                            }
+                        }
+                        // crea y añade las bacterias hijas a sus respectivas celdas
+                        for (int contador = 0; contador < numNuevasBateriasXCelda; contador++) {
+                            miPlato.getPlato()[i][j].anadirBacteria(bactUnidad);
+                        }
+                    }
+                }
+            }//dia
+        }
     }
 
+//    public static void main(String[] args) throws ComidaCeldaExcepcion {
+//        Poblacion pob = new  Poblacion(10, "Poblacion1", 37.5f, LocalDate.of(2021, 1, 1), LocalDate.of(2021, 1, 5), Luminosidad.luminosidad.ALTA, 1);
+//        Plato platoCultivo = new Plato(20, 10);
+//        GestionSimulacion g = new GestionSimulacion();
+//        g.monteCarlo(pob, platoCultivo);
+//
+//    }
 }

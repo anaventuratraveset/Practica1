@@ -1,6 +1,6 @@
 package laboratorio;
-import medio.ComidaPadre;
-import medio.Luminosidad;
+import medio.*;
+
 import java.time.LocalDate;
 import java.util.ArrayList;
 
@@ -26,9 +26,10 @@ public class Poblacion {
     private String nombrePoblacion;
     private int numInicialBacterias;
     private float temperatura;
-    private LocalDate fechaInicio, fechaFin;
+    private LocalDate fechaInicio, fechaFin, fechaPico;
     private Luminosidad.luminosidad luminosidad;
     private ComidaPadre comida;
+    private int cantidadInicial, cantidadFinal, cantidadPico;
     private int numeroPatronComida;
     private final int comidaMax = 300000;
     private int [] dosisComidaDiaria;
@@ -61,14 +62,10 @@ public class Poblacion {
         this.numeroPatronComida = numeroPatronComida;
     }
 
-
-
     /**
      * Getters y setters
      * @return
      */
-
-
 
     /**
      * Muestra el nombre de la poblacion
@@ -79,6 +76,37 @@ public class Poblacion {
         return nombrePoblacion;
     }
 
+    public LocalDate getFechaPico() {
+        return fechaPico;
+    }
+
+    public void setFechaPico(LocalDate fechaPico) {
+        this.fechaPico = fechaPico;
+    }
+
+    public int getCantidadInicial() {
+        return cantidadInicial;
+    }
+
+    public void setCantidadInicial(int cantidadInicial) {
+        this.cantidadInicial = cantidadInicial;
+    }
+
+    public int getCantidadFinal() {
+        return cantidadFinal;
+    }
+
+    public void setCantidadFinal(int cantidadFinal) {
+        this.cantidadFinal = cantidadFinal;
+    }
+
+    public int getCantidadPico() {
+        return cantidadPico;
+    }
+
+    public void setCantidadPico(int cantidadPico) {
+        this.cantidadPico = cantidadPico;
+    }
 
     /**
      * Creo los getters de los siguientes atributos para poder hacer el test unitario
@@ -106,12 +134,35 @@ public class Poblacion {
     public int[] getDosisComidaDiaria() {
         return dosisComidaDiaria;
     }
-    public int getDosisComidaXDia(int dia) {
-        return dosisComidaDiaria[dia];
-    }
-
     public void setDosisComidaDiaria(int[] dosisComidaDiaria) {
         this.dosisComidaDiaria = dosisComidaDiaria;
+    }
+
+    public int getDosisComidaXDia(int dia) {
+        switch (this.numeroPatronComida){
+            case 1:
+                ComidaPico comidaPico = new ComidaPico(cantidadInicial, fechaInicio,cantidadPico, fechaPico, cantidadFinal,fechaFin);
+                this.dosisComidaDiaria=comidaPico.calcularComida();
+                this.comida = comidaPico;
+                break;
+            case 2:
+                ComidaCte comidaCte = new ComidaCte(cantidadInicial, fechaInicio, fechaFin);
+                this.dosisComidaDiaria=comidaCte.calcularComida();
+                this.comida = comidaCte;
+                break;
+            case 3:
+                ComidaIncremento comidaIncremento = new ComidaIncremento(cantidadInicial, fechaInicio, fechaFin, cantidadFinal);
+                this.dosisComidaDiaria=comidaIncremento.calcularComida();
+                this.comida = comidaIncremento;
+                break;
+            case 4:
+                ComidaIntermitente comidaIntermitente = new ComidaIntermitente(cantidadInicial, fechaInicio, fechaFin);
+                this.dosisComidaDiaria=comidaIntermitente.calcularComida();
+                this.comida = comidaIntermitente;
+                break;
+        }
+        this.dosisComidaDiaria=comida.calcularComida();
+        return dosisComidaDiaria[dia];
     }
 
     public void setNumeroPatronComida(int numeroPatronComida) {
@@ -172,10 +223,34 @@ public class Poblacion {
 
     /**
      * Permite modificar la comida de la Población
-     * @param comida
      */
+
     public void setComida(ComidaPadre comida) {
         this.comida = comida;
+    }
+    public void setComida() {
+        switch (this.numeroPatronComida){
+            case 1:
+                ComidaPico comidaPico = new ComidaPico(cantidadInicial, fechaInicio,cantidadPico, fechaPico, cantidadFinal,fechaFin);
+                this.dosisComidaDiaria=comidaPico.calcularComida();
+                this.comida = comidaPico;
+                break;
+            case 2:
+                ComidaCte comidaCte = new ComidaCte(cantidadInicial, fechaInicio, fechaFin);
+                this.dosisComidaDiaria=comidaCte.calcularComida();
+                this.comida = comidaCte;
+                break;
+            case 3:
+                ComidaIncremento comidaIncremento = new ComidaIncremento(cantidadInicial, fechaInicio, fechaFin, cantidadFinal);
+                this.dosisComidaDiaria=comidaIncremento.calcularComida();
+                this.comida = comidaIncremento;
+                break;
+            case 4:
+                ComidaIntermitente comidaIntermitente = new ComidaIntermitente(cantidadInicial, fechaInicio, fechaFin);
+                this.dosisComidaDiaria=comidaIntermitente.calcularComida();
+                this.comida = comidaIntermitente;
+                break;
+        }
         this.dosisComidaDiaria=comida.calcularComida();
     }
 

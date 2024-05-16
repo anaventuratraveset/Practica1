@@ -23,7 +23,6 @@ public class ComidaPico extends ComidaPadre{
         this.cantidadPico=cantidadPico;
         this.fechaPico=fechaPico;
         this.cantidadFinal=cantidadFinal;
-        this.cantidadComida = this.calcularComida(); // esto está bien aqui o igual sobra?
     }
 
 
@@ -63,6 +62,10 @@ public class ComidaPico extends ComidaPadre{
      */
     @Override
         public int[] calcularComida(){
+//            System.out.println("Calculando comida pico");
+//            System.out.println("fecha inicial: "+super.fechaInicial);
+//            System.out.println("fecha final: "+super.fechaFinal);
+//            System.out.println("fecha pico: "+this.fechaPico);
             int diasIncremento =(int) DAYS.between(super.fechaInicial, this.fechaPico);
             int diasDecremento = (int) DAYS.between(this.fechaPico, super.fechaFinal);
             int interseccion= cantidadPico-((cantidadPico-this.cantidadFinal)/diasDecremento);

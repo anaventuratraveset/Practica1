@@ -157,12 +157,21 @@ public class Main {
                             // aqui me imprime siempre lo de que la poblacion no existe
                             // pero no entiendo pq ya que en la de ver info si que me la encuentra y hago exactamente lo mismo
                             Plato platoCultivo = new Plato(poblacionSimulada.getNumInicialBacterias(), poblacionSimulada.getDosisComidaXDia(0));
-                            GestionSimulacion.monteCarlo(poblacionSimulada, platoCultivo);
+                            GestionSimulacion gestionSimulacion = new GestionSimulacion(); //tengo que crearlo pq montecarlo() NO es static
+                            gestionSimulacion.monteCarlo(poblacionSimulada, platoCultivo);
                         } catch (RuntimeException e) {
-                            System.out.println("La población no existe en este experimento.");
+                            if (pobSimular == null) {
+                                System.out.println("La población no existe en este experimento.");
+                                e.printStackTrace();
+                            }
+                            else{
+                                System.out.println("Error durante la simulación: ");
+                                e.printStackTrace();
+                            }
                         }
                         catch (Exception e) {
                             System.out.println("Error durante la simulación: ");
+                            e.printStackTrace();
                         }
                     }
                     break;

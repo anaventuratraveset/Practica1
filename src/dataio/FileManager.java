@@ -74,16 +74,20 @@ public class FileManager {
                 LocalDate fechaInicioFromFile = LocalDate.parse(infoPoblacion[5], dtf);
                 poblacion.setFechaInicio(fechaInicioFromFile);
                 int cantidadInicialFromFile = Integer.parseInt(infoPoblacion[6]);
+                poblacion.setCantidadFinal(cantidadInicialFromFile);
                 //Tengo que ver lo de arriba
                 LocalDate fechaFinFromFile;
 
                 switch (numPatronComida){
                     case 1:
                         LocalDate fechaPicoFromFile = LocalDate.parse(infoPoblacion[7], dtf);
+                        poblacion.setFechaPico(fechaPicoFromFile);
                         int cantidadPicoFromFile = Integer.parseInt(infoPoblacion[8]);
+                        poblacion.setCantidadPico(cantidadPicoFromFile);
                         fechaFinFromFile = LocalDate.parse(infoPoblacion[9], dtf);
                         poblacion.setFechaFin(fechaFinFromFile);
                         int cantidadFinalFromFile = Integer.parseInt(infoPoblacion[10]);
+                        poblacion.setCantidadFinal(cantidadFinalFromFile);
                         ComidaPico comidaPico = new ComidaPico(cantidadInicialFromFile, fechaInicioFromFile, cantidadPicoFromFile, fechaPicoFromFile, cantidadFinalFromFile, fechaFinFromFile);
                         poblacion.setComida(comidaPico);
                         break;
@@ -99,6 +103,7 @@ public class FileManager {
                         fechaFinFromFile = LocalDate.parse(infoPoblacion[7], dtf);
                         poblacion.setFechaFin(fechaFinFromFile);
                         cantidadFinalFromFile = Integer.parseInt(infoPoblacion[8]);
+                        poblacion.setCantidadFinal(cantidadFinalFromFile);
                         ComidaIncremento comidaIncremento = new ComidaIncremento(cantidadInicialFromFile, fechaInicioFromFile, fechaFinFromFile, cantidadFinalFromFile);
                         poblacion.setComida(comidaIncremento);
                         break;
@@ -118,7 +123,7 @@ public class FileManager {
             System.out.println(stringInfoTotal);
             bufferedReader.close();
         }catch (Exception e){
-            System.out.println("ERROR FileManager leyendo archivo. Puede que no exista ningún archivo con ese nombre");
+            System.out.println("\nERROR FileManager leyendo archivo. \nPuede que no exista ningún archivo con ese nombre");
         }
         finally {
             if (bufferedReader != null){
