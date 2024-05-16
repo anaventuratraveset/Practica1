@@ -156,7 +156,7 @@ public class Main {
                             Poblacion poblacionSimulada = GestionLab.buscarPoblacion(pobSimular, experimento);
                             // aqui me imprime siempre lo de que la poblacion no existe
                             // pero no entiendo pq ya que en la de ver info si que me la encuentra y hago exactamente lo mismo
-                            Plato platoCultivo = new Plato(poblacionSimulada.getNumInicialBacterias(), poblacionSimulada.getDosisComidaXDia(0));
+                            Plato platoCultivo = new Plato(poblacionSimulada.getNumInicialBacterias(), poblacionSimulada.getDosisComidaDiaria()[0]);
                             GestionSimulacion gestionSimulacion = new GestionSimulacion(); //tengo que crearlo pq montecarlo() NO es static
                             gestionSimulacion.monteCarlo(poblacionSimulada, platoCultivo);
                         } catch (RuntimeException e) {

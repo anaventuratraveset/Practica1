@@ -142,26 +142,25 @@ public class Poblacion {
         switch (this.numeroPatronComida){
             case 1:
                 ComidaPico comidaPico = new ComidaPico(cantidadInicial, fechaInicio,cantidadPico, fechaPico, cantidadFinal,fechaFin);
-                this.dosisComidaDiaria=comidaPico.calcularComida();
                 this.comida = comidaPico;
+                this.dosisComidaDiaria=comidaPico.calcularComida();
                 break;
             case 2:
                 ComidaCte comidaCte = new ComidaCte(cantidadInicial, fechaInicio, fechaFin);
-                this.dosisComidaDiaria=comidaCte.calcularComida();
                 this.comida = comidaCte;
+                this.dosisComidaDiaria=comidaCte.calcularComida();
                 break;
             case 3:
                 ComidaIncremento comidaIncremento = new ComidaIncremento(cantidadInicial, fechaInicio, fechaFin, cantidadFinal);
-                this.dosisComidaDiaria=comidaIncremento.calcularComida();
                 this.comida = comidaIncremento;
+                this.dosisComidaDiaria=comidaIncremento.calcularComida();
                 break;
             case 4:
                 ComidaIntermitente comidaIntermitente = new ComidaIntermitente(cantidadInicial, fechaInicio, fechaFin);
-                this.dosisComidaDiaria=comidaIntermitente.calcularComida();
                 this.comida = comidaIntermitente;
+                this.dosisComidaDiaria=comidaIntermitente.calcularComida();
                 break;
         }
-        this.dosisComidaDiaria=comida.calcularComida();
         return dosisComidaDiaria[dia];
     }
 
@@ -173,10 +172,8 @@ public class Poblacion {
     }
 
 
-    /**
-     * Permite modificar el nombre de la Población
-     * @param nombrePoblacion
-     */
+    /** Permite modificar el nombre de la Población
+     * @param nombrePoblacion*/
     public void setNombrePoblacion(String nombrePoblacion) {
         this.nombrePoblacion = nombrePoblacion;
     }
@@ -227,31 +224,6 @@ public class Poblacion {
 
     public void setComida(ComidaPadre comida) {
         this.comida = comida;
-    }
-    public void setComida() {
-        switch (this.numeroPatronComida){
-            case 1:
-                ComidaPico comidaPico = new ComidaPico(cantidadInicial, fechaInicio,cantidadPico, fechaPico, cantidadFinal,fechaFin);
-                this.dosisComidaDiaria=comidaPico.calcularComida();
-                this.comida = comidaPico;
-                break;
-            case 2:
-                ComidaCte comidaCte = new ComidaCte(cantidadInicial, fechaInicio, fechaFin);
-                this.dosisComidaDiaria=comidaCte.calcularComida();
-                this.comida = comidaCte;
-                break;
-            case 3:
-                ComidaIncremento comidaIncremento = new ComidaIncremento(cantidadInicial, fechaInicio, fechaFin, cantidadFinal);
-                this.dosisComidaDiaria=comidaIncremento.calcularComida();
-                this.comida = comidaIncremento;
-                break;
-            case 4:
-                ComidaIntermitente comidaIntermitente = new ComidaIntermitente(cantidadInicial, fechaInicio, fechaFin);
-                this.dosisComidaDiaria=comidaIntermitente.calcularComida();
-                this.comida = comidaIntermitente;
-                break;
-        }
-        this.dosisComidaDiaria=comida.calcularComida();
     }
 
     /**

@@ -93,7 +93,6 @@ public class Experimento {
         return this.poblacionesList.get(this.poblacionesList.size()-1);
     }
 
-
     // Métodos para que al meter esta clase en un System.out.println() salga
     // algo legible
 
@@ -113,7 +112,6 @@ public class Experimento {
         }
         return stringToRepresentInfoPoblacionesExperimento;
     }
-
 
     /**
      * Muestra el nombre de todas las poblaciones del experimento

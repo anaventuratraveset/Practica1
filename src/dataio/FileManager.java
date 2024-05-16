@@ -89,6 +89,7 @@ public class FileManager {
                         int cantidadFinalFromFile = Integer.parseInt(infoPoblacion[10]);
                         poblacion.setCantidadFinal(cantidadFinalFromFile);
                         ComidaPico comidaPico = new ComidaPico(cantidadInicialFromFile, fechaInicioFromFile, cantidadPicoFromFile, fechaPicoFromFile, cantidadFinalFromFile, fechaFinFromFile);
+                        poblacion.setDosisComidaDiaria(comidaPico.calcularComida());
                         poblacion.setComida(comidaPico);
                         break;
 
@@ -96,6 +97,7 @@ public class FileManager {
                         fechaFinFromFile = LocalDate.parse(infoPoblacion[7], dtf);
                         poblacion.setFechaFin(fechaFinFromFile);
                         ComidaCte comidaCte = new ComidaCte(cantidadInicialFromFile, fechaInicioFromFile, fechaFinFromFile);
+                        poblacion.setDosisComidaDiaria(comidaCte.calcularComida());
                         poblacion.setComida(comidaCte);
                         break;
 
@@ -105,6 +107,7 @@ public class FileManager {
                         cantidadFinalFromFile = Integer.parseInt(infoPoblacion[8]);
                         poblacion.setCantidadFinal(cantidadFinalFromFile);
                         ComidaIncremento comidaIncremento = new ComidaIncremento(cantidadInicialFromFile, fechaInicioFromFile, fechaFinFromFile, cantidadFinalFromFile);
+                        poblacion.setDosisComidaDiaria(comidaIncremento.calcularComida());
                         poblacion.setComida(comidaIncremento);
                         break;
 
@@ -112,10 +115,10 @@ public class FileManager {
                         fechaFinFromFile = LocalDate.parse(infoPoblacion[7], dtf);
                         poblacion.setFechaFin(fechaFinFromFile);
                         ComidaIntermitente comidaIntermitente = new ComidaIntermitente(cantidadInicialFromFile, fechaInicioFromFile, fechaFinFromFile);
+                        poblacion.setDosisComidaDiaria(comidaIntermitente.calcularComida());
                         poblacion.setComida(comidaIntermitente);
                         break;
                 }
-
                 GestionLab.addPoblacion(poblacion,experimento);
                 stringInfoTotal+=poblacion.toStringInfoPobFile()+"\n";
             }

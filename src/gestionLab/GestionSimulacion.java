@@ -31,30 +31,27 @@ public class GestionSimulacion {
      */
     public void monteCarlo(Poblacion p, Plato miPlato) throws FechaExcepcion, ComidaCeldaExcepcion {
         int duracion = (int) DAYS.between(p.getFechaInicio(), p.getFechaFin());
+        System.out.println("Se está calculando la duración del experimento entre "+p.getFechaInicio() +" y " + p.getFechaFin() + " que es de " + duracion + " días");
 
         for (int dia = 0; dia < duracion; dia++) {
-            if (dia == 0) {
-                // IMPORTANTE DESDE AQUI
-                // ver lo de calcularComida !!
-                System.out.println(p.getDosisComidaXDia(0));
-                // tengo que llamar a gestionLab
-                miPlato.inicializarPlato(p.getNumInicialBacterias(), p.getDosisComidaXDia(0));
-                System.out.println("hasta aqui llega");
-            }
+            System.out.println("comida día " +dia+ ": "+p.getDosisComidaDiaria()[dia]);
+
             for (int pasadas = 0; pasadas < 10; pasadas++) {
                 for (int i = 0; i < miPlato.getAltura(); i++) {
                     for (int j = 0; j < miPlato.getAncho(); j++) {
                         // añado la comida correspondiente del día a cada celda
                         if (dia != 0 && pasadas == 0) {
-                            int comidaXcelda = p.getDosisComidaXDia(dia) / 400;
+                            int comidaXcelda = p.getDosisComidaDiaria()[dia] / 400;
                             miPlato.getPlato()[i][j].anadirComida(comidaXcelda);
                         }
                         Iterator<Bacteria> iteradorBacterias
                                 = miPlato.getPlato()[i][j].getListBacterias().iterator();
                         Bacteria cadaBact = null;
                         while (iteradorBacterias.hasNext()) { //mientras haya bacterias => sigue el bucle
+                            System.out.println("Aqui nunca entra en el bucle");
                             cadaBact = iteradorBacterias.next();
                             int cantidadAcomer = miPlato.getPlato()[i][j].cantidadAcomer();
+                            System.out.println("cantidad a comer: "+cantidadAcomer);
                             int aleatorio = cadaBact.contarComidaIngerida(cantidadAcomer);
 
                             if (cantidadAcomer == 20) {

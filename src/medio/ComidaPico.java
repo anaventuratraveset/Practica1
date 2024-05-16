@@ -71,7 +71,6 @@ public class ComidaPico extends ComidaPadre{
             int interseccion= cantidadPico-((cantidadPico-this.cantidadFinal)/diasDecremento);
             int cantidadIncremento= this.cantidadPico - super.cantidadInicial;
             int cantidadDecremento= this.cantidadPico - this.cantidadFinal;
-            int cantidadComida[]=new int [super.duracion];
 
             for (int i=0; i<diasIncremento; i++){
                 cantidadComida[i]=(cantidadIncremento/diasIncremento)*i+super.cantidadInicial;

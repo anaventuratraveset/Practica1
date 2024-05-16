@@ -31,7 +31,6 @@ public class Celda {
         listBacterias = new LinkedList<Bacteria>();
     }
 
-
     /**
      * Método que añade comida a la celda cuando es un día nuevo y hay una nueva cantidad de comida
      * */
@@ -53,6 +52,7 @@ public class Celda {
          * */
         public void anadirBacteria(Bacteria bacteria) {
             listBacterias.add(bacteria);
+            this.bacteriasVivas++;
         }
 
         /**
@@ -62,6 +62,12 @@ public class Celda {
         public int getComida (int dia) {
             poblacion.getDosisComidaXDia(dia);
             return comida;
+        }
+        public int getComida() {
+            return comida;
+        }
+        public int getBacteriasVivas (){
+            return bacteriasVivas;
         }
 
         /**

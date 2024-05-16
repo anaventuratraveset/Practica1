@@ -35,8 +35,9 @@ public class Plato {
      * iguales y la comida se distribuye también por todo el plato de cultivo 20x20 celdas.
      */
     public void inicializarPlato(int numBacterias, int comidaInicial) {
-        int bacteriasXcelda = numBacterias / 16; // divido por el número de celdas (4x4 = 16) centrales
-        int comidaXCelda = comidaInicial / 400; // divido por el número de celdas (20x20 = 400)
+        //Math.ceil() lo que hace es redondear hacia arriba
+        int bacteriasXcelda = (int)Math.ceil(numBacterias / 16.0); // divido por el número de celdas (4x4 = 16) centrales
+        int comidaXCelda = (int)Math.ceil(comidaInicial / 400.0); // divido por el número de celdas (20x20 = 400)
 
         for (int i = 0; i < ancho; i++) {
             for (int j = 0; j < altura; j++) {
@@ -45,6 +46,8 @@ public class Plato {
                 } else {
                     this.plato[i][j] = new Celda(comidaXCelda, 0);
                 }
+                System.out.println("Celda inicializada ["+i+ ", " +j+"] con comida: " + this.plato[i][j].getComida() + " y bacterias: " + this.plato[i][j].getBacteriasVivas());
+                //Esto funciona e imprime lo que tiene que imprimir
             }
         }
     }

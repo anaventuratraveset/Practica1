@@ -75,8 +75,8 @@ public class GestionLab {
         System.out.println("La cantidad de comida ha de ser entre 0-300000 microgramos).");
         while (true) {
             cantidadInicial = readInt("Introduzca la cantidad de comida inicial: "); //he importado la clase y su método para poder usarlo pq es static el método
-            if (cantidadInicial < 0) {
-                System.out.println("La cantidad de comida no puede ser negativa.");
+            if (cantidadInicial < 400) {
+                System.out.println("La cantidad de comida no puede ser menos de 400 microgramos.");
             } else if (cantidadInicial > p.getComidaMax()) {
                 try {
                     throw new ComidaMaxExcepcion("La comida introducida supera el máximo permitido (300000 microgramos.");
@@ -117,8 +117,8 @@ public class GestionLab {
                 // hay que declararlos fuera del bucle pq sino no puedo usarlos fuera de este
                 while (true) {
                     cantidadFinal = readInt("Introduzca la cantidad de comida final: ");
-                    if (cantidadFinal < 0) {
-                        System.out.println("La cantidad de comida no puede ser negativa.");
+                    if (cantidadFinal < 400) {
+                        System.out.println("La cantidad de comida no puede ser menos de 400 microgramos.");
                     } else if (cantidadFinal > p.getComidaMax()) {
                         try {
                             throw new ComidaMaxExcepcion("La comida introducida supera el máximo permitido (300000 microgramos.");
@@ -132,8 +132,8 @@ public class GestionLab {
 
                 while (true) {
                     cantidadPico = readInt("Introduzca la cantidad de comida más alta: ");
-                    if (cantidadPico < 0) {
-                        System.out.println("La cantidad de comida no puede ser negativa.");
+                    if (cantidadPico < 400) {
+                        System.out.println("La cantidad de comida no puede ser menos de 400 microgramos.");
                     } else if (cantidadPico <= cantidadFinal || cantidadPico <= cantidadInicial) {
                         System.out.println("La comida media debe ser el pico. Por favor vuelva a intentarlo.");
                     } else if (cantidadPico > p.getComidaMax()) {
@@ -208,8 +208,8 @@ public class GestionLab {
         int numIniBact;
         while (true) {
             numIniBact = UserInput.readInt("Escriba el número inicial de bacterias: ");
-            if (numIniBact <= 0) {
-                System.out.println("El número inicial de bacterias no puede ser menor o igual que 0.");
+            if (numIniBact < 16) {
+                System.out.println("El número inicial de bacterias no puede ser menor de 16.");
             } else {
                 p.setNumInicialBacterias(numIniBact);
                 break;

@@ -22,12 +22,10 @@ public class ComidaIncremento extends ComidaPadre{
 
     @Override
     public int[] calcularComida(){
-        int cantidadComida[]=new int [super.duracion];
         int cantidadIncremento = cantidadFinal - cantidadInicial;
         for (int i=0; i<super.duracion; i++){
             cantidadComida [i] = (cantidadIncremento / super.duracion) * i + cantidadInicial;
         }
-
         return cantidadComida;
     }
 
