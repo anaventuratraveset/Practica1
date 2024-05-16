@@ -123,7 +123,7 @@ public class Celda {
         @Override
         public String toString () {
             return "Celda{" +
-                    "comida=" + comida +
+                    "comida:" + comida +" ,numBacterias:" + bacteriasVivas +
                     '}';
         }
 

@@ -1,14 +1,5 @@
 package laboratorio;
 
-import excepciones.ComidaCeldaExcepcion;
-import excepciones.FechaExcepcion;
-
-import java.util.Iterator;
-import java.util.LinkedList;
-import java.util.List;
-
-import static java.time.temporal.ChronoUnit.DAYS;
-
 public class Plato {
     /**
      * Esta clase representa el plato de cultivo con las celdas donde se desarrollan las bacterias.
@@ -26,7 +17,6 @@ public class Plato {
     private final int altura = 20;
     private final int medioBajo = 8;
     private final int medioAlto = 12;
-    private List<Bacteria> listBacterias;
 
     /**
      * Inicializa el plato de cultivo con las celdas correspondientes.
@@ -39,39 +29,32 @@ public class Plato {
         int bacteriasXcelda = (int)Math.ceil(numBacterias / 16.0); // divido por el número de celdas (4x4 = 16) centrales
         int comidaXCelda = (int)Math.ceil(comidaInicial / 400.0); // divido por el número de celdas (20x20 = 400)
 
-        for (int i = 0; i < ancho; i++) {
-            for (int j = 0; j < altura; j++) {
-                if (i >= medioBajo && i < medioAlto && j >= medioBajo && j < medioAlto) {
-                    this.plato[i][j] = new Celda(comidaXCelda, bacteriasXcelda);
+        for (int y = 0; y < ancho; y++) {
+            for (int x = 0; x < altura; x++) {
+                if (y >= medioBajo && y < medioAlto && x >= medioBajo && x < medioAlto) {
+                    this.plato[y][x] = new Celda(comidaXCelda, bacteriasXcelda);
                 } else {
-                    this.plato[i][j] = new Celda(comidaXCelda, 0);
+                    this.plato[y][x] = new Celda(comidaXCelda, 0);
                 }
-                System.out.println("Celda inicializada ["+i+ ", " +j+"] con comida: " + this.plato[i][j].getComida() + " y bacterias: " + this.plato[i][j].getBacteriasVivas());
+                System.out.println("Celda inicializada ["+y+ ", " +x+"] con comida: " + this.plato[y][x].getComida() + " y bacterias: " + this.plato[y][x].getBacteriasVivas());
                 //Esto funciona e imprime lo que tiene que imprimir
             }
         }
     }
 
     /**
-     * constructores de la clase Plato
+     * constructor de la clase Plato
      */
-    public Plato() {
-    }
 
     public Plato(int numBacterias, int comidaInicial) {
         this.plato = new Celda[ancho][altura];
         inicializarPlato(numBacterias, comidaInicial);
-
-        listBacterias = new LinkedList<Bacteria>();
-        for (int i = 0; i < numBacterias; i++) {
-            listBacterias.add(new Bacteria());
-        }
     }
 
     /**
      * getters y setters
      * */
-    public Celda[][] getPlato() {
+    public Celda[][] getCelda() {
         return plato;
     }
     public void setPlato(Celda[][] plato) {
@@ -86,11 +69,5 @@ public class Plato {
     public int getAltura() {
         return altura;
     }
-    public List<Bacteria> getListBacterias() {
-        return listBacterias;
-    }
 
-    public void setListBacterias(List<Bacteria> listBacterias) {
-        this.listBacterias = listBacterias;
-    }
 }
