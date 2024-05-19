@@ -13,8 +13,7 @@ public class Plato {
      */
 
     private Celda[][] plato;
-    private final int ancho = 20;
-    private final int altura = 20;
+    private final int dimension = 20;
     private final int medioBajo = 8;
     private final int medioAlto = 12;
 
@@ -30,8 +29,8 @@ public class Plato {
         System.out.println("Bacterias por celda: " + bacteriasXcelda);
         int comidaXCelda = (int)Math.ceil(comidaInicial / 400.0); // divido por el número de celdas (20x20 = 400)
 
-        for (int x = 0; x < ancho; x++) {
-            for (int y = 0; y < altura; y++) {
+        for (int x = 0; x < dimension; x++) {
+            for (int y = 0; y < dimension; y++) {
                 if (x >= medioBajo && x < medioAlto && y >= medioBajo && y < medioAlto) {
                     this.plato[x][y] = new Celda(comidaXCelda, bacteriasXcelda); // me inicializa la cantidad de comida y las bacterias vivas en la celda
                     for (int i = 0; i < bacteriasXcelda; i++) {
@@ -51,7 +50,7 @@ public class Plato {
      */
 
     public Plato(int numBacterias, int comidaInicial) {
-        this.plato = new Celda[ancho][altura];
+        this.plato = new Celda[dimension][dimension];
         inicializarPlato(numBacterias, comidaInicial);
     }
 
@@ -67,11 +66,8 @@ public class Plato {
     public Celda getCelda (int x, int y){
         return this.plato[x][y];
     }
-    public int getAncho() {
-        return ancho;
-    }
-    public int getAltura() {
-        return altura;
+    public int getDimension() {
+        return dimension;
     }
 
 }
