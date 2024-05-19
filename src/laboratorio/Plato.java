@@ -25,23 +25,31 @@ public class Plato {
      */
     public void inicializarPlato(int numBacterias, int comidaInicial) {
         //Math.ceil() lo que hace es redondear hacia arriba
+        System.out.println("Inicializo el plato de cultivo con " + numBacterias + " bacterias y " + comidaInicial + " microgramos de comida.");
         int bacteriasXcelda = (int)Math.ceil(numBacterias / 16.0); // divido por el número de celdas (4x4 = 16) centrales
-        System.out.println("Bacterias por celda: " + bacteriasXcelda);
+        System.out.println("En las celdas centrales debería haber: " + bacteriasXcelda + " bacterias.");
         int comidaXCelda = (int)Math.ceil(comidaInicial / 400.0); // divido por el número de celdas (20x20 = 400)
+        System.out.println("Y en todas las celdas debería haber: " + comidaXCelda + " microgramos de comida.\n\n");
 
-        for (int x = 0; x < dimension; x++) {
-            for (int y = 0; y < dimension; y++) {
-                if (x >= medioBajo && x < medioAlto && y >= medioBajo && y < medioAlto) {
-                    this.plato[x][y] = new Celda(comidaXCelda, bacteriasXcelda); // me inicializa la cantidad de comida y las bacterias vivas en la celda
+        for (int fila = 0; fila < dimension; fila++) {
+            String infoComida = "";
+            String infoNumBacterias = "";
+            for (int columna = 0; columna < dimension; columna++) {
+                if (fila >= medioBajo && fila < medioAlto && columna >= medioBajo && columna < medioAlto) {
+                    this.plato[fila][columna] = new Celda(comidaXCelda, bacteriasXcelda); // me inicializa la cantidad de comida y las bacterias vivas en la celda
                     for (int i = 0; i < bacteriasXcelda; i++) {
-                        this.plato[x][y].anadirBacteria(new Bacteria()); // añado una bacteria la lista de bacterias de la celda
+                        this.plato[fila][columna].anadirBacteria(new Bacteria()); // añado una bacteria la lista de bacterias de la celda
                     }
                 } else {
-                    this.plato[x][y] = new Celda(comidaXCelda, 0);
+                    this.plato[fila][columna] = new Celda(comidaXCelda, 0);
                 }
-                System.out.println("Celda inicializada ["+x+ ", " +y+"] con comida: " + this.plato[x][y].getComida() + " y bacterias: " + this.plato[x][y].getBacteriasVivas());
+                infoComida += " " + this.plato[fila][columna].getComida();
+                infoNumBacterias += " " + this.plato[fila][columna].getListBacterias().size();
                 //Esto funciona e imprime lo que tiene que imprimir
             }
+            System.out.println("Info comida del dia 1"  + " en la fila " + fila + ": " + infoComida);
+            System.out.println("Info numbacterias del dia 1"  + " en la fila " + fila + ": " + infoNumBacterias);
+            System.out.println();
         }
     }
 

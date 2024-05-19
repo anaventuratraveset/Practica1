@@ -29,92 +29,92 @@ public class Celda {
         this.comida += cantidad;
     }
 
-        /**
-         * Devuelve la lista de bacterias
-         *
-         * @return LinkedList
-         */
-        public List<Bacteria> getListBacterias() {
-            return listBacterias;
-        }
-        /**
-         * Método que añade una bacteria a la lista de bacterias
-         * */
-        public void anadirBacteria(Bacteria bacteria) {
-            listBacterias.add(bacteria);
-        }
-        /**
-         * No creo un método que elimina una bacteria de la lista de bacterias
-         * porque en gestionSimulacion se elimina la bacteria de la lista de bacterias mediante iteradorBacterias.remove();
-         * */
-
-        /**
-         * Devuelve la cantidad de comida de la celda
-         * @return int
-         */
-        public int getComida() {
-            return comida;
-        }
-        public int getBacteriasVivas (){
-            return this.bacteriasVivas;
-        }
-
-        /**
-         * Establece la cantidad de comida de la celda
-         * @param comida
-         */
-        public void setComida(int comida){
-            this.comida = comida;
-        }
-
-        /**
-         * Elimina la cantidad de comida de la celda que se le pasa como argumento
-         * @param cantidadEliminar
-         * @return
-         * @throws ComidaCeldaExcepcion
-         */
-        public int eliminarComida(int cantidadEliminar) throws ComidaCeldaExcepcion {
-            if (this.comida - cantidadEliminar < 0) {
-                throw new ComidaCeldaExcepcion("ERROR. La cantidad de comida a eliminar es mayor a la contenida en la celda");
-            } else {
-                this.comida = this.comida - cantidadEliminar;
-            }
-            return this.comida;
-        }
-
-        /**
-         * Este método se establecen los pasos a seguir para la simulación de Montecarlo.
-         * En función de la cantidad de comida que haya en la celda, se ingerirá x comida
-         * y esta cantidad se eliminará de la cantidad de comida total de la celda (se actualiza)
-         * y la cantidad ingerida será devuelta ya que se utiliza en el método montecarlo()
-         * de la clase Plato.
-         * @return int
-         */
-        public int cantidadAcomer()throws ComidaCeldaExcepcion {
-            /*tengo que añdir el throws porque estoy llamando a un método que lanza una excepción y no la estoy capturando*/
-            int cantidadAIngerir;
-        if (this.comida >= 100) {
-                cantidadAIngerir = 20;
-                eliminarComida(cantidadAIngerir);
-                return cantidadAIngerir;
-            } else if (this.comida < 100 && this.comida > 9) {
-                 cantidadAIngerir = 10;
-                eliminarComida(cantidadAIngerir);
-                return cantidadAIngerir;
-            } else {
-                cantidadAIngerir = 0;
-                eliminarComida(cantidadAIngerir);
-                return cantidadAIngerir;
-            }
-        }
-
-        @Override
-        public String toString () {
-            return "Celda{" +
-                    "comida:" + comida +" ,numBacterias:" + bacteriasVivas +
-                    '}';
-        }
-
+    /**
+     * Devuelve la lista de bacterias
+     *
+     * @return LinkedList
+     */
+    public List<Bacteria> getListBacterias() {
+        return listBacterias;
     }
+    /**
+     * Método que añade una bacteria a la lista de bacterias
+     * */
+    public void anadirBacteria(Bacteria bacteria) {
+        listBacterias.add(bacteria);
+    }
+    /**
+     * No creo un método que elimina una bacteria de la lista de bacterias
+     * porque en gestionSimulacion se elimina la bacteria de la lista de bacterias mediante iteradorBacterias.remove();
+     * */
+
+    /**
+     * Devuelve la cantidad de comida de la celda
+     * @return int
+     */
+    public int getComida() {
+        return comida;
+    }
+    public int getBacteriasVivas (){
+        return this.bacteriasVivas;
+    }
+
+    /**
+     * Establece la cantidad de comida de la celda
+     * @param comida
+     */
+    public void setComida(int comida){
+        this.comida = comida;
+    }
+
+    /**
+     * Elimina la cantidad de comida de la celda que se le pasa como argumento
+     * @param cantidadEliminar
+     * @return
+     * @throws ComidaCeldaExcepcion
+     */
+    public int eliminarComida(int cantidadEliminar) throws ComidaCeldaExcepcion {
+        if (this.comida - cantidadEliminar < 0) {
+            throw new ComidaCeldaExcepcion("ERROR. La cantidad de comida a eliminar es mayor a la contenida en la celda");
+        } else {
+            this.comida = this.comida - cantidadEliminar;
+        }
+        return this.comida;
+    }
+
+    /**
+     * Este método se establecen los pasos a seguir para la simulación de Montecarlo.
+     * En función de la cantidad de comida que haya en la celda, se ingerirá x comida
+     * y esta cantidad se eliminará de la cantidad de comida total de la celda (se actualiza)
+     * y la cantidad ingerida será devuelta ya que se utiliza en el método montecarlo()
+     * de la clase Plato.
+     * @return int
+     */
+    public int cantidadAcomer()throws ComidaCeldaExcepcion {
+        /*tengo que añdir el throws porque estoy llamando a un método que lanza una excepción y no la estoy capturando*/
+        int cantidadAIngerir;
+    if (this.comida >= 100) {
+            cantidadAIngerir = 20;
+            eliminarComida(cantidadAIngerir);
+            return cantidadAIngerir;
+        } else if (this.comida < 100 && this.comida > 9) {
+             cantidadAIngerir = 10;
+            eliminarComida(cantidadAIngerir);
+            return cantidadAIngerir;
+        } else {
+            cantidadAIngerir = 0;
+            eliminarComida(cantidadAIngerir);
+            return cantidadAIngerir;
+        }
+    }
+
+    @Override
+    public String toString () {
+        return "Celda{" +
+                "comida:" + comida +" ,numBacterias:" + bacteriasVivas +
+                '}';
+    }
+
+}
 
 
