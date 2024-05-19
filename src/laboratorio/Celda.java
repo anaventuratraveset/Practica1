@@ -18,19 +18,10 @@ public class Celda {
     private int bacteriasVivas;
     private Poblacion poblacion;
 
-    public Celda() {
-    }
-
     public Celda (int comida, int bacteriasVivas){
         this.comida = comida;
         this.bacteriasVivas = bacteriasVivas;
     }
-
-    public Celda(int comida) {
-        this.comida = comida;
-        listBacterias = new LinkedList<Bacteria>();
-    }
-
     /**
      * Método que añade comida a la celda cuando es un día nuevo y hay una nueva cantidad de comida
      * */
@@ -46,35 +37,33 @@ public class Celda {
         public List<Bacteria> getListBacterias() {
             return listBacterias;
         }
-
         /**
          * Método que añade una bacteria a la lista de bacterias
          * */
         public void anadirBacteria(Bacteria bacteria) {
             listBacterias.add(bacteria);
-            this.bacteriasVivas++;
         }
+        /**
+         * No creo un método que elimina una bacteria de la lista de bacterias
+         * porque en gestionSimulacion se elimina la bacteria de la lista de bacterias mediante iteradorBacterias.remove();
+         * */
 
         /**
          * Devuelve la cantidad de comida de la celda
          * @return int
          */
-        public int getComida (int dia) {
-            poblacion.getDosisComidaXDia(dia);
-            return comida;
-        }
         public int getComida() {
             return comida;
         }
         public int getBacteriasVivas (){
-            return bacteriasVivas;
+            return this.bacteriasVivas;
         }
 
         /**
          * Establece la cantidad de comida de la celda
          * @param comida
          */
-        public void setComida ( int comida){
+        public void setComida(int comida){
             this.comida = comida;
         }
 
@@ -84,8 +73,7 @@ public class Celda {
          * @return
          * @throws ComidaCeldaExcepcion
          */
-        public int eliminarComida ( int cantidadEliminar) throws ComidaCeldaExcepcion {
-
+        public int eliminarComida(int cantidadEliminar) throws ComidaCeldaExcepcion {
             if (this.comida - cantidadEliminar < 0) {
                 throw new ComidaCeldaExcepcion("ERROR. La cantidad de comida a eliminar es mayor a la contenida en la celda");
             } else {

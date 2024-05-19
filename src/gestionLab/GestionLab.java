@@ -129,7 +129,6 @@ public class GestionLab {
                         break;
                     }
                 }
-
                 while (true) {
                     cantidadPico = readInt("Introduzca la cantidad de comida más alta: ");
                     if (cantidadPico < 400) {
@@ -223,10 +222,8 @@ public class GestionLab {
 
         System.out.println("Creada población: "+nombreP);
 
-        //añado la poblacion al experimento
-        e.setNumPoblaciones(e.getNumPoblaciones()+1);
-        e.setPoblacionNueva(p);
-        e.setPoblacionesList(e.getPoblacionesList());
+        // añado la poblacion al experimento
+        addPoblacion(p, e);
         return p;
     }
 
@@ -237,8 +234,8 @@ public class GestionLab {
      * @param exp
      */
     public static void addPoblacion (Poblacion pob, Experimento exp){
-        exp.setNumPoblaciones(exp.getNumPoblaciones()+1);
-        exp.setPoblacionNueva(pob);
+        exp.getPoblacionesList().add(pob);
+        exp.setNumPoblaciones(exp.getPoblacionesList().size());
     }
 
     /**

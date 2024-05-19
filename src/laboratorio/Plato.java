@@ -27,16 +27,20 @@ public class Plato {
     public void inicializarPlato(int numBacterias, int comidaInicial) {
         //Math.ceil() lo que hace es redondear hacia arriba
         int bacteriasXcelda = (int)Math.ceil(numBacterias / 16.0); // divido por el número de celdas (4x4 = 16) centrales
+        System.out.println("Bacterias por celda: " + bacteriasXcelda);
         int comidaXCelda = (int)Math.ceil(comidaInicial / 400.0); // divido por el número de celdas (20x20 = 400)
 
-        for (int y = 0; y < ancho; y++) {
-            for (int x = 0; x < altura; x++) {
-                if (y >= medioBajo && y < medioAlto && x >= medioBajo && x < medioAlto) {
-                    this.plato[y][x] = new Celda(comidaXCelda, bacteriasXcelda);
+        for (int x = 0; x < ancho; x++) {
+            for (int y = 0; y < altura; y++) {
+                if (x >= medioBajo && x < medioAlto && y >= medioBajo && y < medioAlto) {
+                    this.plato[x][y] = new Celda(comidaXCelda, bacteriasXcelda); // me inicializa la cantidad de comida y las bacterias vivas en la celda
+                    for (int i = 0; i < bacteriasXcelda; i++) {
+                        this.plato[x][y].anadirBacteria(new Bacteria()); // añado una bacteria la lista de bacterias de la celda
+                    }
                 } else {
-                    this.plato[y][x] = new Celda(comidaXCelda, 0);
+                    this.plato[x][y] = new Celda(comidaXCelda, 0);
                 }
-                System.out.println("Celda inicializada ["+y+ ", " +x+"] con comida: " + this.plato[y][x].getComida() + " y bacterias: " + this.plato[y][x].getBacteriasVivas());
+                System.out.println("Celda inicializada ["+x+ ", " +y+"] con comida: " + this.plato[x][y].getComida() + " y bacterias: " + this.plato[x][y].getBacteriasVivas());
                 //Esto funciona e imprime lo que tiene que imprimir
             }
         }

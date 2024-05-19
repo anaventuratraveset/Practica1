@@ -1,5 +1,6 @@
 package dataio;
 import gestionLab.GestionLab;
+import laboratorio.Bacteria;
 import laboratorio.Experimento;
 import laboratorio.Poblacion;
 import medio.*;
@@ -59,6 +60,10 @@ public class FileManager {
 
                 int numBacteriasFromFile = Integer.parseInt(infoPoblacion[1]);
                 poblacion.setNumInicialBacterias(numBacteriasFromFile);
+                for (int i = 0; i < numBacteriasFromFile; i++) {
+                    Bacteria bacteria = new Bacteria();
+                    poblacion.setBacteriaNueva(bacteria);
+                }
 
                 float temperaturaFromFile = Float.parseFloat(infoPoblacion[2]);
                 poblacion.setTemperatura(temperaturaFromFile);
@@ -74,7 +79,7 @@ public class FileManager {
                 LocalDate fechaInicioFromFile = LocalDate.parse(infoPoblacion[5], dtf);
                 poblacion.setFechaInicio(fechaInicioFromFile);
                 int cantidadInicialFromFile = Integer.parseInt(infoPoblacion[6]);
-                poblacion.setCantidadFinal(cantidadInicialFromFile);
+                poblacion.setCantidadInicial(cantidadInicialFromFile);
                 //Tengo que ver lo de arriba
                 LocalDate fechaFinFromFile;
 

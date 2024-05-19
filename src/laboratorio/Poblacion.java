@@ -138,32 +138,6 @@ public class Poblacion {
         this.dosisComidaDiaria = dosisComidaDiaria;
     }
 
-    public int getDosisComidaXDia(int dia) {
-        switch (this.numeroPatronComida){
-            case 1:
-                ComidaPico comidaPico = new ComidaPico(cantidadInicial, fechaInicio,cantidadPico, fechaPico, cantidadFinal,fechaFin);
-                this.comida = comidaPico;
-                this.dosisComidaDiaria=comidaPico.calcularComida();
-                break;
-            case 2:
-                ComidaCte comidaCte = new ComidaCte(cantidadInicial, fechaInicio, fechaFin);
-                this.comida = comidaCte;
-                this.dosisComidaDiaria=comidaCte.calcularComida();
-                break;
-            case 3:
-                ComidaIncremento comidaIncremento = new ComidaIncremento(cantidadInicial, fechaInicio, fechaFin, cantidadFinal);
-                this.comida = comidaIncremento;
-                this.dosisComidaDiaria=comidaIncremento.calcularComida();
-                break;
-            case 4:
-                ComidaIntermitente comidaIntermitente = new ComidaIntermitente(cantidadInicial, fechaInicio, fechaFin);
-                this.comida = comidaIntermitente;
-                this.dosisComidaDiaria=comidaIntermitente.calcularComida();
-                break;
-        }
-        return dosisComidaDiaria[dia];
-    }
-
     public void setNumeroPatronComida(int numeroPatronComida) {
         this.numeroPatronComida = numeroPatronComida;
     }
@@ -257,16 +231,6 @@ public class Poblacion {
     }
 
     /**
-     * get para los unit test
-     */
-    public Bacteria getBacteriaNueva(){
-        return this.bacteriasList.get(this.bacteriasList.size()-1);
-    }
-
-
-
-
-    /**
      * toString para cuando se seleccione la opción 6, para visualizar la info de la población
      * @return stringToRepresentPoblacion
      */
@@ -282,7 +246,6 @@ public class Poblacion {
         } else if (this.numeroPatronComida == 4) {
             opcionPatron = this.numeroPatronComida + ". Patrón con cantidad de comida constante durante todo el experimento un día, y al siguiente no proporcionar comida y así sucesivamente";
         }
-
 
         String stringToRepresentPoblacion = "La población "
                 + this.nombrePoblacion +":"

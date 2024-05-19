@@ -15,10 +15,8 @@ import static java.time.temporal.ChronoUnit.DAYS;
 public class GestionSimulacion {
 
     private Celda[][] arrayCeldas;
-    private Integer bacteriasRestantes[][][]; // por día, por celda
-    private Integer comidaRestante[][][]; // por día, por celda
-
-
+    private Integer bacteriasRestantes[][][] = null; // por día, por celda
+    private Integer comidaRestante[][][] = null; // por día, por celda
     /**
      * Este método se encarga de la simulación de Montecarlo, en la que se simula el comportamiento de las bacterias en un plato de cultivo.
      *
@@ -29,30 +27,34 @@ public class GestionSimulacion {
         int duracion = (int) DAYS.between(p.getFechaInicio(), p.getFechaFin());
         System.out.println("Se está calculando la duración del experimento entre "+p.getFechaInicio() +" y " + p.getFechaFin() + " que es de " + duracion + " días");
 
+        /**
+         * Entramos en el bucle de los días
+         * */
         for (int dia = 0; dia < duracion; dia++) {
-            System.out.println("comida día " +dia+ ": "+p.getDosisComidaDiaria()[dia]);
+            System.out.println("comida establecida por día, día " +dia+1+ ": "+p.getDosisComidaDiaria()[dia]);
             for (int pasadas = 0; pasadas < 10; pasadas++) {
                 for (int x = 0; x < miPlato.getAncho(); x++) {
                     for (int y = 0; y < miPlato.getAltura(); y++) {
                         // añado la comida correspondiente del día a cada celda
                         if (dia != 0 && pasadas == 0) {
                             int comidaXcelda = p.getDosisComidaDiaria()[dia] / 400;
-                            miPlato.getCelda(x,y).anadirComida(comidaXcelda);
+                            miPlato.getCelda(x,y).anadirComida(comidaXcelda); // añado la dosis correspondiente del día para cada celda
                         }
+                        System.out.println("Número de bacterias inicial en la celda ["+x+", "+y+"]: "+miPlato.getCelda()[x][y].getListBacterias().size()); // esto siempre me da 0 pero no entiendp pq pq lo estoy inicializando en inicialar plato
                         //miPlato.getPlato().setListBacterias(p.getBacteriasList());
                         Iterator<Bacteria> iteradorBacterias
-                                = miPlato.getCelda()[x][y].getListBacterias().iterator();
+                                = miPlato.getCelda()[x][y].getListBacterias().listIterator(); // aqui están todas las bacterias que haya en esa celda
                         Bacteria cadaBact = null;
                         while (iteradorBacterias.hasNext()) { //mientras haya bacterias => sigue el bucle
                             System.out.println("Aqui nunca entra en el bucle");
-                            cadaBact = iteradorBacterias.next();
+                            cadaBact = iteradorBacterias.next(); // me coge el primero, luego el seg, etc
                             int cantidadAcomer = miPlato.getCelda()[x][y].cantidadAcomer();
                             System.out.println("cantidad a comer: "+cantidadAcomer);
                             int aleatorio = cadaBact.contarComidaIngerida(cantidadAcomer);
 
                             if (cantidadAcomer == 20) {
                                 if (aleatorio < 3) {
-                                    iteradorBacterias.remove();
+                                    iteradorBacterias.remove(); // me quita el último seleccionado
                                     //aqui por ejemplo como hay que desplazar a la bacteria una posición a la derecha
                                     // y una posición hacia abajo, si la bacteria ya está en el extremo inferior derecho
                                     // es decir en la posición (19, 19) => se lo salta y se queda en la celda en la que estaba
@@ -148,7 +150,7 @@ public class GestionSimulacion {
              * */
             for (int x = 0; x < miPlato.getAncho(); x++) {
                 for (int y = 0; y < miPlato.getAltura(); y++) {
-                    this.comidaRestante[dia][x][y] = miPlato.getCelda()[x][y].getComida(dia);
+                    this.comidaRestante[dia][x][y] = miPlato.getCelda()[x][y].getComida();
                     this.bacteriasRestantes[dia][x][y] = miPlato.getCelda()[x][y].getListBacterias().size();
                 }
             }
@@ -189,12 +191,4 @@ public class GestionSimulacion {
             }//dia
         }
     }
-
-//    public static void main(String[] args) throws ComidaCeldaExcepcion {
-//        Poblacion pob = new  Poblacion(10, "Poblacion1", 37.5f, LocalDate.of(2021, 1, 1), LocalDate.of(2021, 1, 5), Luminosidad.luminosidad.ALTA, 1);
-//        Plato platoCultivo = new Plato(20, 10);
-//        GestionSimulacion g = new GestionSimulacion();
-//        g.monteCarlo(pob, platoCultivo);
-//
-//    }
 }

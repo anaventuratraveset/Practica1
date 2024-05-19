@@ -1,18 +1,21 @@
 package laboratorio;
 
 public class Bacteria {
-
-    private int comidaIngerida;
-    private int x, y; //coordenadas de la celda en la que se encuentra
-
     /**
      *
      * @param comidaIngerida
      */
+    private int comidaIngerida;
+    private int x, y; //coordenadas de la celda en la que se encuentra
+
     /**
      * Constructor por defecto de Bacteria
      * */
     public Bacteria() {
+    }
+    public Bacteria(int x, int y) {
+        this.x = x;
+        this.y = y;
     }
 
     /**

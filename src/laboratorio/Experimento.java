@@ -31,7 +31,6 @@ public class Experimento {
      * Getters y setters de los atributos privados de Experimento
      *
      */
-
     /**
      * getNombreExperimento
      * @return String nombreExperiment0
@@ -39,7 +38,6 @@ public class Experimento {
     public String getNombreExperimento() {
         return nombreExperimento;
     }
-
     /**
      * setNombreExperimento
      * @param nombreExperimento
@@ -47,8 +45,6 @@ public class Experimento {
     public void setNombreExperimento(String nombreExperimento) {
         this.nombreExperimento = nombreExperimento;
     }
-
-
     /**
      * getNumPoblaciones
      * @return int numPoblaciones
@@ -56,7 +52,6 @@ public class Experimento {
     public int getNumPoblaciones() {
         return numPoblaciones;
     }
-
     /**
      * setNumPoblaciones
      * @param numPoblaciones
@@ -64,7 +59,6 @@ public class Experimento {
     public void setNumPoblaciones(int numPoblaciones) {
         this.numPoblaciones = numPoblaciones;
     }
-
     /**
      * getPoblacionesList()
      * @return ArrayList<Poblacion> this.poblacionesList: la lista de Poblaciones
@@ -78,24 +72,9 @@ public class Experimento {
     }
 
     /**
-     * setPoblacionNueva
-     * Añade la población a la lista de poblaciones
-     * @param p
+     * Métodos para que al meter esta clase en un System.out.println() salga
+     * algo legible
      */
-    public void setPoblacionNueva (Poblacion p){
-      this.poblacionesList.add(p);
-    }
-
-    /**
-     * get para los unit test
-     */
-    public Poblacion getPoblacionNueva(){
-        return this.poblacionesList.get(this.poblacionesList.size()-1);
-    }
-
-    // Métodos para que al meter esta clase en un System.out.println() salga
-    // algo legible
-
     /**
      * toString
      * Este nos enseña TODA la info del experimento
@@ -112,7 +91,6 @@ public class Experimento {
         }
         return stringToRepresentInfoPoblacionesExperimento;
     }
-
     /**
      * Muestra el nombre de todas las poblaciones del experimento
      * @return toStringNombres(
@@ -125,7 +103,6 @@ public class Experimento {
         }
         return stringToRepresentNombrePoblacionesExperimento;
     }
-
     /**
      * Muestra la información del experimento separada por ";" (modo fichero)
      * @return

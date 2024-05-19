@@ -97,8 +97,10 @@ public class Main {
                         break;
                     }
                     try {
+                        System.out.println("Num pobs antes: "+experimento.getNumPoblaciones());
                         Poblacion recienCreada=GestionLab.createPoblacion(experimento);
                         System.out.println(recienCreada.toString());
+                        System.out.println("Num pobs despues: "+experimento.getNumPoblaciones());
                         GestionLab.ordenarPoblaciones(experimento);
                     } catch (Exception ex) {
                         System.out.println("ERROR.");
@@ -126,7 +128,9 @@ public class Main {
                     }
                     else {
                         String pobDeletear = (readString("Escriba el nombre de la población que desea eliminar: "));
+                        System.out.println("Num pobs antes: "+experimento.getNumPoblaciones());
                         GestionLab.deletePoblacion(pobDeletear, experimento);
+                        System.out.println("Num pobs despues: "+experimento.getNumPoblaciones());
                         System.out.println("Su población se ha borrado correctamente.");
                     }
                     break;
@@ -156,7 +160,7 @@ public class Main {
                             Poblacion poblacionSimulada = GestionLab.buscarPoblacion(pobSimular, experimento);
                             // aqui me imprime siempre lo de que la poblacion no existe
                             // pero no entiendo pq ya que en la de ver info si que me la encuentra y hago exactamente lo mismo
-                            Plato platoCultivo = new Plato(poblacionSimulada.getNumInicialBacterias(), poblacionSimulada.getDosisComidaDiaria()[0]);
+                            Plato platoCultivo = new Plato(poblacionSimulada.getNumInicialBacterias(), poblacionSimulada.getDosisComidaDiaria()[0]); // aqui inicializo el plato
                             GestionSimulacion gestionSimulacion = new GestionSimulacion(); //tengo que crearlo pq montecarlo() NO es static
                             gestionSimulacion.monteCarlo(poblacionSimulada, platoCultivo);
                         } catch (RuntimeException e) {
