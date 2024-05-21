@@ -10,13 +10,13 @@ import ordenacion.OrdenacionAlfabetica;
 import ordenacion.OrdenacionCronologica;
 import ordenacion.OrdenacionCuantitativa;
 
+import javax.swing.*;
 import java.text.ParseException;
 import java.time.LocalDate;
 import java.util.Arrays;
 import java.util.Collections;
 
-import static dataio.UserInput.readFloat;
-import static dataio.UserInput.readInt;
+import static dataio.UserInput.*;
 import static java.time.temporal.ChronoUnit.DAYS;
 
 /**
@@ -25,6 +25,8 @@ import static java.time.temporal.ChronoUnit.DAYS;
 
 /**
  * Gestion del laboratorio (crear, añadir, borrar y buscar poblaciones)
+ * Para introducir swing, he tenido que sustituir el UserInput.readString() por:
+ * OptionPane.showInputDialog() para en vez de imprimir por consola, me salga en la ventana que he creado en mainSwing
  */
 public class GestionLab {
 
@@ -38,32 +40,30 @@ public class GestionLab {
      */
     public static Poblacion createPoblacion(Experimento e) throws Exception, ParseException {
         Poblacion p= new Poblacion();
-        //int dias=30;
-
-        String nombreP = UserInput.readString("Escriba el nombre de su nueva población: ");
+        String nombreP = readString("Escriba el nombre de su nueva población: ");
         p.setNombrePoblacion(nombreP);
 
-        float temp = UserInput.readInt("Escriba la temperatura: ");
+        float temp = readFloat("Escriba la temperatura: "); // Lo parseo a entero
+        // antes del Swing era así: float temp = UserInput.readFloat("Escriba la temperatura: ");
         p.setTemperatura(temp);
 
-        Luminosidad.luminosidad lum = UserInput.readLuminosidad("Escriba el nivel de luminosidad {ALTA, MEDIA, BAJA}: ");
+        Luminosidad.luminosidad lum = readLuminosidad("Escriba el nivel de luminosidad {ALTA, MEDIA, BAJA}: ");
         p.setLuminosidad(lum);
 
-        /*
-        * Comida
-        * */
-        System.out.println("Patrones de comida: " +
+        // comida
+        // JOptionPane.showMessageDialog() para verlo en mi ventana
+        JOptionPane.showMessageDialog(null, "Patrones de comida: " +
                 "\n1. Patrón de incremento lineal seguido de decremento lineal." +
                 "\n2. Patrón de cantidad de comida constante durante toda la duración del experimento." +
                 "\n3. Patrón de incremento lineal de la cantidad de comida." +
-                "\n4. Patrón con cantidad de comida constante durante todo el experimento un día, y al siguiente no proporcionar comida y así sucesivamente" );
+                "\n4. Patrón con cantidad de comida constante durante todo el experimento un día, y al siguiente no proporcionar comida y así sucesivamente");
 
         int numPatronComida;
 
         do {
             numPatronComida = readInt("Escriba el número del patrón de comida que desea: ");
             if (numPatronComida < 1 || numPatronComida > 4) {
-                System.out.println("El patrón de comida seleccionado no es correcto.");
+                JOptionPane.showMessageDialog(null,"El patrón de comida seleccionado no es correcto.");
             }
         } while (numPatronComida < 1 || numPatronComida > 4);
         p.setNumeroPatronComida(numPatronComida);
@@ -72,11 +72,11 @@ public class GestionLab {
         int cantidadInicial;
         LocalDate fechaInicial, fechaFinal;
 
-        System.out.println("La cantidad de comida ha de ser entre 0-300000 microgramos).");
+        JOptionPane.showMessageDialog(null,"La cantidad de comida ha de ser entre 0-300000 microgramos).");
         while (true) {
             cantidadInicial = readInt("Introduzca la cantidad de comida inicial: "); //he importado la clase y su método para poder usarlo pq es static el método
             if (cantidadInicial < 400) {
-                System.out.println("La cantidad de comida no puede ser menos de 400 microgramos.");
+                JOptionPane.showMessageDialog(null,"La cantidad de comida no puede ser menos de 400 microgramos.");
             } else if (cantidadInicial > p.getComidaMax()) {
                 try {
                     throw new ComidaMaxExcepcion("La comida introducida supera el máximo permitido (300000 microgramos.");
@@ -90,11 +90,12 @@ public class GestionLab {
         }
 
         //Para controlar que fecha de inicio no sea después que la de fin
-        fechaInicial= UserInput.readDate("Introduzca la fecha donde empieza su experimento (yyyy.MM.dd): ");
-        fechaFinal = UserInput.readDate("Introduzca la fecha donde termina su experimento (yyyy.MM.dd): ");
+        fechaInicial = readDate("Introduzca la fecha donde empieza su experimento (yyyy.MM.dd): ");
+        fechaFinal = readDate("Introduzca la fecha donde termina su experimento (yyyy.MM.dd): ");
         while (true) {
             if (fechaFinal.isBefore(fechaInicial)) {
                 try {
+                    // no sé si esto está bien
                     throw new FechaExcepcion("La fecha introducida no es correcta. " +
                             "\nNo puede ser la fecha final antes de la fecha inicial del experimento.");
                 } catch (FechaExcepcion ex) {
@@ -118,7 +119,7 @@ public class GestionLab {
                 while (true) {
                     cantidadFinal = readInt("Introduzca la cantidad de comida final: ");
                     if (cantidadFinal < 400) {
-                        System.out.println("La cantidad de comida no puede ser menos de 400 microgramos.");
+                        JOptionPane.showMessageDialog(null,"La cantidad de comida no puede ser menos de 400 microgramos.");
                     } else if (cantidadFinal > p.getComidaMax()) {
                         try {
                             throw new ComidaMaxExcepcion("La comida introducida supera el máximo permitido (300000 microgramos.");
@@ -132,9 +133,9 @@ public class GestionLab {
                 while (true) {
                     cantidadPico = readInt("Introduzca la cantidad de comida más alta: ");
                     if (cantidadPico < 400) {
-                        System.out.println("La cantidad de comida no puede ser menos de 400 microgramos.");
+                        JOptionPane.showMessageDialog(null,"La cantidad de comida no puede ser menos de 400 microgramos.");
                     } else if (cantidadPico <= cantidadFinal || cantidadPico <= cantidadInicial) {
-                        System.out.println("La comida media debe ser el pico. Por favor vuelva a intentarlo.");
+                        JOptionPane.showMessageDialog(null,"La comida media debe ser el pico. Por favor vuelva a intentarlo.");
                     } else if (cantidadPico > p.getComidaMax()) {
                         try {
                             throw new ComidaMaxExcepcion("La comida introducida supera el máximo permitido (300000 microgramos.");
@@ -146,7 +147,7 @@ public class GestionLab {
                     }
                 }
                 while (true) {
-                    fechaPico = UserInput.readDate("Introduzca la fecha donde hay el pico en su experimento (yyyy.MM.dd): ");
+                    fechaPico = readDate("Introduzca la fecha donde hay el pico en su experimento (yyyy.MM.dd): ");
                     if (fechaFinal.isBefore(fechaPico) || fechaPico.isBefore(fechaInicial)) {
                         try {
                             throw new FechaExcepcion("La fecha introducida no es correcta. " +
@@ -177,9 +178,9 @@ public class GestionLab {
                 while (true) {
                     cantidadFinal = readInt("Introduzca la cantidad de comida final: ");
                     if (cantidadFinal < 0) {
-                        System.out.println("La cantidad de comida no puede ser negativa.");
+                        JOptionPane.showMessageDialog(null,"La cantidad de comida no puede ser negativa.");
                     } else if (cantidadFinal <= cantidadInicial) {
-                        System.out.println("La comida final debe ser superior a la cantidad inicial. Por favor vuelva a intentarlo.");
+                        JOptionPane.showMessageDialog(null,"La comida final debe ser superior a la cantidad inicial. Por favor vuelva a intentarlo.");
                     } else if (cantidadFinal > p.getComidaMax()) {
                         try {
                             throw new ComidaMaxExcepcion("La comida introducida supera el máximo permitido (300000 microgramos.");
@@ -206,9 +207,9 @@ public class GestionLab {
 
         int numIniBact;
         while (true) {
-            numIniBact = UserInput.readInt("Escriba el número inicial de bacterias: ");
+            numIniBact = readInt("Escriba el número inicial de bacterias: ");
             if (numIniBact < 16) {
-                System.out.println("El número inicial de bacterias no puede ser menor de 16.");
+                JOptionPane.showMessageDialog(null,"El número inicial de bacterias no puede ser menor de 16.");
             } else {
                 p.setNumInicialBacterias(numIniBact);
                 break;
@@ -220,7 +221,7 @@ public class GestionLab {
             p.setBacteriaNueva(bacteria);
         }
 
-        System.out.println("Creada población: "+nombreP);
+        JOptionPane.showMessageDialog(null,"Creada población: "+nombreP);
 
         // añado la poblacion al experimento
         addPoblacion(p, e);
@@ -243,15 +244,15 @@ public class GestionLab {
      * */
     public static void ordenarPoblaciones(Experimento experimento) {
         int opcion = 0;
-        System.out.println("\nMétodos de ordenación:");
-        System.out.println("1 - Ordenar por nombre.");
-        System.out.println("2 - Ordenar por fecha de inicio.");
-        System.out.println("3 - Ordenar por número de bacterias.");
-        System.out.println("4 - Sin ordenar.");
+        JOptionPane.showMessageDialog(null,"\nMétodos de ordenación:" +
+                        "\n1 - Ordenar por nombre." +
+                        "\n2 - Ordenar por fecha de inicio." +
+                        "\n3 - Ordenar por número de bacterias." +
+                        "\n4 - Sin ordenar.");
         do {
             opcion = readInt("\nSeleccione una opción: ");
             if (opcion < 1 || opcion > 4) {
-                System.out.println("¡ Opción no valida ! ");
+                JOptionPane.showMessageDialog(null,"¡ Opción no valida ! ");
             }
         } while (opcion < 1 || opcion > 4);
 
@@ -293,7 +294,7 @@ public class GestionLab {
      * @param nombrePoblacion
      * @param e
      */
-    public static void deletePoblacion(String nombrePoblacion, Experimento e) {
+    public static void borrarPoblacion(String nombrePoblacion, Experimento e) {
 
         for (int i = 0; i < e.getPoblacionesList().size(); i++) {
             if (nombrePoblacion.equals(e.getPoblacionesList().get(i).getNombrePoblacion())) {

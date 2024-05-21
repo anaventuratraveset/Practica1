@@ -50,7 +50,11 @@ public class Bacteria {
 
     /**
      * Cuenta la cantidad de comida ingerida por la bacteria, sumándole el valor
-     * que se le pasa como argumento
+     * que se le pasa como argumento.
+     * Se va acumulando la cantidad de comida ingerida por la bacteria a lo largo de las pasadas, para que al final del día,
+     * según la cantidad ingerida se sepa cuanto ha de reproducirse.
+     *
+     * Además este método, además de sumar la cantidad de comida ingerida, devuelve un número aleatorio que se utiliza en montecarlo para saber cual será su comportamiento (morir, quedarse, desplazarse)
      * @param cantidaComida
      * @return
      */

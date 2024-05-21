@@ -23,7 +23,8 @@ public class Celda {
         this.bacteriasVivas = bacteriasVivas;
     }
     /**
-     * Método que añade comida a la celda cuando es un día nuevo y hay una nueva cantidad de comida
+     * Método que´cuando es un día nuevo, añade a la comida actual (del dia anterior - lo que se haya comido) de la celda la comida que corresponda para ese nuevo día
+     * esta cantidad de comida varía según la población, el patrón de comida y el día
      * */
     public void anadirComida(int cantidad) {
         this.comida += cantidad;
@@ -83,8 +84,7 @@ public class Celda {
     }
 
     /**
-     * Este método se establecen los pasos a seguir para la simulación de Montecarlo.
-     * En función de la cantidad de comida que haya en la celda, se ingerirá x comida
+     * Este método en función de la cantidad de comida que haya en la celda, se ingerirá x comida
      * y esta cantidad se eliminará de la cantidad de comida total de la celda (se actualiza)
      * y la cantidad ingerida será devuelta ya que se utiliza en el método montecarlo()
      * de la clase Plato.
@@ -103,7 +103,6 @@ public class Celda {
             return cantidadAIngerir;
         } else {
             cantidadAIngerir = 0;
-            eliminarComida(cantidadAIngerir);
             return cantidadAIngerir;
         }
     }

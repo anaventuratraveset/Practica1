@@ -38,7 +38,7 @@ public class Plato {
                 if (fila >= medioBajo && fila < medioAlto && columna >= medioBajo && columna < medioAlto) {
                     this.plato[fila][columna] = new Celda(comidaXCelda, bacteriasXcelda); // me inicializa la cantidad de comida y las bacterias vivas en la celda
                     for (int i = 0; i < bacteriasXcelda; i++) {
-                        this.plato[fila][columna].anadirBacteria(new Bacteria()); // añado una bacteria la lista de bacterias de la celda
+                        this.plato[fila][columna].anadirBacteria(new Bacteria()); // añado cada bacteria a la lista de bacterias de la celda
                     }
                 } else {
                     this.plato[fila][columna] = new Celda(comidaXCelda, 0);

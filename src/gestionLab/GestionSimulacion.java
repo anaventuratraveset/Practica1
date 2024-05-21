@@ -7,6 +7,8 @@ import laboratorio.Celda;
 import laboratorio.Plato;
 import laboratorio.Poblacion;
 
+import javax.swing.*;
+import java.awt.*;
 import java.util.Iterator;
 import java.util.ListIterator;
 
@@ -20,11 +22,17 @@ public class GestionSimulacion {
     private int [][][] comidaRestante = null; // por día, por celda
     /**
      * Este método se encarga de la simulación de Montecarlo, en la que se simula el comportamiento de las bacterias en un plato de cultivo.
+     * A este método se el pasan como argumentos la población de bacterias y el plato de cultivo.
+     * La población de bacterias contiene la información sobre la cantidad de bacterias iniciales, la duración del experimento y el patrón de comida.
+     * El plato de cultivo contiene la información sobre la cantidad de comida inicial y la cantidad de bacterias. El plato ya está inicializado =>
+     * la comida y las bacterias están correctamente distribuidas en las celdas como se pide en el enunciado
+     *
+     * .
      *
      * @param p
      * @param miPlato
      */
-    public void monteCarlo(Poblacion p, Plato miPlato) throws FechaExcepcion, ComidaCeldaExcepcion {
+    public String monteCarlo(Poblacion p, Plato miPlato) throws FechaExcepcion, ComidaCeldaExcepcion {
         int duracion = (int) DAYS.between(p.getFechaInicio(), p.getFechaFin());
         System.out.println("Se está calculando la duración del experimento entre "+p.getFechaInicio() +" y " + p.getFechaFin() + " que es de " + duracion + " días");
         bacteriasRestantes = new int[duracion][miPlato.getDimension()][miPlato.getDimension()];
@@ -52,15 +60,16 @@ public class GestionSimulacion {
                             cadaBact = iteradorBacterias.next(); // me coge el primero, luego el seg, etc
                             int cantidadAcomer = miPlato.getCelda()[fila][columna].cantidadAcomer(); // dependiendo de la cantidad de comida que haya en la celda => la bacteria come más o menos
                             // el método cantidadAComer() se encarga de quitar de la comida que hay en esa celda la cantidad que la bacteria se va a comer
-                            int aleatorio = cadaBact.contarComidaIngerida(cantidadAcomer); // genera número aleatorio para saber si la bacteria se muere, se queda en su celda o se desplaza (y a cual)
+                            int aleatorio = cadaBact.contarComidaIngerida(cantidadAcomer); // genera número aleatorio para saber si la bacteria se muere, se queda en su celda o se desplaza (y a cuál)
 
                             if (cantidadAcomer == 20) {
                                 if (aleatorio < 3) {
                                     iteradorBacterias.remove(); // me quita el último seleccionado
-                                    //aqui por ejemplo como hay que desplazar a la bacteria una posición a la derecha
-                                    // y una posición hacia abajo, si la bacteria ya está en el extremo inferior derecho
-                                    // es decir en la posición (19, 19) => se lo salta y se queda en la celda en la que estaba
                                 } else if (aleatorio >= 60 && aleatorio < 65 && fila != 0 && columna != 0) {
+                                    //aqui por ejemplo como hay que desplazar a la bacteria una posición a la izquierda
+                                    // y una posición hacia arriba, si la bacteria ya está en el extremo superior izquierdo
+                                    // es decir en la posición (o, 9) => se lo salta y se queda en la celda en la que estaba
+                                    // ya que no puede salirse del plato
                                     iteradorBacterias.remove();
                                     miPlato.getCelda()[fila - 1][columna - 1].anadirBacteria(cadaBact);
                                 } else if (aleatorio >= 65 && aleatorio < 70 && fila != 0) {
@@ -151,12 +160,12 @@ public class GestionSimulacion {
             // Reproducción
             // después de las 10 pasadas, si las bacterias siguen vivas =>
             // según lo que hayan comido en todo el dia se reproducen mas o menos
-            for (int fila = 0; fila < 20; fila++) {
-                for (int columna = 0; columna < 20; columna++) {
-                    int numNuevasBateriasXCelda = 0;
+            for (int fila = 0; fila < miPlato.getDimension(); fila++) {
+                for (int columna = 0; columna < miPlato.getDimension(); columna++) {
+                    int numNuevasBateriasXCelda = 0; // creo e inicializo en número de nuevas bacterias a 0
                     ListIterator<Bacteria> itBact = miPlato.getCelda()[fila][columna].getListBacterias().listIterator();
-                    Bacteria bactUnidad = null;
-                    while (itBact.hasNext()) {
+                    Bacteria bactUnidad = null; // creo e inicializo a null un nuevo objeto Bacteria
+                    while (itBact.hasNext()) { // mientras mi iterador tenga bacterias, entra en el bucle. Va cogiendo una a una y analizando su caso
                         bactUnidad = itBact.next();
                         if (bactUnidad.getComidaIngerida() >= 150) {
                             numNuevasBateriasXCelda += 3;
@@ -173,6 +182,7 @@ public class GestionSimulacion {
                 }
             }
             // Guardo la info de cada día en la matriz
+            // lo he hecho en tipo String para que se vea mejor esta parte
             for (int fila = 0; fila < miPlato.getDimension(); fila++) {
                 String infoComida = "";
                 String infoNummBacterias = "";
@@ -189,7 +199,7 @@ public class GestionSimulacion {
             //antes estaba aqui la visualización de la matriz 3D
         }//dia
 
-        // visualización de la matriz 3D
+        // visualización de la matriz 3D de Montecarlo
         System.out.println("\n\nMatriz 3D representando la simulación de Montecarlo por días: ");
         for (int dia = 0; dia < duracion; dia++) {
             System.out.println("\nDía " + (dia + 1));
@@ -200,5 +210,22 @@ public class GestionSimulacion {
                 System.out.println();
             }
         }
+
+        // visualización de la matriz 3D que representa la cantidad de bacterias que quedan en cada celda el último día del experimento
+        System.out.println("\n\nMatriz representando la cantidad de bacterias que quedan en cada celda el último día del experimento: ");
+        JPanel panel = new JPanel(new GridLayout(miPlato.getDimension(), miPlato.getDimension()));
+        String stringDevolver = "";
+        for (int fila = 0; fila < miPlato.getDimension(); fila++) {
+                for (int columna = 0; columna < miPlato.getDimension(); columna++) {
+                    System.out.print("[" + this.bacteriasRestantes[duracion-1][fila][columna] + "] ");
+                    stringDevolver += " " + String.format("%02d",  this.bacteriasRestantes[duracion-1][fila][columna] );
+                    // el %o2d es para que se vea mejor la matriz, pq obliga a que todos los números tengan 2 dígitos
+                    JLabel label = new JLabel(String.valueOf(this.bacteriasRestantes[duracion-1][fila][columna]));
+                    panel.add(label);
+                }
+                System.out.println();
+            stringDevolver += "\n";
+            }
+        return stringDevolver;
     }
 }

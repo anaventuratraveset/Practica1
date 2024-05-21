@@ -21,10 +21,8 @@ import java.io.FileNotFoundException;
  */
 public class Main {
     public static void main(String[] args)  {
-
         int opcion = 0;
         Experimento experimento=null;
-
         while (opcion != 10) {
             System.out.println("\nSelecione una opción:" +
                     "\n1. Abrir un archivo que contenga un experimento" +
@@ -129,7 +127,7 @@ public class Main {
                     else {
                         String pobDeletear = (readString("Escriba el nombre de la población que desea eliminar: "));
                         System.out.println("Num pobs antes: "+experimento.getNumPoblaciones());
-                        GestionLab.deletePoblacion(pobDeletear, experimento);
+                        GestionLab.borrarPoblacion(pobDeletear, experimento);
                         System.out.println("Num pobs despues: "+experimento.getNumPoblaciones());
                         System.out.println("Su población se ha borrado correctamente.");
                     }

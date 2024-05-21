@@ -7,6 +7,8 @@ import java.util.Arrays;
  * @author Ana Ventura-Traveset
  */
 public abstract class ComidaPadre {
+    // hago esta clase abstract pq no tiene sentido instanciarla, no tiene sentido tener un objeto de tipo ComidaPadre
+    // lo que tiene es clases hijas, que heredan de esta y son las que se instancian
 
     /**
      * Atributos de Comida Padre
