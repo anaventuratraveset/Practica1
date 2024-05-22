@@ -4,12 +4,16 @@ import dataio.FileManager;
 import static dataio.FileManager.abrirArchivo;
 import static dataio.UserInput.readInt;
 import static dataio.UserInput.readString;
+import static java.time.temporal.ChronoUnit.DAYS;
+
 import gestionLab.GestionLab;
 import gestionLab.GestionSimulacion;
 import laboratorio.Experimento;
 import laboratorio.Plato;
 import laboratorio.Poblacion;
 import java.io.FileNotFoundException;
+import java.time.LocalDate;
+import java.util.Arrays;
 
 /*
 * Poner los html, en una carpeta de javadoc*/
@@ -21,6 +25,7 @@ import java.io.FileNotFoundException;
  */
 public class Main {
     public static void main(String[] args)  {
+
         int opcion = 0;
         Experimento experimento=null;
         while (opcion != 10) {

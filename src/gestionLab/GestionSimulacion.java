@@ -17,6 +17,7 @@ import static java.time.temporal.ChronoUnit.DAYS;
 
 public class GestionSimulacion {
 
+    // tengo que guardar en un archivo la matriz 3D
     private Celda[][] arrayCeldas;
     private int [][][] bacteriasRestantes = null; // por día, por celda
     private int [][][] comidaRestante = null; // por día, por celda

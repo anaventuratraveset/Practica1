@@ -64,8 +64,9 @@ public class MainSwing extends JFrame /*implements ActionListener*/ {
         JMenuItem salir = new JMenuItem("Salir");
 
         /**
+         * Estas cosas se llaman lambda body lo de abrirArchivo.addActionListener(e -> { ... });
          * Abre el archivo que contenga el experimento
-         * FUNCIONA !
+         * Me muestra la info pero no sé si me abre el archivo y lo guarda en memoria !
          * */
         abrirArchivo.addActionListener(new ActionListener() { // cuando creo un objeto de tipo ActionListener, estoy creando una clase interna anonima que implementa la interfaz ActionListener
             // esto me permite definir actionPerformed
@@ -74,9 +75,17 @@ public class MainSwing extends JFrame /*implements ActionListener*/ {
 
             public void actionPerformed(ActionEvent e) { // actionPerformed es la acción
                 try {
+                    JFileChooser fileChooser = new JFileChooser(); // para abrir el archivo
                     String nombreExperimentoAbrir = JOptionPane.showInputDialog("Escriba el nombre del experimento a abrir:");
-                    experimento = abrirArchivo(nombreExperimentoAbrir);
-                    JOptionPane.showMessageDialog(null, experimento.toString());
+                    int resultado = fileChooser.showOpenDialog(null);
+                    if (resultado == JFileChooser.APPROVE_OPTION ) {
+                        File file = fileChooser.getSelectedFile();
+                        if (nombreExperimentoAbrir == file.getName()){
+                        experimento = abrirArchivo(file.getName());
+                        JOptionPane.showMessageDialog(null, experimento.toString());
+                        }
+                    }
+
                     // en JOptionPane.showMessageDialog(), se abre una ventana con un JTextField para escribir dentro (sólo puede ser String)
                     // sirve para pedirle info al usuario, enseñándole el mensaje (petición)
                 } catch (FileNotFoundException fnf) {
@@ -125,6 +134,14 @@ public class MainSwing extends JFrame /*implements ActionListener*/ {
             }
         });
 
+//        private void openExperiment() {
+//            JFileChooser fileChooser = new JFileChooser();
+//            if (fileChooser.showOpenDialog(this) == JFileChooser.APPROVE_OPTION) {
+//                // el this non funciona pq no le digo a mi clase que implements ActionListener
+//                File file = fileChooser.getSelectedFile();
+//                // Load experiment data from file
+//
+//            }
         /**
          *
          * NO funciona
@@ -298,6 +315,7 @@ public class MainSwing extends JFrame /*implements ActionListener*/ {
                 System.exit(0);
             }
         });
+
 
         //Añado los items al menu
         menu.add(abrirArchivo);

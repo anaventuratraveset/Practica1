@@ -30,19 +30,13 @@ public class FileManager {
         InputStreamReader inputStreamReader = null;
         BufferedReader bufferedReader = null;
         String stringInfoTotal="";
-
         // hacer esto en varios métodos
         try {
             // lo leo
             bufferedReader = new BufferedReader(new InputStreamReader(new FileInputStream(file)));
             String [] todosArgs = bufferedReader.readLine().split("\n");
-//            String [] infoExperimento = todosArgs[0].split(";");
-//            String nombreExpFromFile = infoExperimento[0];
-            //lo hago así ahora porque ya la duracion ya no depende de cada experimento sino que cada poblaicon tiene la suya propia
             String nombreExpFromFile = todosArgs[0];
-
             experimento = new Experimento(nombreExpFromFile);
-
             System.out.println(todosArgs.length+ "mi length");
             stringInfoTotal+=experimento.toStringInfoExperimentoToFile()+"\n";
 
@@ -51,9 +45,6 @@ public class FileManager {
                 String [] infoPoblacion = line.split(";");
 
                 Poblacion poblacion = new Poblacion();
-
-                // tengo q conseguir hacerlo de otra manera para q recorra el array
-
                 //Empiezo con la info de poblaciones
                 String nombrePoblacionFromFile = infoPoblacion[0];
                 poblacion.setNombrePoblacion(nombrePoblacionFromFile);

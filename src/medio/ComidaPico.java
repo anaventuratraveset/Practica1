@@ -76,7 +76,7 @@ public class ComidaPico extends ComidaPadre{
                 cantidadComida[i]=(cantidadIncremento/diasIncremento)*i+super.cantidadInicial;
             }
             for(int j=diasIncremento; j<super.duracion; j++){
-                cantidadComida[j]= -(cantidadDecremento/diasDecremento)*j+interseccion;
+                cantidadComida[j]= -(cantidadDecremento/diasDecremento)*(j-diasIncremento)+cantidadPico;
             }
             return cantidadComida;
         }
