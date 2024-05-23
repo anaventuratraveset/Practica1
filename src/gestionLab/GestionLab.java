@@ -1,7 +1,5 @@
 package gestionLab;
-import dataio.UserInput;
-import excepciones.ComidaMaxExcepcion;
-import excepciones.FechaExcepcion;
+import excepciones.*;
 import laboratorio.Bacteria;
 import laboratorio.Experimento;
 import laboratorio.Poblacion;
@@ -13,11 +11,9 @@ import ordenacion.OrdenacionCuantitativa;
 import javax.swing.*;
 import java.text.ParseException;
 import java.time.LocalDate;
-import java.util.Arrays;
 import java.util.Collections;
 
 import static dataio.UserInput.*;
-import static java.time.temporal.ChronoUnit.DAYS;
 
 /**
  * @author Ana Ventura-Traveset
@@ -72,38 +68,36 @@ public class GestionLab {
         int cantidadInicial;
         LocalDate fechaInicial, fechaFinal;
 
-        JOptionPane.showMessageDialog(null,"La cantidad de comida ha de ser entre 0-300000 microgramos).");
+        JOptionPane.showMessageDialog(null,"La cantidad de comida ha de ser entre 400-300000 microgramos).");
+        // lo de que 400 sea el mínimo de comida permitida, lo establezco yo pq así en caso de hacer una simulación de Montecarlo,
+        // siempre va a haber como mínimo una cantidad de 1 microgramo por celda a la hora de inicializar el plato de cultivo
         while (true) {
-            cantidadInicial = readInt("Introduzca la cantidad de comida inicial: "); //he importado la clase y su método para poder usarlo pq es static el método
-            if (cantidadInicial < 400) {
-                JOptionPane.showMessageDialog(null,"La cantidad de comida no puede ser menos de 400 microgramos.");
-            } else if (cantidadInicial > p.getComidaMax()) {
                 try {
-                    throw new ComidaMaxExcepcion("La comida introducida supera el máximo permitido (300000 microgramos.");
-                } catch (ComidaMaxExcepcion ex) {
-                    //sirve para avisar de que ha ido mal la excepción, en caso de que asi sea
-                    ex.printStackTrace();
+                    cantidadInicial = readInt("Introduzca la cantidad de comida inicial: ");
+                    if (cantidadInicial < 400) {
+                        throw new ComidaMinExcepcion("La cantidad de comida introducida no puede ser menos de 400 microgramos.");
+                    } else if (cantidadInicial > p.getComidaMax()) {
+                        throw new ComidaMaxExcepcion("La comida introducida supera el máximo permitido (300000 microgramos.)");
+                    } else {
+                        break;
+                    }
+                } catch (ComidaMinExcepcion | ComidaMaxExcepcion ignored) {
                 }
-            } else {
-                break;
-            }
         }
 
         //Para controlar que fecha de inicio no sea después que la de fin
-        fechaInicial = readDate("Introduzca la fecha donde empieza su experimento (yyyy.MM.dd): ");
-        fechaFinal = readDate("Introduzca la fecha donde termina su experimento (yyyy.MM.dd): ");
+
         while (true) {
-            if (fechaFinal.isBefore(fechaInicial)) {
-                try {
-                    // no sé si esto está bien
+            try {
+                fechaInicial = readDate("Introduzca la fecha donde empieza su experimento (yyyy.MM.dd): ");
+                fechaFinal = readDate("Introduzca la fecha donde termina su experimento (yyyy.MM.dd): ");
+                if (fechaFinal.isBefore(fechaInicial)) {
                     throw new FechaExcepcion("La fecha introducida no es correcta. " +
                             "\nNo puede ser la fecha final antes de la fecha inicial del experimento.");
-                } catch (FechaExcepcion ex) {
-                    ex.printStackTrace();
+                } else {
+                    break;
                 }
-            }
-            else {
-                break;
+            } catch (FechaExcepcion ignored) {
             }
         }
         p.setFechaInicio(fechaInicial);
@@ -117,47 +111,44 @@ public class GestionLab {
                 LocalDate fechaPico;
                 // hay que declararlos fuera del bucle pq sino no puedo usarlos fuera de este
                 while (true) {
-                    cantidadFinal = readInt("Introduzca la cantidad de comida final: ");
-                    if (cantidadFinal < 400) {
-                        JOptionPane.showMessageDialog(null,"La cantidad de comida no puede ser menos de 400 microgramos.");
-                    } else if (cantidadFinal > p.getComidaMax()) {
-                        try {
-                            throw new ComidaMaxExcepcion("La comida introducida supera el máximo permitido (300000 microgramos.");
-                        } catch (ComidaMaxExcepcion ex) {
-                            ex.printStackTrace();
+                    try {
+                        cantidadFinal = readInt("Introduzca la cantidad de comida final: ");
+                        if (cantidadFinal < 400) {
+                            throw new ComidaMinExcepcion("La cantidad de comida introducida no puede ser menos de 400 microgramos.");
+                        } else if (cantidadFinal > p.getComidaMax()) {
+                            throw new ComidaMaxExcepcion("La comida introducida supera el máximo permitido (300000 microgramos.)");
+                        } else {
+                            break;
                         }
-                    } else {
-                        break;
+                    } catch (ComidaMinExcepcion | ComidaMaxExcepcion ignored) {
                     }
                 }
                 while (true) {
-                    cantidadPico = readInt("Introduzca la cantidad de comida más alta: ");
-                    if (cantidadPico < 400) {
-                        JOptionPane.showMessageDialog(null,"La cantidad de comida no puede ser menos de 400 microgramos.");
-                    } else if (cantidadPico <= cantidadFinal || cantidadPico <= cantidadInicial) {
-                        JOptionPane.showMessageDialog(null,"La comida media debe ser el pico. Por favor vuelva a intentarlo.");
-                    } else if (cantidadPico > p.getComidaMax()) {
-                        try {
-                            throw new ComidaMaxExcepcion("La comida introducida supera el máximo permitido (300000 microgramos.");
-                        } catch (ComidaMaxExcepcion ex) {
-                            ex.printStackTrace();
+                    try {
+                        cantidadPico = readInt("Introduzca la cantidad de comida pico: ");
+                        if (cantidadPico < 400) {
+                            throw new ComidaMinExcepcion("La cantidad de comida introducida no puede ser menos de 400 microgramos.");
+                        } else if (cantidadPico > p.getComidaMax()) {
+                            throw new ComidaMaxExcepcion("La comida introducida supera el máximo permitido (300000 microgramos.)");
+                        } else if (cantidadPico <= cantidadFinal || cantidadPico <= cantidadInicial) {
+                            throw new ComidaRangoExcepcion("La cantidad introducida debe ser el pico.");
+                        } else {
+                            break;
                         }
-                    } else {
-                        break;
+                    } catch (ComidaMinExcepcion | ComidaMaxExcepcion | ComidaRangoExcepcion ignored) {
                     }
                 }
+
                 while (true) {
-                    fechaPico = readDate("Introduzca la fecha donde hay el pico en su experimento (yyyy.MM.dd): ");
-                    if (fechaFinal.isBefore(fechaPico) || fechaPico.isBefore(fechaInicial)) {
-                        try {
+                    try {
+                        fechaPico = readDate("Introduzca la fecha donde hay el pico en su experimento (yyyy.MM.dd): ");
+                        if (fechaFinal.isBefore(fechaPico) || fechaPico.isBefore(fechaInicial)) {
                             throw new FechaExcepcion("La fecha introducida no es correcta. " +
                                     "\nLa fecha pico debe encontrarse entre la fecha de inicio y la de fin.");
-                        } catch (FechaExcepcion ex) {
-                            ex.printStackTrace();
+                        } else {
+                            break;
                         }
-                    }
-                    else {
-                        break;
+                    } catch (FechaExcepcion ignored) {
                     }
                 }
 
@@ -176,19 +167,19 @@ public class GestionLab {
             case 3:
                 p.setNumeroPatronComida(3);
                 while (true) {
-                    cantidadFinal = readInt("Introduzca la cantidad de comida final: ");
-                    if (cantidadFinal < 0) {
-                        JOptionPane.showMessageDialog(null,"La cantidad de comida no puede ser negativa.");
-                    } else if (cantidadFinal <= cantidadInicial) {
-                        JOptionPane.showMessageDialog(null,"La comida final debe ser superior a la cantidad inicial. Por favor vuelva a intentarlo.");
-                    } else if (cantidadFinal > p.getComidaMax()) {
-                        try {
-                            throw new ComidaMaxExcepcion("La comida introducida supera el máximo permitido (300000 microgramos.");
-                        } catch (ComidaMaxExcepcion ex) {
-                            ex.printStackTrace();
+                    try {
+                        cantidadFinal = readInt("Introduzca la cantidad de comida final: ");
+                        if (cantidadFinal < 400) {
+                            throw new ComidaMinExcepcion("La cantidad de comida introducida no puede ser menos de 400 microgramos.");
+                        } else if (cantidadFinal > p.getComidaMax()) {
+                            throw new ComidaMaxExcepcion("La comida introducida supera el máximo permitido (300000 microgramos.)");
+                        } else if (cantidadFinal <= cantidadInicial) {
+                            throw new ComidaRangoExcepcion("La cantidad final debe ser superior a la cantidad inicial.");
+
+                        }else {
+                            break;
                         }
-                    } else {
-                        break;
+                    } catch (ComidaMinExcepcion | ComidaMaxExcepcion | ComidaRangoExcepcion ignored) {
                     }
                 }
                 ComidaIncremento comidaIncremento = new ComidaIncremento(cantidadInicial, fechaInicial, fechaFinal, cantidadFinal);
@@ -207,12 +198,15 @@ public class GestionLab {
 
         int numIniBact;
         while (true) {
-            numIniBact = readInt("Escriba el número inicial de bacterias: ");
-            if (numIniBact < 16) {
-                JOptionPane.showMessageDialog(null,"El número inicial de bacterias no puede ser menor de 16.");
-            } else {
-                p.setNumInicialBacterias(numIniBact);
-                break;
+            try{
+                numIniBact = readInt("Escriba el número inicial de bacterias: ");
+                if (numIniBact < 16) {
+                    throw new NInicialBacterias("El número inicial de bacterias no puede ser menor de 16.");
+                } else {
+                    p.setNumInicialBacterias(numIniBact);
+                    break;
+                }
+            } catch (NInicialBacterias ignored) {
             }
         }
 

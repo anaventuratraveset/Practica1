@@ -1,4 +1,5 @@
 package excepciones;
+import javax.swing.*;
 
 /**
  * @author Ana Ventura-Traveset
@@ -12,5 +13,6 @@ public class ComidaMaxExcepcion extends Exception {
      */
     public ComidaMaxExcepcion(String mensaje) {
         super(mensaje);
+        JOptionPane.showMessageDialog(null, mensaje);
     }
 }

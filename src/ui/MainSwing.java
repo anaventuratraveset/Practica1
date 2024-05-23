@@ -7,7 +7,7 @@ import laboratorio.Experimento;
 import laboratorio.Plato;
 import laboratorio.Poblacion;
 
-import javax.swing.*; // para importas los componentes de Swing (de nuestra interfaz gráfica, ej el JOptionPane)
+import javax.swing.*; // para importar los componentes de Swing (de nuestra interfaz gráfica, ej el JOptionPane)
 import java.awt.*;
 import java.awt.event.*; // para importar los JBottons, ActionEvent, ActionListener, etc
 import java.io.File;
@@ -122,14 +122,16 @@ public class MainSwing extends JFrame /*implements ActionListener*/ {
                     try {
                         GestionLab.createPoblacion(experimento);
                     } catch (Exception ex) {
-                        JOptionPane.showMessageDialog(null, "Ha ocurrido un error.");
+                        JOptionPane.showMessageDialog(null, "No se ha podido crear el experimento.");
                         ex.printStackTrace();
                     }
                 }
                 if (numPoblaciones > 1) {
                     GestionLab.ordenarPoblaciones(experimento);
                 }
-                JOptionPane.showMessageDialog(null, "Experimento " + experimento.getNombreExperimento() + " ha sido creado correctamente.");
+                if (experimento != null) { // si el experimento se ha creado
+                    JOptionPane.showMessageDialog(null, "Experimento " + experimento.getNombreExperimento() + " ha sido creado correctamente.");
+                }
                 System.out.println(experimento.toString());
             }
         });

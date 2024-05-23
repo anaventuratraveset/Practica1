@@ -1,5 +1,5 @@
 package excepciones;
-
+import javax.swing.*;
 
 /**
  * @author Ana Ventura-Traveset
@@ -13,5 +13,6 @@ public class FechaExcepcion extends RuntimeException{
      * */
     public FechaExcepcion(String mensaje){
         super(mensaje);
+        JOptionPane.showMessageDialog(null, mensaje);
     }
 }

@@ -1,5 +1,7 @@
 package excepciones;
 
+import javax.swing.*;
+
 public class ComidaCeldaExcepcion extends Exception {
     /**
      * Esta excepción se lanza en el método de eliminación de comida de la clase Celda
@@ -8,5 +10,6 @@ public class ComidaCeldaExcepcion extends Exception {
      * */
     public ComidaCeldaExcepcion(String mensaje) {
         super(mensaje);
+        JOptionPane.showMessageDialog(null, mensaje);
     }
 }
