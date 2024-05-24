@@ -1,6 +1,5 @@
 package ui;
 
-import dataio.FileManager;
 import gestionLab.GestionLab;
 import gestionLab.GestionSimulacion;
 import laboratorio.Experimento;
@@ -8,16 +7,12 @@ import laboratorio.Plato;
 import laboratorio.Poblacion;
 
 import javax.swing.*; // para importar los componentes de Swing (de nuestra interfaz gráfica, ej el JOptionPane)
-import java.awt.*;
 import java.awt.event.*; // para importar los JBottons, ActionEvent, ActionListener, etc
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.io.InputStreamReader;
 
 import static dataio.FileManager.abrirArchivo;
 import static dataio.FileManager.guardarArchivo;
-import static dataio.UserInput.readInt;
 
 /**
  * Esta clase es para tener la ventana de mi main
@@ -33,11 +28,14 @@ import static dataio.UserInput.readInt;
  *
  * @autor Ana Ventura-Traveset
  * */
-public class MainSwing extends JFrame /*implements ActionListener*/ {
+public class VentanaSwing extends JFrame /*implements ActionListener*/ {
 
     public static void main(String[] args) {
-        MainSwing mainSwing = new MainSwing();
-        mainSwing.setVisible(true);
+        VentanaSwing ventanaSwing = new VentanaSwing();
+        ventanaSwing.setVisible(true);
+    }
+
+    public VentanaSwing() {
 
         Experimento experimento;
 
@@ -68,24 +66,24 @@ public class MainSwing extends JFrame /*implements ActionListener*/ {
          * Abre el archivo que contenga el experimento
          * Me muestra la info pero no sé si me abre el archivo y lo guarda en memoria !
          * */
-        abrirArchivo.addActionListener(new ActionListener() { // cuando creo un objeto de tipo ActionListener, estoy creando una clase interna anonima que implementa la interfaz ActionListener
+        abrirArchivo.addActionListener(new ActionListener() { // cuando creo un objeto de tipo ActionListener, estoy creando una clase interna anónima que implementa la interfaz ActionListener
             // esto me permite definir actionPerformed
             // lo del ActionListener es para que cuando haga click en el item del menu, se ejecute lo que hay dentro de actionPerformed
             Experimento experimento ;
 
-            public void actionPerformed(ActionEvent e) { // actionPerformed es la acción
+            public void actionPerformed(ActionEvent e) {
                 try {
                     JFileChooser fileChooser = new JFileChooser(); // para abrir el archivo
-                    String nombreExperimentoAbrir = JOptionPane.showInputDialog("Escriba el nombre del experimento a abrir:");
+                    // Pedirle el nombre del experimento ya no es necesario porque el nombre del experimento ya está en el archivo
+                    //String nombreExperimentoAbrir = JOptionPane.showInputDialog("Escriba el nombre del experimento a abrir:");
                     int resultado = fileChooser.showOpenDialog(null);
                     if (resultado == JFileChooser.APPROVE_OPTION ) {
                         File file = fileChooser.getSelectedFile();
-                        if (nombreExperimentoAbrir == file.getName()){
-                        experimento = abrirArchivo(file.getName());
+                        JOptionPane.showMessageDialog(null, "Has seleccionado el archivo: " + file.getName());
+                        String nombreExperimento = file.getName().substring(0, file.getName().length()-4); // para quitarle el .txt
+                        experimento = abrirArchivo(nombreExperimento);
                         JOptionPane.showMessageDialog(null, experimento.toString());
-                        }
                     }
-
                     // en JOptionPane.showMessageDialog(), se abre una ventana con un JTextField para escribir dentro (sólo puede ser String)
                     // sirve para pedirle info al usuario, enseñándole el mensaje (petición)
                 } catch (FileNotFoundException fnf) {

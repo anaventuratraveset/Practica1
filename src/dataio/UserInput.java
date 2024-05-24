@@ -1,13 +1,11 @@
 package dataio;
 import medio.Luminosidad;
-import ui.MainSwing;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.Date;
-import java.util.Scanner;
 import javax.swing.*;
 
 

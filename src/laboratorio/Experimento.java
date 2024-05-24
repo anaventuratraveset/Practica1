@@ -17,6 +17,11 @@ public class Experimento {
     private int numPoblaciones;
     private ArrayList<Poblacion> poblacionesList;
 
+    /**
+     * Constructor de experimento
+     */
+    public Experimento(){
+    }
 
     /**
      * Constructor de experimento
