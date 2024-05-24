@@ -254,7 +254,7 @@ public class MainSwing extends JFrame /*implements ActionListener*/ {
                     GestionSimulacion gestionSimulacion = new GestionSimulacion(); //tengo que crearlo pq montecarlo() NO es static
                     gestionSimulacion.monteCarlo(poblacionSimulada, platoCultivo);
                     JOptionPane.showMessageDialog(null, "Simulación realizada correctamente.");
-                    JOptionPane.showMessageDialog(null, gestionSimulacion.monteCarlo(poblacionSimulada, platoCultivo), "Resultado de la simulación", JOptionPane.INFORMATION_MESSAGE);
+                    //JOptionPane.showMessageDialog(null, gestionSimulacion.monteCarlo(poblacionSimulada, platoCultivo), "Resultado de la simulación", JOptionPane.INFORMATION_MESSAGE);
                     // algo asi: JMenuBar.add(label);
                 }catch (Exception ex) {
                     JOptionPane.showMessageDialog(null, "No se ha encontrado la población.");
