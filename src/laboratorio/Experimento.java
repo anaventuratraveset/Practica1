@@ -97,7 +97,7 @@ public class Experimento {
      */
     public String toStringNombres() {
         String stringToRepresentNombrePoblacionesExperimento = "Nombre Experimento: " + this.nombreExperimento
-                + "\nNombre de poblaciones:\n";
+                + "\n";
         for (int i=0; i<this.poblacionesList.size() ; i++) {
             stringToRepresentNombrePoblacionesExperimento += "Nombre de la poblacion " + (i + 1) + ": " + poblacionesList.get(i).getNombrePoblacion()+"\n";
         }
