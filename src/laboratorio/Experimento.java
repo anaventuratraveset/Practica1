@@ -5,7 +5,6 @@ import java.util.ArrayList;
  * @author Ana Ventura-Traveset
  */
 public class Experimento {
-
     /**
      * Atributos experimento
      *

@@ -246,6 +246,7 @@ public class GestionLab {
         do {
             opcion = readInt("\nSeleccione una opción: ");
             if (opcion < 1 || opcion > 4) {
+                System.out.println("CACA");
                 JOptionPane.showMessageDialog(null,"¡ Opción no valida ! ");
             }
         } while (opcion < 1 || opcion > 4);
