@@ -79,6 +79,7 @@ public class ExperimentApp extends JFrame {
         simulacionMontecarlo.addActionListener(e -> simuloMontecarlo());
         guardar.addActionListener(e -> guardoExperimento());
         guardarComo.addActionListener(e -> guardoComoExperimento());
+        salir.addActionListener(e -> salgo());
 
         //Añado los items al menu
         menu.add(abrirArchivo);
@@ -296,6 +297,7 @@ public class ExperimentApp extends JFrame {
       */
     private void salgo() {
         System.exit(0);
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     }
     public static void main(String[] args) {
         ExperimentApp ventanaSwing = new ExperimentApp();
