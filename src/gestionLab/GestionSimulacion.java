@@ -34,7 +34,7 @@ public class GestionSimulacion {
      * @param p
      * @param miPlato
      */
-    public void monteCarlo(Poblacion p, Plato miPlato) throws Exception {
+    public int[][][][] monteCarlo(Poblacion p, Plato miPlato) throws Exception {
         int duracion = (int) DAYS.between(p.getFechaInicio(), p.getFechaFin());
         System.out.println("Se está calculando la duración del experimento entre " + p.getFechaInicio() + " y " + p.getFechaFin() + " que es de " + duracion + " días");
         simulacion = new int[duracion][miPlato.getDimension()][miPlato.getDimension()][2];
@@ -225,5 +225,6 @@ public class GestionSimulacion {
 //                stringDevolver += "\n";
 //            }
 //        }
+    return simulacion;
     }
 }

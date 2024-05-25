@@ -228,23 +228,27 @@ public class ExperimentApp extends JFrame {
 
     /*
       Realiza y visualiza una simulación de Montecarlo de una población de bacterias del experimento actual
-      TENGO Q VER COMO HACER PARA Q EL EXP SEA EL Q YA ESTÁ ABIERTO
       */
     private void simuloMontecarlo() {
         if (experimento != null){
             String nombrePoblacion = JOptionPane.showInputDialog("Escriba el nombre de la población a simular:");
+            Plato platoCultivo = null;
+            int [][][][] matriz = null;
             try {
                 Poblacion poblacionSimulada = GestionLab.buscarPoblacion(nombrePoblacion, experimento);
                 JOptionPane.showMessageDialog(null, poblacionSimulada.toString());
-                Plato platoCultivo = new Plato(poblacionSimulada.getNumInicialBacterias(), poblacionSimulada.getDosisComidaDiaria()[0]); // aqui inicializo el plato
+                platoCultivo = new Plato(poblacionSimulada.getNumInicialBacterias(), poblacionSimulada.getDosisComidaDiaria()[0]); // aqui inicializo el plato
                 GestionSimulacion gestionSimulacion = new GestionSimulacion(); //tengo que crearlo pq montecarlo() NO es static
-                gestionSimulacion.monteCarlo(poblacionSimulada, platoCultivo);
+                matriz = gestionSimulacion.monteCarlo(poblacionSimulada, platoCultivo);
                 JOptionPane.showMessageDialog(null, "Simulación realizada correctamente.");
                 // JOptionPane.showMessageDialog(null, gestionSimulacion.monteCarlo(poblacionSimulada, platoCultivo), "Resultado de la simulación", JOptionPane.INFORMATION_MESSAGE);
                 // algo asi: JMenuBar.add(label);
             } catch (Exception ex) {
                 JOptionPane.showMessageDialog(null, "No se ha encontrado la población.");
             }
+            VistaSimulacion vistaSimulacion = new VistaSimulacion(matriz);
+            repaint();
+            vistaSimulacion.setVisible(true);
         }
         else {
             JOptionPane.showMessageDialog(null, "No hay ningún experimento abierto.");

@@ -17,6 +17,10 @@ public class Plato {
     private final int medioBajo = 8;
     private final int medioAlto = 12;
 
+    public Plato() {
+        this.plato = new Celda[dimension][dimension];
+    }
+
     /**
      * Inicializa el plato de cultivo con las celdas correspondientes.
      * Se encarga de la distribución del dia 0 en el plato de cultivo, las bacterias
