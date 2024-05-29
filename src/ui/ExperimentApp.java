@@ -61,7 +61,7 @@ public class ExperimentApp extends JFrame {
         JMenuItem guardarComo = new JMenuItem("Guardar como");
         JMenuItem salir = new JMenuItem("Salir");
 
-        // las cosas que necesito que haya mi fileMenu ( o debería poner todos?)
+        // las cosas que necesito que haya mi fileMenu (o debería poner todos?)
         fileMenu.add(abrirArchivo);
         fileMenu.add(crearExperimento);
         fileMenu.add(guardar);
@@ -96,19 +96,17 @@ public class ExperimentApp extends JFrame {
         // Añado el menu al menu bar
         menuBar.add(menu);
         setJMenuBar(menuBar);
-
     }
 
     private void abroArchivo() {
         try {
             JFileChooser fileChooser = new JFileChooser(); // para abrir el archivo
             // Pedirle el nombre del experimento ya no es necesario porque el nombre del experimento ya está en el archivo
-            //String nombreExperimentoAbrir = JOptionPane.showInputDialog("Escriba el nombre del experimento a abrir:");
             int resultado = fileChooser.showOpenDialog(null); // para que me lo abra en mi ventana tengo q pasarle la ventana como param
             if (resultado == JFileChooser.APPROVE_OPTION) {
                 File file = fileChooser.getSelectedFile();
-                JOptionPane.showMessageDialog(null, "Has seleccionado el archivo: " + file.getName());
                 String nombreExperimento = file.getName().substring(0, file.getName().length() - 4); // para quitarle el .txt
+                JOptionPane.showMessageDialog(null, "Has seleccionado el archivo: " + file.getName());
                 experimento = abrirArchivo(nombreExperimento);
                 JOptionPane.showMessageDialog(null, experimento.toString());
             }
@@ -120,7 +118,6 @@ public class ExperimentApp extends JFrame {
             JOptionPane.showMessageDialog(null, "ERROR.");
         }
     }
-
 
     // Crea un experimento nuevo
     private void creoExperiment() {
@@ -160,9 +157,7 @@ public class ExperimentApp extends JFrame {
     }
 
     /*
-      No funciona
       Crea una población de bacterias y la añade al experimento actual
-      TENGO QUE VER COMO HACER PARA QUE EL EXPERIMENTO UNA VEZ ABIERTO, NO ME VUELVA A PEDIR SU NOMBRE
       */
     private void creoPoblacion() {
         Poblacion poblacion = null;
@@ -195,7 +190,6 @@ public class ExperimentApp extends JFrame {
 
     /*
       Borra poblacion de bacterias del experimento actual
-      TENGO Q VER COMO HACER PARA Q EL EXP SEA EL Q YA ESTÁ ABIERTO
       */
     private void borroPoblacion() {
         if (experimento != null){
@@ -210,7 +204,6 @@ public class ExperimentApp extends JFrame {
 
     /*
       Muestra información de una población en concreto del experimento actual
-      TENGO Q VER COMO HACER PARA Q EL EXP SEA EL Q YA ESTÁ ABIERTO
       */
     private void muestroInfoPob() {
         if (experimento != null){

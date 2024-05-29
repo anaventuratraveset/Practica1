@@ -13,7 +13,6 @@ public class VistaSimulacion extends JPanel {
      * de celdas => un plato de cultivo para cada día.
      * */
     int [][][][] simulacion;
-    JScrollPane scrollPane;
 
     /**
      * Este es el constructor de la clase.
@@ -25,20 +24,7 @@ public class VistaSimulacion extends JPanel {
     public VistaSimulacion(int[][][][]simulacion) {
         this.simulacion = simulacion;
         setPreferredSize(new Dimension(400, 400)); // el tamaño que va a tener
-
-        // Crear un JScrollPane que envuelva este panel
-        scrollPane = new JScrollPane(this);
-
-        // Configurar las barras de desplazamiento para que siempre se muestren
-        scrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
-        scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
     }
-
-    // Método para obtener el JScrollPane
-    public JScrollPane getScrollPane() {
-        return scrollPane;
-    }
-
 
     /**
      *  Este método se sobrescribe de la clase JPanel.
@@ -46,19 +32,30 @@ public class VistaSimulacion extends JPanel {
      *  Si la simulación no es nula, recorre cada celda de la cuadrícula
      *  y llama al método drawCell(g, fila, columna) para dibujar la celda.
      * */
-    @Override
-    protected void paintComponent(Graphics g) {
-        super.paintComponent(g);
-        if (simulacion != null) {
-            int duracion = simulacion.length;
-            for (int dia = 0; dia < duracion; dia++) {
-                for (int fila = 0; fila < 20; fila++) {
-                    for (int columna = 0; columna < 20; columna++) {
-                        drawCell(g, dia, fila, columna);
-                    }
-                }
-            }
-        }
+//    @Override
+//    protected void paintComponent(Graphics g) {
+//        super.paintComponent(g);
+//        if (simulacion != null) {
+//            int duracion = simulacion.length;
+//            for (int dia = 0; dia < duracion; dia++) {
+//                for (int fila = 0; fila < 20; fila++) {
+//                    for (int columna = 0; columna < 20; columna++) {
+//                        drawCell(g, dia, fila, columna);
+//                    }
+//                }
+//            }
+//        }
+//    }
+
+    public void paint(Graphics g) {
+        Dimension size = new Dimension(12, 12);         // diameter
+        int d = Math.min(size.width, size.height);
+        int x = (size.width - d)/2;
+        int y = (size.height - d)/2;
+        // draw circle (color already set to foreground)
+        g.fillOval(x, y, d, d);
+        g.setColor(Color.black);
+        g.drawOval(x, y, d, d);
     }
     /**
      * Este método dibuja una celda individual de la cuadrícula.
@@ -73,17 +70,16 @@ public class VistaSimulacion extends JPanel {
     }
     /**
      * Este método devuelve un color en función del número de bacterias.
-     * Si el número de bacterias es mayor que 100, devuelve rojo.
-     * Si es mayor que 50, devuelve naranja.
-     * Si es mayor que 20, devuelve amarillo.
-     * Si es mayor que 10, devuelve verde.
+     * TODO: rellenar esto
      * Si no, devuelve blanco, lo que indica que no hay bacterias.
+     *
      * */
     private Color getColorForCount(int numeroBacterias) {
-        if (numeroBacterias > 100) return Color.RED;
-        if (numeroBacterias > 50) return Color.ORANGE;
-        if (numeroBacterias > 20) return Color.YELLOW;
-        if (numeroBacterias > 10) return Color.GREEN;
-        return Color.BLUE; // Sin bacterias
+        if (numeroBacterias > 20) return Color.RED;
+        if (numeroBacterias > 15) return Color.PINK;
+        if (numeroBacterias > 10) return Color.ORANGE;
+        if (numeroBacterias > 5) return Color.YELLOW;
+        if (numeroBacterias > 1) return Color.GREEN;
+        return Color.WHITE; // Sin bacterias
     }
 }
