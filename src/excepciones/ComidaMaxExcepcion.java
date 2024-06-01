@@ -1,4 +1,5 @@
 package excepciones;
+
 import javax.swing.*;
 
 /**
@@ -8,7 +9,8 @@ import javax.swing.*;
 public class ComidaMaxExcepcion extends Exception {
 
     /**
-     * Excepción que se lanzará si la cantidad de comida es superior a la cantidad máxima (300000)
+     * Esta excepción se lanza en la clase gestionLab en el caso de la comida introducida por el usuario
+     * sea superior a la cantidad máxima permitida (300000 microgramos).
      * @param mensaje
      */
     public ComidaMaxExcepcion(String mensaje) {

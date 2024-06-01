@@ -1,4 +1,4 @@
-package gestionLab;
+package gestion;
 import excepciones.*;
 import laboratorio.Bacteria;
 import laboratorio.Experimento;
@@ -27,10 +27,21 @@ import static dataio.UserInput.*;
 public class GestionLab {
 
     /**
-     *
      * CREAR población
+     * Este método se encarga de crear una nueva población en un experimento.
+     * El experimento que se pasa como argumento es al que queremos añadir la población una vez creada.
+     * Se lanza las excepciones Exception y ParseException, ya que va a haber introducción de datos por teclado
+     * y varios parse al crear una población.
+     * En este método se le pide al usuario toda la información de la población mediante los métodos que se
+     * encuentran en la clase UserInput del paquete dataio, como readInt() por ejemplo y se va creando
+     * la población haciendo el respectivo set() para cada atributo de población.
+     * En este método se controla que no se introduzca una comida negativa por ejemplo o que las fechas
+     * tengan concordancia (que no sea la fecha final antes de la inicial, por ejemplo).
+     * Esto se hace mediante while true, que lo que hace es que va a pedir el dato hasta que se consiga y
+     * mediante bucles if else, dentro de éste para controlar este tipo de “errores” previamente mencionados.
+     * Finalmente, se añade la población al experimento.
      * @param e
-     * @return
+     * @return Poblacion p
      * @throws Exception
      * @throws ParseException
      */
@@ -223,8 +234,10 @@ public class GestionLab {
     }
 
     /**
-     *
      * AÑADIR poblacion al experimento
+     *
+     * Se añade la poblacion al arrayList de Poblacion del experimento mediante el método add() de los ArrayList.
+     * Además, se actualiza el número de poblaciones de Experimento, que está almacenado en un atributo de tipo int.
      * @param pob
      * @param exp
      */
@@ -235,6 +248,11 @@ public class GestionLab {
 
     /**
      * ORDENAR poblaciones del experimento
+     * Existen tres opciones de ordenamiento:
+     * Por orden alfabético del nombre de las poblaciones,
+     * por orden cronológico, según la fecha de inicio y
+     * por orden cuantitativo, según el número de bacterias por población.
+     * @param experimento
      * */
     public static void ordenarPoblaciones(Experimento experimento) {
         int opcion = 0;
@@ -251,7 +269,6 @@ public class GestionLab {
             }
         } while (opcion < 1 || opcion > 4);
 
-        // TENGO QUE ESTUDIARME MEJOR ESTO
         switch (opcion) {
             case 1:
                 try {
@@ -284,8 +301,12 @@ public class GestionLab {
     }
 
     /**
-     *
      * ELIMINAR población del experimento
+     *
+     * Se recorre mediante un bucle for la lista de poblaciones del experimento y dentro de este for,
+     * se crea un if. Cuando el nombre de la población introducida sea igual que el nombre de alguna de las
+     * poblaciones del experimento, entonces ésta se elimina mediante el método remove(índice), de los ArrayList
+     * y se resetea el número de poblaciones del experimento.
      * @param nombrePoblacion
      * @param e
      */
@@ -301,7 +322,17 @@ public class GestionLab {
     }
 
 
-    // para hacer esto lo mejor es el tema
+    /**
+     * BUSCAR población en el experimento
+     *
+     * A este método se le pasa como parámetros el nombre de la poblacion a buscar y el experimento
+     * en el que se encuentra. Se recorre mediante un bucle for la lista de poblaciones del experimento
+     * y dentro de este for, se crea un if. Cuando el nombre de la población introducida sea igual que
+     * el nombre de alguna de las poblaciones del experimento, entonces se devuelve esa población.
+     * En caso de no encontrarla se lanza una excepción.
+     * @param nombrePoblacion
+     * @param e
+     * */
     public static Poblacion buscarPoblacion(String nombrePoblacion, Experimento e) {
         Poblacion miPoblacion=null;
         for (int i = 0; i < e.getPoblacionesList().size(); i++) {

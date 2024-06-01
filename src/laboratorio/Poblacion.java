@@ -33,7 +33,7 @@ public class Poblacion {
     private int numeroPatronComida;
     private final int comidaMax = 300000;
     private int [] dosisComidaDiaria;
-    private ArrayList<Bacteria> bacteriasList = new ArrayList<>();
+    private final ArrayList<Bacteria> bacteriasList = new ArrayList<>();
 
 
     /**

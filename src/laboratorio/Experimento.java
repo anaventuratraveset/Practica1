@@ -100,10 +100,10 @@ public class Experimento {
      * @return toStringNombres(
      */
     public String toStringNombres() {
-        String stringToRepresentNombrePoblacionesExperimento = "Nombre Experimento: " + this.nombreExperimento
-                + "\n";
+        String stringToRepresentNombrePoblacionesExperimento = "Experimento: " + this.nombreExperimento
+                + "\n\n";
         for (int i=0; i<this.poblacionesList.size() ; i++) {
-            stringToRepresentNombrePoblacionesExperimento += "Nombre de la poblacion " + (i + 1) + ": " + poblacionesList.get(i).getNombrePoblacion()+"\n";
+            stringToRepresentNombrePoblacionesExperimento += "Poblacion " + (i + 1) + ": " + poblacionesList.get(i).getNombrePoblacion()+"\n";
         }
         return stringToRepresentNombrePoblacionesExperimento;
     }

@@ -1,15 +1,10 @@
-package gestionLab;
+package gestion;
 
-import excepciones.ComidaCeldaExcepcion;
-import excepciones.FechaExcepcion;
 import laboratorio.Bacteria;
 import laboratorio.Celda;
 import laboratorio.Plato;
 import laboratorio.Poblacion;
 
-import javax.swing.*;
-import java.awt.*;
-import java.util.Iterator;
 import java.util.ListIterator;
 
 import static java.time.temporal.ChronoUnit.DAYS;
@@ -24,9 +19,10 @@ public class GestionSimulacion {
     // y la última dimensión es un array de dos elementos que guarda la cantidad de bacterias y comida en cada celda,
     // siendo la posición del array bidimensional 0, para el num de bacterias y 1 para la cantidad de comida
 
+
     /**
      * Este método se encarga de la simulación de Montecarlo, en la que se simula el comportamiento de las bacterias en un plato de cultivo.
-     * A este método se le pasan como argumentos la población de bacterias y el plato de cultivo.
+     * A este método se le pasan como parámetros la población de bacterias y el plato de cultivo.
      * La población de bacterias contiene la información sobre la cantidad de bacterias iniciales, la duración del experimento y el patrón de comida.
      * El plato de cultivo contiene la información sobre la cantidad de comida inicial y la cantidad de bacterias. El plato ya está inicializado =>
      * la comida y las bacterias están correctamente distribuidas en las celdas como se pide en el enunciado
@@ -38,9 +34,8 @@ public class GestionSimulacion {
         int duracion = (int) DAYS.between(p.getFechaInicio(), p.getFechaFin());
         System.out.println("Se está calculando la duración del experimento entre " + p.getFechaInicio() + " y " + p.getFechaFin() + " que es de " + duracion + " días");
         simulacion = new int[duracion][miPlato.getDimension()][miPlato.getDimension()][2];
-        /**
-         * Entramos en el bucle de los días
-         * */
+
+        // Entramos en el bucle de los días
         System.out.println("\n\nMatriz 3D representando la simulación de Montecarlo por días: ");
         for (int dia = 0; dia < duracion; dia++) {
             System.out.println("\nDía " + (dia + 1) + " del experimento");

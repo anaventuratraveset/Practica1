@@ -6,7 +6,7 @@ public class Bacteria {
      * @param comidaIngerida
      */
     private int comidaIngerida;
-    private int x, y; //coordenadas de la celda en la que se encuentra
+    private int x, y; //coordenadas de la celda en la que se encuentra, aunq creo que no se usa
 
     /**
      * Constructor por defecto de Bacteria

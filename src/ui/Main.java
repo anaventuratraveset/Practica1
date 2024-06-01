@@ -4,16 +4,13 @@ import dataio.FileManager;
 import static dataio.FileManager.abrirArchivo;
 import static dataio.UserInput.readInt;
 import static dataio.UserInput.readString;
-import static java.time.temporal.ChronoUnit.DAYS;
 
-import gestionLab.GestionLab;
-import gestionLab.GestionSimulacion;
+import gestion.GestionLab;
+import gestion.GestionSimulacion;
 import laboratorio.Experimento;
 import laboratorio.Plato;
 import laboratorio.Poblacion;
 import java.io.FileNotFoundException;
-import java.time.LocalDate;
-import java.util.Arrays;
 
 /*
 * Poner los html, en una carpeta de javadoc*/
@@ -91,7 +88,7 @@ public class Main {
                     }
 
                     System.out.println("\nExperimento " + experimento.getNombreExperimento() + " ha sido creado correctamente.");
-                    System.out.println(experimento.toString());
+                    System.out.println(experimento);
                     break;
 
                 case 3: //Crear una población de bacterias y añadirla al experimento actual
@@ -102,7 +99,7 @@ public class Main {
                     try {
                         System.out.println("Num pobs antes: "+experimento.getNumPoblaciones());
                         Poblacion recienCreada=GestionLab.createPoblacion(experimento);
-                        System.out.println(recienCreada.toString());
+                        System.out.println(recienCreada);
                         System.out.println("Num pobs despues: "+experimento.getNumPoblaciones());
                         GestionLab.ordenarPoblaciones(experimento);
                     } catch (Exception ex) {
@@ -146,7 +143,7 @@ public class Main {
                         String pobVerInfo = (readString("Escriba el nombre de la población que desea ver la info: "));
                         try {
                             Poblacion poblacionEncontrada = GestionLab.buscarPoblacion(pobVerInfo, experimento);
-                            System.out.println(poblacionEncontrada.toString());
+                            System.out.println(poblacionEncontrada);
                         } catch (Exception e) {
                             System.out.println("La población no existe en este experimento.");
                         }

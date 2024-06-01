@@ -1,10 +1,10 @@
 package dataio;
-import gestionLab.GestionLab;
+
+import gestion.GestionLab;
 import laboratorio.Bacteria;
 import laboratorio.Experimento;
 import laboratorio.Poblacion;
 import medio.*;
-
 import java.io.*;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;

@@ -14,8 +14,8 @@ public class Celda {
      * Además, gestiona la simulación de Montecarlo para las bacterias en una única celda.
      */
     private int comida;
-    private List<Bacteria> listBacterias = new LinkedList<Bacteria>();
-    private int bacteriasVivas;
+    private final List<Bacteria> listBacterias = new LinkedList<Bacteria>();
+    private final int bacteriasVivas;
     private Poblacion poblacion;
 
     public Celda (int comida, int bacteriasVivas){

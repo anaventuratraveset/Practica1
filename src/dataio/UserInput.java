@@ -10,7 +10,7 @@ import javax.swing.*;
 
 
 /**
- * Clase para leer de teclado
+ * Clase para leer de teclado a traves de la interfaz gráfica
  * @author Ana Ventura-Traveset
  */
 public class UserInput {
@@ -23,7 +23,7 @@ public class UserInput {
      * @return miString
      */
     public static String readString(String peticion) {
-System.out.println(peticion);
+        System.out.println(peticion);
         boolean hecho = false;
         String miString = "";
         do {
@@ -36,7 +36,7 @@ System.out.println(peticion);
                 System.out.println("ERROR al introducir por teclado.");
                 e.printStackTrace();
             }
-        } while (hecho == false);
+        } while (!hecho);
         return miString;
     }
 
@@ -62,7 +62,7 @@ System.out.println(peticion);
             } catch (Exception e) {
                 JOptionPane.showMessageDialog(null,"ERROR al introducir por teclado. Debe introducir un número entero.");
             }
-        } while (hecho == false);
+        } while (!hecho);
         return miInt;
     }
 
@@ -84,7 +84,7 @@ System.out.println(peticion);
             } catch (Exception e) {
                 JOptionPane.showMessageDialog(null,"ERROR al introducir por teclado. Debe introducir un número real.");
             }
-        } while (hecho == false);
+        } while (!hecho);
         return miFloat;
     }
 
@@ -118,17 +118,15 @@ System.out.println(peticion);
             } catch (Exception e) {
                 JOptionPane.showMessageDialog(null,"ERROR al introducir por teclado.");
             }
-        }while (hecho == false) ;
+        }while (!hecho) ;
         return luminosidad;
     }
 
     /**
      * Para leer por teclado fechas
-     *
-     * SimpleDateFormat tiene un método para convertir String
-     * en el formato fecha que le hayamos dicho, y ese es el parse
-     * se utiliza el método toInstant de Date().atZone().toLocalDate() para pasar de Date a LocalDate
-     *
+     * Se establece el formato de la fecha “yyyy.MM.dd” con el objeto SimpleDateFormat y
+     * se parsea el String a Date en el formato fecha que se haya establecido. S
+     * e utiliza el método toInstant de Date().atZone().toLocalDate() para pasar de Date a LocalDate.
      * @param peticion
      * @return fechaADevolver
      */
@@ -147,10 +145,11 @@ System.out.println(peticion);
                 fecha = formato.parse(fechaString); // le paso el String que ha introducido el usuario mediante la interfaz en vez de mediante el clásico scanner.nextLine()
                 fechaADevolver = fecha.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
                 hecho=true;
-            }catch(ParseException pe){
+            }
+            catch(ParseException pe){
                 JOptionPane.showMessageDialog(null,"ERROR. La fecha introducida no es correcta o no se ha parseado correctamente.");
             }
-        }while(hecho==false);
+        }while(!hecho);
         return fechaADevolver;
     }
 }

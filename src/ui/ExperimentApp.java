@@ -1,7 +1,7 @@
 package ui;
 
-import gestionLab.GestionLab;
-import gestionLab.GestionSimulacion;
+import gestion.GestionLab;
+import gestion.GestionSimulacion;
 import laboratorio.Experimento;
 import laboratorio.Plato;
 import laboratorio.Poblacion;
@@ -106,16 +106,23 @@ public class ExperimentApp extends JFrame {
             if (resultado == JFileChooser.APPROVE_OPTION) {
                 File file = fileChooser.getSelectedFile();
                 String nombreExperimento = file.getName().substring(0, file.getName().length() - 4); // para quitarle el .txt
-                JOptionPane.showMessageDialog(null, "Has seleccionado el archivo: " + file.getName());
                 experimento = abrirArchivo(nombreExperimento);
+                if(experimento == null) {
+                    if (nombreExperimento.contains(".txt")) {
+                        JOptionPane.showMessageDialog(null, "El nombre del archivo no existe.");
+                    } else {
+                        JOptionPane.showMessageDialog(null, "El nombre del archivo no existe o es incorrecto. (Pruebe añadiendo .txt al final)");
+                    }
+                } else {
+                    JOptionPane.showMessageDialog(null, "Has seleccionado el archivo: " + file.getName());
+                }
                 JOptionPane.showMessageDialog(null, experimento.toString());
             }
             // en JOptionPane.showMessageDialog(), se abre una ventana con un JTextField para escribir dentro (solo puede ser String)
             // sirve para pedirle info al usuario, enseñándole el mensaje (petición)
         } catch (FileNotFoundException fnf) {
             JOptionPane.showMessageDialog(null, "No se ha encontrado el archivo.");
-        } catch (Exception ex) {
-            JOptionPane.showMessageDialog(null, "ERROR.");
+        } catch (Exception ignored) {
         }
     }
 
@@ -182,6 +189,7 @@ public class ExperimentApp extends JFrame {
       */
     private void visualizoNombres() {
         if (experimento != null){
+            GestionLab.ordenarPoblaciones(experimento);
             JOptionPane.showMessageDialog(null, experimento.toStringNombres());
         } else {
             JOptionPane.showMessageDialog(null, "No hay ningún experimento abierto.");
@@ -226,23 +234,18 @@ public class ExperimentApp extends JFrame {
     private void simuloMontecarlo() {
         if (experimento != null){
             String nombrePoblacion = JOptionPane.showInputDialog("Escriba el nombre de la población a simular:");
-            Plato platoCultivo = null;
-            int [][][][] matriz = null;
             try {
                 Poblacion poblacionSimulada = GestionLab.buscarPoblacion(nombrePoblacion, experimento);
                 JOptionPane.showMessageDialog(null, poblacionSimulada.toString());
-                platoCultivo = new Plato(poblacionSimulada.getNumInicialBacterias(), poblacionSimulada.getDosisComidaDiaria()[0]); // aqui inicializo el plato
+                Plato platoCultivo = new Plato(poblacionSimulada.getNumInicialBacterias(), poblacionSimulada.getDosisComidaDiaria()[0]); // aqui inicializo el plato
                 GestionSimulacion gestionSimulacion = new GestionSimulacion(); //tengo que crearlo pq montecarlo() NO es static
-                matriz = gestionSimulacion.monteCarlo(poblacionSimulada, platoCultivo);
-                JOptionPane.showMessageDialog(null, "Simulación realizada correctamente.");
+                gestionSimulacion.monteCarlo(poblacionSimulada, platoCultivo);
+                JOptionPane.showMessageDialog(null, "Simulación realizada correctamente. Puede visualizarla por días por consola.");
                 // JOptionPane.showMessageDialog(null, gestionSimulacion.monteCarlo(poblacionSimulada, platoCultivo), "Resultado de la simulación", JOptionPane.INFORMATION_MESSAGE);
                 // algo asi: JMenuBar.add(label);
             } catch (Exception ex) {
                 JOptionPane.showMessageDialog(null, "No se ha encontrado la población.");
             }
-            VistaSimulacion vistaSimulacion = new VistaSimulacion(matriz);
-            repaint();
-            vistaSimulacion.setVisible(true);
         }
         else {
             JOptionPane.showMessageDialog(null, "No hay ningún experimento abierto.");
