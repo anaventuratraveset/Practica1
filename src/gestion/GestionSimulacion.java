@@ -183,7 +183,7 @@ public class GestionSimulacion {
                         } else if(simulacion[dia][fila][columna][0] >= 1){
                             color = YELLOW;
                         }
-                        infoNumBacteria = color + "["+String.format("%03d",simulacion[dia][fila][columna][0]) + "," + String.format("%03d",simulacion[dia][fila][columna][1])+"] " + RESET;
+                        infoNumBacteria = color +String.format("%03d",simulacion[dia][fila][columna][0]) + "," + String.format("%03d",simulacion[dia][fila][columna][1])+"|" + RESET;
                         System.out.print(infoNumBacteria);
                     } catch (Exception e) {
                         e.printStackTrace();
