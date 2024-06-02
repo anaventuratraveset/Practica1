@@ -1,12 +1,9 @@
 package gestion;
 
 import laboratorio.Bacteria;
-import laboratorio.Celda;
 import laboratorio.Plato;
 import laboratorio.Poblacion;
-import ui.VistaSimulacion;
 
-import java.sql.SQLOutput;
 import java.util.ListIterator;
 
 import static java.time.temporal.ChronoUnit.DAYS;
@@ -19,6 +16,8 @@ public class GestionSimulacion {
     public static final String GREEN = "\u001B[32m";
     public static final String YELLOW = "\u001B[33m";
     public static final String PURPLE = "\u001B[35m";
+    public static final String BLUE = "\u001B[34m";
+
     public static final String WHITE = "\u001B[37m";
     private int[][][][] simulacion = null; // matriz 4D que guarda la simulación de Montecarlo
     // la primera dimensión es el día, la segunda y tercera dimensión son las filas y columnas del plato
@@ -160,18 +159,6 @@ public class GestionSimulacion {
 
             // Guardo la info de cada día en la matriz (antes de la reproducción)
             // y la visualizo para cada día
-            /*for (int fila = 0; fila < miPlato.getDimension(); fila++) {
-                for (int columna = 0; columna < miPlato.getDimension(); columna++) {
-                    try {
-                        simulacion[dia][fila][columna][0] = miPlato.getCelda()[fila][columna].getListBacterias().size();
-                        simulacion[dia][fila][columna][1] = miPlato.getCelda()[fila][columna].getComida();
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                        throw new Exception("Error en la matriz 3D");
-                    }
-                }
-            }*/
-            // esto es lo q tenía antes y arriba es lo nuevo
             for (int fila = 0; fila < miPlato.getDimension(); fila++) {
                 String infoNumBacteria = "";
                 int infoNumBacterias;
@@ -185,18 +172,18 @@ public class GestionSimulacion {
                     try {
                         if (simulacion[dia][fila][columna][0] == 0){
                             color = WHITE;
-                        } else if (simulacion[dia][fila][columna][0] >= 15){
+                        } else if (simulacion[dia][fila][columna][0] >= 20){
                             color = RED;
-                        } else if(simulacion[dia][fila][columna][0] >= 10){
+                        } else if(simulacion[dia][fila][columna][0] >= 15){
                             color = PURPLE;
+                        } else if(simulacion[dia][fila][columna][0] >= 10){
+                            color = BLUE;
                         } else if(simulacion[dia][fila][columna][0] >= 5){
                             color = GREEN;
                         } else if(simulacion[dia][fila][columna][0] >= 1){
                             color = YELLOW;
                         }
-
-                        infoNumBacteria = color + "["+String.format("%03d",simulacion[dia][fila][columna][0]) /*+ "," + String.format("%03d",simulacion[dia][fila][columna][1])*/+"] " + RESET;
-                        //String stringFormateado = String.format(infoNumBacteria, "%02d");
+                        infoNumBacteria = color + "["+String.format("%03d",simulacion[dia][fila][columna][0]) + "," + String.format("%03d",simulacion[dia][fila][columna][1])+"] " + RESET;
                         System.out.print(infoNumBacteria);
                     } catch (Exception e) {
                         e.printStackTrace();
@@ -231,11 +218,5 @@ public class GestionSimulacion {
                 }
             }
         }//dia
-        /*VistaSimulacion vistaSimulacion = new VistaSimulacion();
-        System.out.println("Visualización del plato de cultivo con su número de bacterias por día por celda: \n\n");
-        vistaSimulacion.VistaNumBacterias(simulacion);
-
-        System.out.println("Visualización del plato de cultivo con la cantidad de comida por día por celda: \n\n");
-        vistaSimulacion.VistaCantidadComida(simulacion);*/
     }
 }

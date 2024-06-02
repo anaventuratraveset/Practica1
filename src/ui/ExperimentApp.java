@@ -240,7 +240,9 @@ public class ExperimentApp extends JFrame {
                 Plato platoCultivo = new Plato(poblacionSimulada.getNumInicialBacterias(), poblacionSimulada.getDosisComidaDiaria()[0]); // aqui inicializo el plato
                 GestionSimulacion gestionSimulacion = new GestionSimulacion(); //tengo que crearlo pq montecarlo() NO es static
                 gestionSimulacion.monteCarlo(poblacionSimulada, platoCultivo);
-                JOptionPane.showMessageDialog(null, "Simulación realizada correctamente. Puede visualizarla por días por consola.");
+                JOptionPane.showMessageDialog(null, "Simulación realizada correctamente. \nPuede visualizarla por consola siendo [nºbact, comida]." +
+                        "\nMapa de colores asociado al número de bacterias vivas en cada celda:" +
+                        "\n0: Blanco, 1-4: Amarillo, 5-9: Verde, 10-14: Azul, 15-19: Morado, +20: Rojo.");
                 // JOptionPane.showMessageDialog(null, gestionSimulacion.monteCarlo(poblacionSimulada, platoCultivo), "Resultado de la simulación", JOptionPane.INFORMATION_MESSAGE);
                 // algo asi: JMenuBar.add(label);
             } catch (Exception ex) {
