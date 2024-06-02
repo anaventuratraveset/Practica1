@@ -4,7 +4,9 @@ import laboratorio.Bacteria;
 import laboratorio.Celda;
 import laboratorio.Plato;
 import laboratorio.Poblacion;
+import ui.VistaSimulacion;
 
+import java.sql.SQLOutput;
 import java.util.ListIterator;
 
 import static java.time.temporal.ChronoUnit.DAYS;
@@ -12,8 +14,12 @@ import static java.time.temporal.ChronoUnit.DAYS;
 
 public class GestionSimulacion {
 
-    // tengo que guardar en un archivo la matriz 3D
-    private Celda[][] arrayCeldas;
+    public static final String RESET = "\u001B[0m";
+    public static final String RED = "\u001B[31m";
+    public static final String GREEN = "\u001B[32m";
+    public static final String YELLOW = "\u001B[33m";
+    public static final String PURPLE = "\u001B[35m";
+    public static final String WHITE = "\u001B[37m";
     private int[][][][] simulacion = null; // matriz 4D que guarda la simulación de Montecarlo
     // la primera dimensión es el día, la segunda y tercera dimensión son las filas y columnas del plato
     // y la última dimensión es un array de dos elementos que guarda la cantidad de bacterias y comida en cada celda,
@@ -30,7 +36,7 @@ public class GestionSimulacion {
      * @param p
      * @param miPlato
      */
-    public int[][][][] monteCarlo(Poblacion p, Plato miPlato) throws Exception {
+    public void monteCarlo(Poblacion p, Plato miPlato) throws Exception {
         int duracion = (int) DAYS.between(p.getFechaInicio(), p.getFechaFin());
         System.out.println("Se está calculando la duración del experimento entre " + p.getFechaInicio() + " y " + p.getFechaFin() + " que es de " + duracion + " días");
         simulacion = new int[duracion][miPlato.getDimension()][miPlato.getDimension()][2];
@@ -43,8 +49,8 @@ public class GestionSimulacion {
             for (int pasadas = 0; pasadas < 10; pasadas++) {
                 for (int fila = 0; fila < miPlato.getDimension(); fila++) {
                     for (int columna = 0; columna < miPlato.getDimension(); columna++) {
-                        // añado la comida correspondiente del día a cada celda
-                        if (dia != 0 && pasadas == 0) {
+
+                        if (dia != 0 && pasadas == 0) { // al principio de cada día (=> pasada 0), añado la comida correspondiente del día a cada celda
                             int comidaXcelda = p.getDosisComidaDiaria()[dia] / 400;
                             miPlato.getCelda(fila, columna).anadirComida(comidaXcelda); // añado la dosis correspondiente del día (según el patrón al que esté asociada la poblacion de bacterias) para cada celda (por eso divido por 400)
                         }
@@ -154,19 +160,44 @@ public class GestionSimulacion {
 
             // Guardo la info de cada día en la matriz (antes de la reproducción)
             // y la visualizo para cada día
-            String infoPorCelda = "";
+            /*for (int fila = 0; fila < miPlato.getDimension(); fila++) {
+                for (int columna = 0; columna < miPlato.getDimension(); columna++) {
+                    try {
+                        simulacion[dia][fila][columna][0] = miPlato.getCelda()[fila][columna].getListBacterias().size();
+                        simulacion[dia][fila][columna][1] = miPlato.getCelda()[fila][columna].getComida();
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                        throw new Exception("Error en la matriz 3D");
+                    }
+                }
+            }*/
+            // esto es lo q tenía antes y arriba es lo nuevo
             for (int fila = 0; fila < miPlato.getDimension(); fila++) {
+                String infoNumBacteria = "";
                 int infoNumBacterias;
                 int infoComida;
                 for (int columna = 0; columna < miPlato.getDimension(); columna++) {
+                    String color = RED;
+                    infoNumBacterias = miPlato.getCelda()[fila][columna].getListBacterias().size();
+                    infoComida = miPlato.getCelda()[fila][columna].getComida();
+                    simulacion[dia][fila][columna][0] = infoNumBacterias;
+                    simulacion[dia][fila][columna][1] = infoComida;
                     try {
-                        infoNumBacterias = miPlato.getCelda()[fila][columna].getListBacterias().size();
-                        infoComida = miPlato.getCelda()[fila][columna].getComida();
-                        simulacion[dia][fila][columna][0] = infoNumBacterias;
-                        simulacion[dia][fila][columna][1] = infoComida;
-                        infoPorCelda = "["+String.format("%03d",simulacion[dia][fila][columna][0]) + "," + String.format("%03d",simulacion[dia][fila][columna][1])+"] ";
-                        //String stringFormateado = String.format(infoPorCelda, "%02d");
-                        System.out.print(infoPorCelda);
+                        if (simulacion[dia][fila][columna][0] == 0){
+                            color = WHITE;
+                        } else if (simulacion[dia][fila][columna][0] >= 15){
+                            color = RED;
+                        } else if(simulacion[dia][fila][columna][0] >= 10){
+                            color = PURPLE;
+                        } else if(simulacion[dia][fila][columna][0] >= 5){
+                            color = GREEN;
+                        } else if(simulacion[dia][fila][columna][0] >= 1){
+                            color = YELLOW;
+                        }
+
+                        infoNumBacteria = color + "["+String.format("%03d",simulacion[dia][fila][columna][0]) /*+ "," + String.format("%03d",simulacion[dia][fila][columna][1])*/+"] " + RESET;
+                        //String stringFormateado = String.format(infoNumBacteria, "%02d");
+                        System.out.print(infoNumBacteria);
                     } catch (Exception e) {
                         e.printStackTrace();
                         throw new Exception("Error en la matriz 3D");
@@ -199,27 +230,12 @@ public class GestionSimulacion {
                     }
                 }
             }
-
-            //antes estaba aqui la visualización de la matriz 3D
         }//dia
+        /*VistaSimulacion vistaSimulacion = new VistaSimulacion();
+        System.out.println("Visualización del plato de cultivo con su número de bacterias por día por celda: \n\n");
+        vistaSimulacion.VistaNumBacterias(simulacion);
 
-        // visualización de la matriz 3D que representa la cantidad de bacterias que quedan en cada celda el último día del experimento
-//        System.out.println("\n\nMatriz representando la cantidad de bacterias que quedan en cada celda el último día del experimento: ");
-//        JPanel panel = new JPanel(new GridLayout(miPlato.getDimension(), miPlato.getDimension()));
-//        String stringDevolver = "";
-//        for (int dia = 0; dia < duracion; dia++){
-//            for (int fila = 0; fila < miPlato.getDimension(); fila++) {
-//                for (int columna = 0; columna < miPlato.getDimension(); columna++) {
-//                    System.out.print("[" + simulacion[dia][fila][columna][0] + "] ");
-//                    stringDevolver += " " + String.format("%02d", simulacion[dia][fila][columna][0]);
-//                    // el %o2d es para que se vea mejor la matriz, pq obliga a que todos los números tengan 2 dígitos
-//                    JLabel label = new JLabel(String.valueOf(simulacion[dia][fila][columna][0]));
-//                    panel.add(label);
-//                }
-//                System.out.println();
-//                stringDevolver += "\n";
-//            }
-//        }
-    return simulacion;
+        System.out.println("Visualización del plato de cultivo con la cantidad de comida por día por celda: \n\n");
+        vistaSimulacion.VistaCantidadComida(simulacion);*/
     }
 }

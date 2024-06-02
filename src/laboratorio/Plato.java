@@ -17,9 +17,16 @@ public class Plato {
     private final int medioBajo = 8;
     private final int medioAlto = 12;
 
-    public Plato() {
+    /**
+     * Constructor de la clase Plato
+     * @param numBacterias
+     * @param comidaInicial
+     */
+    public Plato(int numBacterias, int comidaInicial) {
         this.plato = new Celda[dimension][dimension];
+        inicializarPlato(numBacterias, comidaInicial);
     }
+
 
     /**
      * Inicializa el plato de cultivo con las celdas correspondientes.
@@ -33,7 +40,7 @@ public class Plato {
         int bacteriasXcelda = (int)Math.ceil(numBacterias / 16.0); // divido por el número de celdas (4x4 = 16) centrales
         System.out.println("En las celdas centrales debería haber: " + bacteriasXcelda + " bacterias.");
         int comidaXCelda = (int)Math.ceil(comidaInicial / 400.0); // divido por el número de celdas (20x20 = 400)
-        System.out.println("Y en todas las celdas debería haber: " + comidaXCelda + " microgramos de comida.\n\n");
+        System.out.println("Y en todas las celdas debería haber: " + comidaXCelda + " microgramos de comida.\n");
 
         for (int fila = 0; fila < dimension; fila++) {
             String infoComida = "";
@@ -51,8 +58,8 @@ public class Plato {
                 infoNumBacterias += " " + this.plato[fila][columna].getListBacterias().size();
                 //Esto funciona e imprime lo que tiene que imprimir
             }
-            System.out.println("Info comida del dia 1"  + " en la fila " + fila + ": " + infoComida);
-            System.out.println("Info numbacterias del dia 1"  + " en la fila " + fila + ": " + infoNumBacterias);
+            System.out.println("Info comida del dia 1, recién inicializado"  + ", fila " + fila + ": " + infoComida);
+            System.out.println("Info numbacterias del dia 1, recién inicializado"  + ", fila " + fila + ": " + infoNumBacterias);
             System.out.println();
         }
     }
@@ -61,10 +68,6 @@ public class Plato {
      * constructor de la clase Plato
      */
 
-    public Plato(int numBacterias, int comidaInicial) {
-        this.plato = new Celda[dimension][dimension];
-        inicializarPlato(numBacterias, comidaInicial);
-    }
 
     /**
      * getters y setters
