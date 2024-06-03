@@ -20,6 +20,7 @@ public class FileManager {
 
     /**
      * Abre archivo y lo carga en memoria
+     * Para ello, se lee el archivo y se crea un experimento con la información del archivo
      * @param nombreExperimento
      * @return experimento
      * @throws FileNotFoundException
@@ -32,14 +33,13 @@ public class FileManager {
         InputStreamReader inputStreamReader = null;
         BufferedReader bufferedReader = null;
         String stringInfoTotal="";
-        // hacer esto en varios métodos
+
         try {
             // lo leo
             bufferedReader = new BufferedReader(new InputStreamReader(new FileInputStream(file)));
             String [] todosArgs = bufferedReader.readLine().split("\n");
             String nombreExpFromFile = todosArgs[0];
             experimento = new Experimento(nombreExpFromFile);
-            System.out.println(todosArgs.length+ "mi length");
             stringInfoTotal+=experimento.toStringInfoExperimentoToFile()+"\n";
 
             String line;
@@ -120,8 +120,8 @@ public class FileManager {
                 GestionLab.addPoblacion(poblacion,experimento);
                 stringInfoTotal+=poblacion.toStringInfoPobFile()+"\n";
             }
-            System.out.println("\nFICHERO CARGADO EN MEMORIA\n");
-            System.out.println(stringInfoTotal);
+            JOptionPane.showMessageDialog(null, "\nFICHERO CARGADO EN MEMORIA\n");
+            //System.out.println(stringInfoTotal); // antes usaba este cuando era por consola, pero ahora prefiero enseñar toda la info bien
             bufferedReader.close();
         }catch (Exception e){
             JOptionPane.showMessageDialog(null,"\nERROR FileManager leyendo archivo. \nPuede que no exista ningún archivo con ese nombre");
@@ -153,9 +153,10 @@ public class FileManager {
         return experimento;
     }
 
-
     /**
      * Guarda/guarda como experimento en archivo
+     * Para ello, se crea un archivo con el nombre nombreExperimento.txt y se escribe en él la información del experimento
+     * mediante el método toStringInfoExperimentoToFile() de Experimento
      * @param nombreExperimento
      * @param experimento
      * @return comprobacion
@@ -167,7 +168,7 @@ public class FileManager {
         try {
             printWriter = new PrintWriter(file1);
             String experimentoInfoFile = experimento.getNombreExperimento() ;
-            printWriter.println(experimentoInfoFile);//escribe en el fichero primero la info del experimento
+            printWriter.println(experimentoInfoFile);//escribe en el fichero primero el nombre del experimento
             for (int i = 0; i < experimento.getPoblacionesList().size(); i++) {
                 String infoPoblacionesFile = "";
                 infoPoblacionesFile += experimento.getPoblacionesList().get(i).toStringInfoPobFile();
@@ -177,7 +178,8 @@ public class FileManager {
             }
             printWriter.close();
             comprobacion=true;
-        } catch (IOException e) { // Cacheo esta excepción porque el constructor de PrintWriter lanza esa excepción
+        } catch (IOException e) {
+            // Cacheo esta excepción porque el constructor de PrintWriter lanza esa excepción
             e.printStackTrace();
         } finally {
             if (printWriter != null) {

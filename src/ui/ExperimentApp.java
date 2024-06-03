@@ -103,7 +103,9 @@ public class ExperimentApp extends JFrame {
     }
 
     /**
-     * Abre un archivo que contiene un experimento.
+     * Abre un archivo que contiene un experimento
+     * Para ello, se utiliza un JFileChooser para que el usuario pueda seleccionar el archivo
+     * y se llama al método abrirArchivo de FileManager
      * Si el archivo no existe o no lo ha podido abrir, muestra un mensaje de error.
      * Si el archivo existe, muestra un mensaje con el nombre del archivo
      * y el contenido del experimento.
@@ -116,10 +118,7 @@ public class ExperimentApp extends JFrame {
                 File file = fileChooser.getSelectedFile();
                 String nombreExperimento = file.getName().substring(0, file.getName().length() - 4); // para quitarle el .txt
                 experimento = abrirArchivo(nombreExperimento);
-                if(experimento != null) {
-                    JOptionPane.showMessageDialog(null, "Has seleccionado el archivo: " + file.getName());
-                    JOptionPane.showMessageDialog(null, experimento.toString());
-                }
+                JOptionPane.showMessageDialog(null, experimento.toString());
             }
             // en JOptionPane.showMessageDialog(), se abre una ventana con un JTextField para escribir dentro (solo puede ser String)
             // sirve para pedirle info al usuario, enseñándole el mensaje (petición)
@@ -132,8 +131,9 @@ public class ExperimentApp extends JFrame {
     }
 
     /**
-     * Crea un nuevo experimento
-     * Pide al usuario el nombre del experimento y el número de poblaciones
+     * Inicializa un nuevo experimento
+     * Le pide al usuario el nombre del experimento y el número de poblaciones
+     * Para crear las poblaciones, llama al método createPoblacion de GestionLab
      * Si el número de poblaciones es 0, muestra un mensaje de error
      * Si el número de poblaciones es negativo, muestra un mensaje de error
      * Si el experimento se ha creado correctamente, muestra un mensaje con el nombre del experimento
