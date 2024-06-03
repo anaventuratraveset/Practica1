@@ -2,6 +2,7 @@ package laboratorio;
 import java.util.ArrayList;
 
 /**
+ * Es la clase que representa un experimento en la aplicación.
  * @author Ana Ventura-Traveset
  */
 public class Experimento {
@@ -75,10 +76,6 @@ public class Experimento {
         this.poblacionesList = poblacionesList;
     }
 
-    /**
-     * Métodos para que al meter esta clase en un System.out.println() salga
-     * algo legible
-     */
     /**
      * toString
      * Este nos enseña TODA la info del experimento

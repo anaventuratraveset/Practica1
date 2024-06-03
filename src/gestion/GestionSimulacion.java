@@ -1,5 +1,4 @@
 package gestion;
-
 import laboratorio.Bacteria;
 import laboratorio.Plato;
 import laboratorio.Poblacion;
@@ -11,14 +10,14 @@ import static java.time.temporal.ChronoUnit.DAYS;
 
 public class GestionSimulacion {
 
-    public static final String RESET = "\u001B[0m";
-    public static final String RED = "\u001B[31m";
-    public static final String GREEN = "\u001B[32m";
-    public static final String YELLOW = "\u001B[33m";
-    public static final String PURPLE = "\u001B[35m";
-    public static final String BLUE = "\u001B[34m";
+    private static final String RESET = "\u001B[0m";
+    private static final String RED = "\u001B[31m";
+    private static final String GREEN = "\u001B[32m";
+    private static final String YELLOW = "\u001B[33m";
+    private static final String PURPLE = "\u001B[35m";
+    private static final String BLUE = "\u001B[34m";
 
-    public static final String WHITE = "\u001B[37m";
+    private static final String WHITE = "\u001B[37m";
     private int[][][][] simulacion = null; // matriz 4D que guarda la simulación de Montecarlo
     // la primera dimensión es el día, la segunda y tercera dimensión son las filas y columnas del plato
     // y la última dimensión es un array de dos elementos que guarda la cantidad de bacterias y comida en cada celda,
@@ -31,6 +30,24 @@ public class GestionSimulacion {
      * La población de bacterias contiene la información sobre la cantidad de bacterias iniciales, la duración del experimento y el patrón de comida.
      * El plato de cultivo contiene la información sobre la cantidad de comida inicial y la cantidad de bacterias. El plato ya está inicializado =>
      * la comida y las bacterias están correctamente distribuidas en las celdas como se pide en el enunciado
+     *
+     *
+     *
+     * Para cada día (después de las 10 pasadas pero antes de la reproducción), se guarda la cantidad de bacterias y de comida por celda.
+     * Para cada día se imprime el plato de cultivo, con en cada celda la cantidad de bacterias vivas y la cantidad de comida restante,
+     * de la siguiente manera: |nº bacterias, cantidad comida|.
+     * Se realiza un mapa de color según la cantidad de bacterias vivas en cada celda.
+     * Si hay 20 o más bacterias en una celda, se escribe en rojo.
+     * Si hay entre 15 y 19 bacterias, se escribe en morado.
+     * Si hay entre 10 y 14 bacterias, se escribe en azul.
+     * Si hay entre 5 y 9 bacterias se escribe en verde.
+     * Si hay entre 1 y 4 bacterias se escribe en amarillo.
+     * Si no hay ninguna bacteria, se escribe en blanco.
+     *
+     * Para cada día, después de las 10 pasadas y de haber guardado la información para cada día en la matriz 4D,
+     * entonces se coge celda por celda, bacteria por bacteria y se analiza el caso de cada bacteria y según la cantidad ingerida,
+     * se reproduce mas o menos. Para recorrer todas las bacterias de cada celda, se hace con un ListIterator.Y luego para añadir
+     * las bacterias hijas en cada celda, se hace mediante el método anadirBacterias(bacteria) de la clase Celda.
      *
      * @param p
      * @param miPlato

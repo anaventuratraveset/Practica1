@@ -1,30 +1,38 @@
 package laboratorio;
 
 import excepciones.ComidaCeldaExcepcion;
-
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Random;
 
 public class Celda {
     /**
      * @param comida
      * @param numBacterias
-     * Representa una celda individual en el plato de cultivo, conteniendo información sobre las bacterias presentes y la comida disponible.
-     * Además, gestiona la simulación de Montecarlo para las bacterias en una única celda.
+     * @param listBacterias
+     * Representa una celda individual en el plato de cultivo, conteniendo información sobre
+     * las bacterias presentes y la comida disponible.
+     * Además, gestiona parte de lo que ocurre en la simulación de Montecarlo para las bacterias
+     * en la celda.
      */
     private int comida;
     private final List<Bacteria> listBacterias = new LinkedList<Bacteria>();
     private final int bacteriasVivas;
-    private Poblacion poblacion;
 
+    /**
+     * Constructor de la clase Celda
+     * @param comida
+     * @param bacteriasVivas
+     */
     public Celda (int comida, int bacteriasVivas){
         this.comida = comida;
         this.bacteriasVivas = bacteriasVivas;
     }
     /**
-     * Método que´cuando es un día nuevo, añade a la comida actual (del dia anterior - lo que se haya comido) de la celda la comida que corresponda para ese nuevo día
-     * esta cantidad de comida varía según la población, el patrón de comida y el día
+     * Método que cuando es un día nuevo, añade a la comida actual (del dia anterior - lo que se haya comido) de la celda la comida que corresponda para ese nuevo día
+     * esta cantidad de comida varía según la población, el patrón de comida, las cantidades
+     * de comida que haya puesto el usuario y el día que sea.
+     * A este método se le llama en el método de monteCarlo(), al empezar un nuevo día.
+     * @param cantidad
      * */
     public void anadirComida(int cantidad) {
         this.comida += cantidad;
@@ -69,9 +77,9 @@ public class Celda {
     }
 
     /**
-     * Elimina la cantidad de comida de la celda que se le pasa como argumento
+     * Elimina la cantidad de comida pasada como parámetro de la cantidad total de la celda.
      * @param cantidadEliminar
-     * @return
+     * @return int
      * @throws ComidaCeldaExcepcion
      */
     public int eliminarComida(int cantidadEliminar) throws ComidaCeldaExcepcion {
@@ -84,10 +92,10 @@ public class Celda {
     }
 
     /**
-     * Este método en función de la cantidad de comida que haya en la celda, se ingerirá x comida
+     * Este método hace que en función de la cantidad de comida que haya en la celda, se ingiera x comida
      * y esta cantidad se eliminará de la cantidad de comida total de la celda (se actualiza)
-     * y la cantidad ingerida será devuelta ya que se utiliza en el método montecarlo()
-     * de la clase Plato.
+     * y la cantidad ingerida será devuelta ya que este método es llamado desde el método monteCarlo()
+     * de la clase GestionSimulacion.
      * @return int
      */
     public int cantidadAcomer()throws ComidaCeldaExcepcion {
@@ -106,14 +114,6 @@ public class Celda {
             return cantidadAIngerir;
         }
     }
-
-    @Override
-    public String toString () {
-        return "Celda{" +
-                "comida:" + comida +" ,numBacterias:" + bacteriasVivas +
-                '}';
-    }
-
 }
 
 

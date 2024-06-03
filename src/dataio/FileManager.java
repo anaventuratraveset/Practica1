@@ -5,6 +5,8 @@ import laboratorio.Bacteria;
 import laboratorio.Experimento;
 import laboratorio.Poblacion;
 import medio.*;
+
+import javax.swing.*;
 import java.io.*;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -122,7 +124,7 @@ public class FileManager {
             System.out.println(stringInfoTotal);
             bufferedReader.close();
         }catch (Exception e){
-            System.out.println("\nERROR FileManager leyendo archivo. \nPuede que no exista ningún archivo con ese nombre");
+            JOptionPane.showMessageDialog(null,"\nERROR FileManager leyendo archivo. \nPuede que no exista ningún archivo con ese nombre");
         }
         finally {
             if (bufferedReader != null){

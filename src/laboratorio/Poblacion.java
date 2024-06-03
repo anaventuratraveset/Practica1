@@ -5,6 +5,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 
 /**
+ * Clase que representa una población de bacterias
  * @author Ana Ventura-Traveset
  */
 public class Poblacion {
@@ -22,6 +23,11 @@ public class Poblacion {
      * dosisComidaDiaria
      * numeroPatronComida
      * comidaMax
+     * bacteriasList
+     * fechaPico
+     * cantidadInicial
+     * cantidadFinal
+     * cantidadPico
      */
     private String nombrePoblacion;
     private int numInicialBacterias;
@@ -64,53 +70,32 @@ public class Poblacion {
 
     /**
      * Getters y setters
-     * @return
      */
 
-    /**
-     * Muestra el nombre de la poblacion
-     *
-     * @return String
-     */
     public String getNombrePoblacion() {
         return nombrePoblacion;
     }
 
-    public LocalDate getFechaPico() {
-        return fechaPico;
-    }
 
     public void setFechaPico(LocalDate fechaPico) {
         this.fechaPico = fechaPico;
     }
 
-    public int getCantidadInicial() {
-        return cantidadInicial;
-    }
 
     public void setCantidadInicial(int cantidadInicial) {
         this.cantidadInicial = cantidadInicial;
     }
 
-    public int getCantidadFinal() {
-        return cantidadFinal;
-    }
 
     public void setCantidadFinal(int cantidadFinal) {
         this.cantidadFinal = cantidadFinal;
     }
 
-    public int getCantidadPico() {
-        return cantidadPico;
-    }
 
     public void setCantidadPico(int cantidadPico) {
         this.cantidadPico = cantidadPico;
     }
 
-    /**
-     * Creo los getters de los siguientes atributos para poder hacer el test unitario
-     */
     public int getNumInicialBacterias() {
         return numInicialBacterias;
     }
@@ -200,10 +185,6 @@ public class Poblacion {
         this.comida = comida;
     }
 
-    /**
-     * Getters para los test
-     */
-
     public Luminosidad.luminosidad getLuminosidad() {
         return luminosidad;
     }
@@ -211,7 +192,6 @@ public class Poblacion {
     public ComidaPadre getComida() {
         return comida;
     }
-
 
     /**
      * getBacteriasList()
@@ -266,12 +246,9 @@ public class Poblacion {
                 + ";" + this.numInicialBacterias
                 + ";" + this.temperatura
                 + ";" + this.luminosidad
-                + ";" + this.numeroPatronComida
-                /*+ ";" + comida.toStringToFile()*/; // no sé si debería quitarlo y ponerlo directamente desde comida o dejarlo
-
+                + ";" + this.numeroPatronComida;
         return stringToRepresentInfoPobFile;
     }
-
 }
 
 

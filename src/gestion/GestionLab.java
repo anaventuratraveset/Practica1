@@ -83,21 +83,20 @@ public class GestionLab {
         // lo de que 400 sea el mínimo de comida permitida, lo establezco yo pq así en caso de hacer una simulación de Montecarlo,
         // siempre va a haber como mínimo una cantidad de 1 microgramo por celda a la hora de inicializar el plato de cultivo
         while (true) {
-                try {
-                    cantidadInicial = readInt("Introduzca la cantidad de comida inicial: ");
-                    if (cantidadInicial < 400) {
-                        throw new ComidaMinExcepcion("La cantidad de comida introducida no puede ser menos de 400 microgramos.");
-                    } else if (cantidadInicial > p.getComidaMax()) {
-                        throw new ComidaMaxExcepcion("La comida introducida supera el máximo permitido (300000 microgramos.)");
-                    } else {
-                        break;
-                    }
-                } catch (ComidaMinExcepcion | ComidaMaxExcepcion ignored) {
+            try {
+                cantidadInicial = readInt("Introduzca la cantidad de comida inicial: ");
+                if (cantidadInicial < 400) {
+                    throw new ComidaMinExcepcion("La cantidad de comida introducida no puede ser menos de 400 microgramos.");
+                } else if (cantidadInicial > p.getComidaMax()) {
+                    throw new ComidaMaxExcepcion("La comida introducida supera el máximo permitido (300000 microgramos.)");
+                } else {
+                    break;
                 }
+            } catch (ComidaMinExcepcion | ComidaMaxExcepcion ignored) {
+            }
         }
 
         //Para controlar que fecha de inicio no sea después que la de fin
-
         while (true) {
             try {
                 fechaInicial = readDate("Introduzca la fecha donde empieza su experimento (yyyy.MM.dd): ");
@@ -264,7 +263,6 @@ public class GestionLab {
         do {
             opcion = readInt("\nSeleccione una opción: ");
             if (opcion < 1 || opcion > 4) {
-                System.out.println("CACA");
                 JOptionPane.showMessageDialog(null,"¡ Opción no valida ! ");
             }
         } while (opcion < 1 || opcion > 4);

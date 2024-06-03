@@ -3,23 +3,32 @@ package medio;
 import java.time.LocalDate;
 import java.util.Arrays;
 
+/**
+ * Clase ComidaIncremento.
+ * La cantidad de comida incrementa linealmente durante la duración del experimento
+ * @autor Ana Ventura-Traveset
+ */
 public class ComidaIncremento extends ComidaPadre{
 
     private int cantidadFinal;
+    /**
+     * Constructor de la clase ComidaIncremento
+     * @param cantidadInicial
+     * @param fechaInicial
+     * @param fechaFinal
+     * @param cantidadFinal
+     */
     public ComidaIncremento(int cantidadInicial, LocalDate fechaInicial, LocalDate fechaFinal,
                             int cantidadFinal){
         super(cantidadInicial, fechaInicial, fechaFinal);
         this.cantidadFinal = cantidadFinal;
     }
 
-    public void setCantidadFinal(int cantidadFinal) {
-        this.cantidadFinal = cantidadFinal;
-    }
-
-    public int getCantidadFinal() {
-        return cantidadFinal;
-    }
-
+    /**
+     * Permite calcular la cantidad de comida para cada día.
+     * En este caso, la cantidad de comida incrementa linealmente
+     * @return cantidadComida
+     */
     @Override
     public int[] calcularComida(){
         int cantidadIncremento = cantidadFinal - cantidadInicial;

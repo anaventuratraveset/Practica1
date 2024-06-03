@@ -15,16 +15,14 @@ import static dataio.FileManager.abrirArchivo;
 import static dataio.FileManager.guardarArchivo;
 
 /**
- * Esta clase es para tener la ventana de mi main
+ * Esta clase es la encargada de la representación gráfica de la aplicación mediante Swing
  * Componentes Swing:
  * JFrame: ventana
  * JMenuBar: barra de menu
  * JMenu: menu
  * JMenuItem: items del menu
- * JTextField: para que el usuario pueda escribir
- * JLabel: etiqueta para mostrar información (ej: al lado de un JTextField, para indicar que escribir en él)
- * JPanel: para añadir los componentes a la ventana
- * JButton: para que el usuario pueda hacer click
+ * JFileChooser: para abrir archivos
+ * JOptionPane: para mostrar mensajes
  *
  * @author Ana Ventura-Traveset
  */
@@ -32,8 +30,12 @@ import static dataio.FileManager.guardarArchivo;
 
 public class ExperimentApp extends JFrame {
     Experimento experimento;
-    public ExperimentApp() {
 
+    /**
+     * Constructor de la clase ExperimentApp
+     * Configura la ventana y llama a la configuración del menú
+     */
+    public ExperimentApp() {
         setTitle("Aplicación para gestionar cultivos de bacterias"); // JFrame es una ventana
         setSize(700, 300);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -41,6 +43,9 @@ public class ExperimentApp extends JFrame {
         setUpMenu();
     }
 
+    /**
+     * Configura el menú de la aplicación
+     */
     private void setUpMenu() {
         // Menú
         JMenu menu = new JMenu();
@@ -67,7 +72,6 @@ public class ExperimentApp extends JFrame {
         fileMenu.add(guardar);
         fileMenu.add(guardarComo);
 
-        // Aqui crearía un panel, del cultivo y lo añadiria a mi ventana haciendo simplemente add(panelCultivo)
 
         // Voy a añadirle a cada item un evento
         abrirArchivo.addActionListener(e -> abroArchivo());
@@ -98,35 +102,45 @@ public class ExperimentApp extends JFrame {
         setJMenuBar(menuBar);
     }
 
+    /**
+     * Abre un archivo que contiene un experimento.
+     * Si el archivo no existe o no lo ha podido abrir, muestra un mensaje de error.
+     * Si el archivo existe, muestra un mensaje con el nombre del archivo
+     * y el contenido del experimento.
+     */
     private void abroArchivo() {
         try {
             JFileChooser fileChooser = new JFileChooser(); // para abrir el archivo
-            // Pedirle el nombre del experimento ya no es necesario porque el nombre del experimento ya está en el archivo
             int resultado = fileChooser.showOpenDialog(null); // para que me lo abra en mi ventana tengo q pasarle la ventana como param
             if (resultado == JFileChooser.APPROVE_OPTION) {
                 File file = fileChooser.getSelectedFile();
                 String nombreExperimento = file.getName().substring(0, file.getName().length() - 4); // para quitarle el .txt
                 experimento = abrirArchivo(nombreExperimento);
-                if(experimento == null) {
-                    if (nombreExperimento.contains(".txt")) {
-                        JOptionPane.showMessageDialog(null, "El nombre del archivo no existe.");
-                    } else {
-                        JOptionPane.showMessageDialog(null, "El nombre del archivo no existe o es incorrecto. (Pruebe añadiendo .txt al final)");
-                    }
-                } else {
+                if(experimento != null) {
                     JOptionPane.showMessageDialog(null, "Has seleccionado el archivo: " + file.getName());
+                    JOptionPane.showMessageDialog(null, experimento.toString());
                 }
-                JOptionPane.showMessageDialog(null, experimento.toString());
             }
             // en JOptionPane.showMessageDialog(), se abre una ventana con un JTextField para escribir dentro (solo puede ser String)
             // sirve para pedirle info al usuario, enseñándole el mensaje (petición)
         } catch (FileNotFoundException fnf) {
             JOptionPane.showMessageDialog(null, "No se ha encontrado el archivo.");
-        } catch (Exception ignored) {
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(null, "El nombre del archivo no existe o es incorrecto. (Pruebe añadiendo .txt al final)");
+            ex.printStackTrace();
         }
     }
 
-    // Crea un experimento nuevo
+    /**
+     * Crea un nuevo experimento
+     * Pide al usuario el nombre del experimento y el número de poblaciones
+     * Si el número de poblaciones es 0, muestra un mensaje de error
+     * Si el número de poblaciones es negativo, muestra un mensaje de error
+     * Si el experimento se ha creado correctamente, muestra un mensaje con el nombre del experimento
+     * y el contenido del experimento
+     * Si el experimento no se ha creado correctamente, muestra un mensaje de error
+     * Si el número de poblaciones es mayor que 1, pide como quiere ordenarlas (nombre, fecha, cantidad de bacterias)
+     * */
     private void creoExperiment() {
         String nombreNuevoExperimento = JOptionPane.showInputDialog("Escriba el nombre del nuevo experimento:");
         int numPoblaciones;
@@ -163,9 +177,10 @@ public class ExperimentApp extends JFrame {
         }
     }
 
-    /*
-      Crea una población de bacterias y la añade al experimento actual
-      */
+    /**
+    *  Crea una población de bacterias y la añade al experimento actual
+    *  Si el experimento no está abierto, muestra un mensaje de error
+    */
     private void creoPoblacion() {
         Poblacion poblacion = null;
         if (experimento != null) {
@@ -184,9 +199,10 @@ public class ExperimentApp extends JFrame {
         }
     }
 
-    /*
-      Visualiza el nombre de cada población de bacterias del experimento actual
-      */
+    /**
+     * Visualiza el nombre de cada población de bacterias del experimento actual
+     * Si el experimento no está abierto, muestra un mensaje de error
+     * */
     private void visualizoNombres() {
         if (experimento != null){
             GestionLab.ordenarPoblaciones(experimento);
@@ -196,23 +212,34 @@ public class ExperimentApp extends JFrame {
         }
     }
 
-    /*
-      Borra poblacion de bacterias del experimento actual
-      */
+    /**
+     * Llama al método borrarPoblacion para borrar la población de bacterias seleccionada
+     * Si el experimento no está abierto, muestra un mensaje de error
+     * Si la población no existe, muestra un mensaje de error
+     * */
     private void borroPoblacion() {
         if (experimento != null){
             String nombrePoblacion = JOptionPane.showInputDialog("Escriba el nombre de la población a borrar:");
-            GestionLab.borrarPoblacion(nombrePoblacion, experimento);
-            JOptionPane.showMessageDialog(null, "Población borrada correctamente.");
+            try {
+                Poblacion poblacionEncontrada = GestionLab.buscarPoblacion(nombrePoblacion, experimento);
+                JOptionPane.showMessageDialog(null, poblacionEncontrada.toString());
+                GestionLab.borrarPoblacion(nombrePoblacion, experimento);
+                JOptionPane.showMessageDialog(null, "Población borrada correctamente.");
+            } catch (Exception ex) {
+                JOptionPane.showMessageDialog(null, "No se ha encontrado la población.");
+            }
         }
         else {
             JOptionPane.showMessageDialog(null, "No hay ningún experimento abierto.");
         }
     }
 
-    /*
-      Muestra información de una población en concreto del experimento actual
-      */
+    /**
+     * Llama al método buscarPoblacion para encontrar la población de bacterias seleccionada
+     * y muestra su información detallada mediante su método toString()
+     * Si el experimento no está abierto, muestra un mensaje de error
+     * Si la población no existe, muestra un mensaje de error
+     * */
     private void muestroInfoPob() {
         if (experimento != null){
             String nombrePoblacion = JOptionPane.showInputDialog("Escriba el nombre de la población que desea ver la información:");
@@ -228,9 +255,11 @@ public class ExperimentApp extends JFrame {
         }
     }
 
-    /*
-      Realiza y visualiza una simulación de Montecarlo de una población de bacterias del experimento actual
-      */
+    /**
+     * LLama a la simulación de montecarlo para que se realice sobre la población de bacterias seleccionada
+     * Si el experimento no está abierto, muestra un mensaje de error
+     * Si la población no existe, muestra un mensaje de error
+     * */
     private void simuloMontecarlo() {
         if (experimento != null){
             String nombrePoblacion = JOptionPane.showInputDialog("Escriba el nombre de la población a simular:");
@@ -254,9 +283,12 @@ public class ExperimentApp extends JFrame {
         }
     }
 
-    /*
-      Guarda el experimento actual
-      */
+    /**
+     * Llama al método guardarArchivo para guardar el experimento actual
+     * Si el experimento no está abierto, muestra un mensaje de error
+     * Si el archivo se ha guardado correctamente, muestra un mensaje de éxito
+     * Si el archivo no se ha guardado correctamente, muestra un mensaje de error
+     * */
     private void guardoExperimento() {
         if (experimento != null){
             boolean guardar = guardarArchivo(experimento.getNombreExperimento(), experimento);
@@ -271,9 +303,9 @@ public class ExperimentApp extends JFrame {
         }
     }
 
-    /*
-      Guarda como el experimento actual
-      */
+    /**
+     * Llama al método guardarArchivo para guardar el experimento actual con un nombre específico
+     * */
     private void guardoComoExperimento() {
         if (experimento != null){
             String nombreExperimento = JOptionPane.showInputDialog("Escriba el nombre con el que desea guardar el experimento:");

@@ -4,12 +4,10 @@ public class Plato {
     /**
      * Esta clase representa el plato de cultivo con las celdas donde se desarrollan las bacterias.
      *
-     * @param ancho
-     * @param altura
+     * @param dimension
      * @param plato
      * @param medioBajo
      * @param medioAlto
-     * @param listBacterias
      */
 
     private Celda[][] plato;
@@ -32,7 +30,7 @@ public class Plato {
      * Inicializa el plato de cultivo con las celdas correspondientes.
      * Se encarga de la distribución del dia 0 en el plato de cultivo, las bacterias
      * iniciales se posicionan en los cuadrantes centrales 4x4 celdas a partes
-     * iguales y la comida se distribuye también por todo el plato de cultivo 20x20 celdas.
+     * iguales y la comida se distribuye por todo el plato de cultivo 20x20 celdas.
      */
     public void inicializarPlato(int numBacterias, int comidaInicial) {
         //Math.ceil() lo que hace es redondear hacia arriba
@@ -65,18 +63,10 @@ public class Plato {
     }
 
     /**
-     * constructor de la clase Plato
-     */
-
-
-    /**
      * getters y setters
      * */
     public Celda[][] getCelda() {
         return plato;
-    }
-    public void setPlato(Celda[][] plato) {
-        this.plato = plato;
     }
     public Celda getCelda (int x, int y){
         return this.plato[x][y];

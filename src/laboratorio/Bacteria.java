@@ -1,41 +1,31 @@
 package laboratorio;
 
+/**
+ * Clase Bacteria
+ * Esta clase representa a una bacteria,
+ * la cual tiene un atributo privado que es la cantidad de comida ingerida
+ * @author Ana Ventura-Traveset
+ * */
 public class Bacteria {
     /**
      *
      * @param comidaIngerida
      */
     private int comidaIngerida;
-    private int x, y; //coordenadas de la celda en la que se encuentra, aunq creo que no se usa
 
     /**
      * Constructor por defecto de Bacteria
      * */
     public Bacteria() {
     }
-    public Bacteria(int x, int y) {
-        this.x = x;
-        this.y = y;
-    }
 
     /**
-     * Getters y setters de los atributos privados de la clase Bacteria
-     * comida ingerida, x e y
+     * Pone la cantidad de comida ingerida por una bacteria
+     * @param comidaIngerida
+     * @return void
      * */
     public void setComidaIngerida(int comidaIngerida) {
         this.comidaIngerida = comidaIngerida;
-    }
-    public int getX() {
-        return x;
-    }
-    public void setX(int x) {
-        this.x = x;
-    }
-    public int getY() {
-        return y;
-    }
-    public void setY(int y) {
-        this.y = y;
     }
 
     /**
@@ -51,10 +41,13 @@ public class Bacteria {
     /**
      * Cuenta la cantidad de comida ingerida por la bacteria, sumándole el valor
      * que se le pasa como argumento.
-     * Se va acumulando la cantidad de comida ingerida por la bacteria a lo largo de las pasadas, para que al final del día,
+     * Se va acumulando la cantidad de comida ingerida por la bacteria a lo largo de las pasadas,
+     * para que al final del día,
      * según la cantidad ingerida se sepa cuanto ha de reproducirse.
      *
-     * Además este método, además de sumar la cantidad de comida ingerida, devuelve un número aleatorio que se utiliza en montecarlo para saber cual será su comportamiento (morir, quedarse, desplazarse)
+     * Además, este método, además de sumar la cantidad de comida ingerida, devuelve un número
+     * aleatorio que se utiliza en montecarlo para saber cuál será su comportamiento
+     * (morir, quedarse, desplazarse)
      * @param cantidaComida
      * @return
      */
@@ -64,8 +57,4 @@ public class Bacteria {
         return aleatorio;
     }
 
-    public String toString() {
-        String texto = "\nComida Ingerida: " + comidaIngerida;
-        return texto;
-    }
 }
