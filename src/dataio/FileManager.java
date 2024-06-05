@@ -121,10 +121,9 @@ public class FileManager {
                 stringInfoTotal+=poblacion.toStringInfoPobFile()+"\n";
             }
             JOptionPane.showMessageDialog(null, "\nFICHERO CARGADO EN MEMORIA\n");
-            //System.out.println(stringInfoTotal); // antes usaba este cuando era por consola, pero ahora prefiero enseñar toda la info bien
             bufferedReader.close();
         }catch (Exception e){
-            JOptionPane.showMessageDialog(null,"\nERROR FileManager leyendo archivo. \nPuede que no exista ningún archivo con ese nombre");
+            JOptionPane.showMessageDialog(null,"\nERROR FileManager leyendo archivo. \nPuede que no exista ningún archivo con ese nombre.");
         }
         finally {
             if (bufferedReader != null){

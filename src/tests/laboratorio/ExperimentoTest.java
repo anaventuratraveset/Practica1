@@ -6,6 +6,12 @@ import org.junit.jupiter.api.Test;
 
 import static gestion.GestionLab.addPoblacion;
 import static org.junit.jupiter.api.Assertions.*;
+
+/**
+ * Clase de pruebas unitarias para la clase Experimento.
+ * @autor Ana Ventura-Traveset
+ */
+
 class ExperimentoTest {
     private Experimento experimento;
     @BeforeEach

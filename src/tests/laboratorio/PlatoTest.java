@@ -7,6 +7,10 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+/**
+ * Clase de pruebas unitarias para la clase Plato.
+ * @autor Ana Ventura-Traveset
+ * */
 class PlatoTest {
     private Plato plato;
 
