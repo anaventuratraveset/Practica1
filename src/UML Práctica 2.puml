@@ -1,0 +1,212 @@
+
+@startuml
+package `ui`{
+    class ExperimentoApp {
+        - (experimento: Experimento)
+        + abroArchivo(): void
+        + creoExperimento(): void
+        + creoPoblacion(): void
+        + visualizoNombres(): void
+        + borroPoblacion(): void
+        + muestroInfoPob(): void
+        + simuloMontecarlo(): void
+        + guardoExperimento(): void
+        + guardoComoExperimento(): void
+        + salgo(): void
+    }
+}
+
+package `gestion`{
+class GestionLab {
+    -nombreLab: String
+    -experimentosList: ArrayList<Experimento>
+    +setNombreLab(nombreLab: String): void
+    +getNombreLab(): String
+    +setExperimentosList(experimentosList: ArrayList<Experimento>): void
+    +getExperimentosList(): ArrayList<Experimento>
+    +addExperimento(experimento: Experimento): void
+    +removeExperimento(experimento: Experimento): void
+    +toString(): String
+}
+
+class GestionSimulacion {
+    -nombreSimulacion: String
+    -platosList: ArrayList<Plato>
+    +setNombreSimulacion(nombreSimulacion: String): void
+    +getNombreSimulacion(): String
+    +setPlatosList(platosList: ArrayList<Plato>): void
+    +getPlatosList(): ArrayList<Plato>
+    +addPlato(plato: Plato): void
+    +removePlato(plato: Plato): void
+    +toString(): String
+    }
+}
+
+package `laboratorio`{
+    class Experimento {
+        -nombreExperimento: String
+        -numPoblaciones: int
+        -poblacionesList: ArrayList<Poblacion>
+        +setNombreExperimento(nombreExperimento: String): void
+        +getNombreExperimento(): String
+        +setNumPoblaciones(numPoblaciones: int): void
+        +getNumPoblaciones(): int
+        +setPoblacionesList(poblacionesList: ArrayList<Poblacion>): void
+        +getPoblacionesList(): ArrayList<Poblacion>
+        +addPoblacion(poblacion: Poblacion): void
+        +removePoblacion(poblacion: Poblacion): void
+        +toString(): String
+    }
+    class Poblacion {
+        -nombrePoblacion: String
+        -numInicialBacterias: int
+        -temperatura: float
+        -fechaInicio: LocalDate
+        -fechaFin: LocalDate
+        -luminosidad: Luminosidad.luminosidad
+        -comida: ComidaPadre
+        -bacteriasList: ArrayList<Bacteria>
+        -numeroPatronComida: int
+        +setNombrePoblacion(nombrePoblacion: String): void
+        +getNombrePoblacion(): String
+        +setNumInicialBacterias(numInicialBacterias: int): void
+        +getNumInicialBacterias(): int
+        +setTemperatura(temperatura: float): void
+        +getTemperatura(): float
+        +setFechaInicio(fechaInicio: LocalDate): void
+        +getFechaInicio(): LocalDate
+        +setFechaFin(fechaFin: LocalDate): void
+        +getFechaFin(): LocalDate
+        +setLuminosidad(luminosidad: Luminosidad.luminosidad): void
+        +getLuminosidad(): Luminosidad.luminosidad
+        +setComida(comida: ComidaPadre): void
+        +getComida(): ComidaPadre
+        +getBacteriasList(): ArrayList<Bacteria>
+        +setBacteriaNueva(b: Bacteria): void
+        +toString(): String
+        +toStringInfoPobFile(): String
+    }
+    class Plato {
+        -nombre: String
+        -celdasList: ArrayList<Celda>
+        +setNombre(nombre: String): void
+        +getNombre(): String
+        +setCeldasList(celdasList: ArrayList<Celda>): void
+        +getCeldasList(): ArrayList<Celda>
+        +addCelda(celda: Celda): void
+        +removeCelda(celda: Celda): void
+        +toString(): String
+    }
+
+    class Celda {
+        -nombre: String
+        -bacteriasList: ArrayList<Bacteria>
+        +setNombre(nombre: String): void
+        +getNombre(): String
+        +setBacteriasList(bacteriasList: ArrayList<Bacteria>): void
+        +getBacteriasList(): ArrayList<Bacteria>
+        +addBacteria(bacteria: Bacteria): void
+        +removeBacteria(bacteria: Bacteria): void
+        +toString(): String
+    }
+
+    class Bacteria {
+        -nombre: String
+        -vida: int
+        +setNombre(nombre: String): void
+        +getNombre(): String
+        +setVida(vida: int): void
+        +getVida(): int
+        +toString(): String
+    }
+}
+
+
+package "medio" {
+    class "ComidaPadre" {
+        - cantidadInicial: int
+        - cantidadComida: int []
+        - fechaInicial: LocalDate
+        - fechaFinal: LocalDate
+        - duracion: int
+        +abstract calcularComida(): int[]
+        +toString(): String
+        +toStringToFile(): String
+    }
+
+    class "ComidaPico" {
+        - cantidadPico: int
+        - cantidadFinal: int
+        - fechaPico: LocalDate
+        +calcularComida(): int[]
+        +toString(): String
+        +toStringToFile(): String
+    }
+    class "ComidaIntermitente" {
+            +calcularComida(): int[]
+            +toString(): String
+            +toStringToFile(): String
+        }
+
+    class "ComidaCte" {
+                +calcularComida(): int[]
+                +toString(): String
+                +toStringToFile(): String
+            }
+    class "ComidaIncremento" {
+            -cantidadFinal: int
+            +calcularComida(): int[]
+            +toString(): String
+            +toStringToFile(): String
+        }
+
+    class "Luminosidad" {
+        +luminosidad: Enum
+    }
+}
+
+
+package "dataio" {
+    class "FileManager" {
+        +abrirArchivo(): Experimento
+        +guardarArchivo(): boolean
+    }
+
+    class "UserInput" {
+        +readInt(): int
+        +readString(): String
+        +readFloat(): float
+        +readLocalDate(): LocalDate
+        +readLuminosidad(): Luminosidad.luminosidad
+    }
+}
+ComidaPico --|> ComidaPadre
+ComidaIntermitente --|> ComidaPadre
+ComidaCte --|> ComidaPadre
+ComidaIncremento --|> ComidaPadre
+
+"ComidaPadre" *-- "many" "Poblacion" : aportaPatrón
+"Poblacion" "many" *-- "1" "Luminosidad" : has
+
+UserInput "1" *-- "many" "GestionLab" : controls
+UserInput "1" *-- "many" "ExperimentoApp" : controls
+
+FileManager "1" *-- "many" "Experimento" : manages
+FileManager "1" *-- "many" "Poblacion" : manages
+
+Plato "1" *-- "many" Celda : contains
+Celda "1" *-- "many" Bacteria : contains
+Plato "1" -- "1" Poblacion : has
+Celda "1" -- "part of" Poblacion : contains
+Bacteria "many" -- "1" Poblacion : has
+GestionSimulacion "1" *-- "many" Plato : contains
+GestionSimulacion "1" -- "1" Poblacion : has
+GestionLab "1" *-- "many" Experimento : controls
+GestionLab "1" *-- "many" "Poblacion" : controls
+Experimento "1" *-- "many" Poblacion : contains
+
+ExperimentoApp "1" *-- "1" "Experimento" : contains
+ExperimentoApp ..> FileManager : uses
+ExperimentoApp ..> UserInput : uses
+ExperimentoApp ..> GestionLab : uses
+@enduml

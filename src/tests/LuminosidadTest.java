@@ -1,4 +1,4 @@
-package tests.medio;
+package tests;
 
 import medio.Luminosidad;
 import org.junit.jupiter.api.Test;

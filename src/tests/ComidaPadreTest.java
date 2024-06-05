@@ -1,4 +1,4 @@
-package tests.medio;
+package tests;
 import medio.ComidaPadre;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

@@ -13,6 +13,7 @@ import java.text.ParseException;
 
 import static dataio.FileManager.abrirArchivo;
 import static dataio.FileManager.guardarArchivo;
+import static gestion.GestionLab.createPoblacion;
 
 /**
  * Esta clase es la encargada de la representación gráfica de la aplicación mediante Swing
@@ -159,7 +160,7 @@ public class ExperimentApp extends JFrame {
             JOptionPane.showMessageDialog(null, "Poblacion " + (i + 1) + ":\n");
             // showMessageDialog() solo enseña un mensaje, sin pedir al usuario que escriba nada
             try {
-                GestionLab.createPoblacion(experimento);
+                createPoblacion(experimento);
             } catch (Exception ex) {
                 JOptionPane.showMessageDialog(null, "No se ha podido crear el experimento.");
                 ex.printStackTrace();
@@ -185,7 +186,7 @@ public class ExperimentApp extends JFrame {
         Poblacion poblacion = null;
         if (experimento != null) {
             try {
-                poblacion = GestionLab.createPoblacion(experimento);
+                poblacion = createPoblacion(experimento);
                 JOptionPane.showMessageDialog(null, "Población creada correctamente.");
                 JOptionPane.showMessageDialog(null, poblacion.toString());
             } catch(ParseException parseException) {
